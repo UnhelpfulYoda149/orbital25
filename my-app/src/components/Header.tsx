@@ -9,6 +9,7 @@ function Header({ user }: HeaderProps) {
     <header className="App-header">
       <h1>
         Welcome to <strong>TradeConnect</strong>, {user}
+        test line
       </h1>
     </header>
   );
