@@ -5,6 +5,8 @@ import Login from "./components/Login";
 import OrderPage from "./pages/OrderPage";
 import { Stock } from "./types";
 
+// test edit
+
 const test: Stock = { id: "hello", lastTradePrice: 1, openPrice: 1 };
 
 function App() {
