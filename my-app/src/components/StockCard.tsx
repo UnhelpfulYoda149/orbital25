@@ -12,11 +12,16 @@ function StockCard({ stock }: StockCardProps) {
   return (
     <Card variant="outlined" sx={{ minWidth: 500 }}>
       <CardContent>
-        <Typography variant="h5">{stock.id}</Typography>
-        <Typography variant="body1">
-          Last Trade Price: {stock.lastTradePrice}
+        <Typography variant="h5">{stock.name}</Typography>
+        <Typography variant="body2" color="textSecondary">
+          ({stock.id})
         </Typography>
-        <Typography variant="body1">Open Price: {stock.openPrice}</Typography>
+        <Typography variant="body1">
+          Last Trade Price: {stock.lastTradePrice.toFixed(2)}
+        </Typography>
+        <Typography variant="body1">
+          Open Price: {stock.openPrice.toFixed(2)}
+        </Typography>
       </CardContent>
     </Card>
   );

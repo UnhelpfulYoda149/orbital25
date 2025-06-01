@@ -13,11 +13,6 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import DashboardPage from "./pages/DashboardPage";
 
-const goog: Stock = { id: "GOOG", lastTradePrice: 1.0, openPrice: 0.95 };
-const app: Stock = { id: "APPL", lastTradePrice: 5.03, openPrice: 5.05 };
-const nvidia: Stock = { id: "NVDA", lastTradePrice: 139.1, openPrice: 142 };
-const portfolio: Stock[] = [goog, app, nvidia];
-
 console.log(process.env.REACT_APP_SUPABASE_KEY);
 
 export const supabase = createClient(

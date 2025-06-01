@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSymbolPrice, getOpenPrice } from "../fetchPrices";
+import { getCompanyName, getSymbolPrice, getOpenPrice } from "../fetchPrices";
 import StockCard from "../components/StockCard"; // make sure this exists
 import { Stock } from "../types";
 
@@ -12,14 +12,16 @@ export default function DashboardPage() {
   useEffect(() => {
     const loadStockData = async () => {
       const promises = stockSymbols.map(async (symbol) => {
-        const [lastPrice, openPrice] = await Promise.all([
-          getSymbolPrice(symbol),
-          getOpenPrice(symbol),
-        ]);
+        const [name, lastPrice, openPrice] = await Promise.all([
+  getCompanyName(symbol),
+  getSymbolPrice(symbol),
+  getOpenPrice(symbol),
+]);
 
-    if (lastPrice !== null && openPrice !== null) {
+    if (name && lastPrice !== null && openPrice !== null) {
       return {
         id: symbol,
+        name,
         lastTradePrice: lastPrice,
         openPrice: openPrice,
       };
