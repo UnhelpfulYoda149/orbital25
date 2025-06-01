@@ -11,25 +11,28 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const loadStockData = async () => {
-      const results: Stock[] = [];
+      const promises = stockSymbols.map(async (symbol) => {
+        const [lastPrice, openPrice] = await Promise.all([
+          getSymbolPrice(symbol),
+          getOpenPrice(symbol),
+        ]);
 
-      for (const symbol of stockSymbols) {
-        const lastPrice = await getSymbolPrice(symbol);
-        const openPrice = await getOpenPrice(symbol);
+    if (lastPrice !== null && openPrice !== null) {
+      return {
+        id: symbol,
+        lastTradePrice: lastPrice,
+        openPrice: openPrice,
+      };
+    }
 
-        if (lastPrice !== null && openPrice !== null) {
-          results.push({
-            id: symbol,
-            lastTradePrice: lastPrice,
-            openPrice: openPrice,
-          });
-        }
-      }
+    return null;
+  });
 
-      setStocks(results);
-    };
+  const results = await Promise.all(promises);
+  setStocks(results.filter((stock): stock is Stock => stock !== null));
+  };
 
-    loadStockData();
+  loadStockData();
   }, []);
 
   return (
