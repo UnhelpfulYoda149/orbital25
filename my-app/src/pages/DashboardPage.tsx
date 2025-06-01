@@ -14,11 +14,6 @@ interface DashboardPageProps {
 
 export default function DashboardPage({ stocksInput }: DashboardPageProps) {
   const [stocks, setStocks] = useState<Stock[]>([]);
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/OrderPage");
-  };
 
   // useEffect(() => {
   //   const loadStockData = async () => {
@@ -59,8 +54,8 @@ export default function DashboardPage({ stocksInput }: DashboardPageProps) {
       <h1>Dashboard</h1>
       <div className="grid grid-cols-2 gap-4">
         {stocksInput.map((stock) => (
-          <Card variant="outlined" sx={{ minWidth: 500 }}>
-            <CardActionArea onClick={handleClick}>
+          <Card variant="outlined">
+            <CardActionArea>
               <StockCard key={stock.id} stock={stock} />
             </CardActionArea>
           </Card>

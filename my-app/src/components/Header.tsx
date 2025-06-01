@@ -19,11 +19,14 @@ function Header({ user }: HeaderProps) {
   return (
     <header className="App-header">
       <h1>
-        Welcome to <strong>TradeConnect</strong>, {user}
+        Welcome to <strong>TradeConnect</strong>
+        {user}
       </h1>
-      <Button variant="contained" onClick={signOut}>
-        Sign Out
-      </Button>
+      {user && (
+        <Button variant="contained" onClick={signOut}>
+          Sign Out
+        </Button>
+      )}
     </header>
   );
 }

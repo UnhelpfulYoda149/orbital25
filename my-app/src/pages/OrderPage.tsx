@@ -8,7 +8,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import { supabase } from "../App";
 import StockCard from "../components/StockCard";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface OrderPageProps {
   stocksInput: Stock[];
@@ -26,11 +26,7 @@ function OrderPage({ stocksInput }: OrderPageProps) {
   const [numShares, setNumShares] = useState<number | null>(null);
   const [orderPrice, setOrderPrice] = useState<number | null>(null);
   const [stockName, setStockName] = useState<Stock>(stocksInput[0]);
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/");
-  };
+  // const navigate = useNavigate();
 
   const handleOrderChange = (
     event: MouseEvent<HTMLElement>,
@@ -88,10 +84,15 @@ function OrderPage({ stocksInput }: OrderPageProps) {
       numShares: numShares,
       purchasePrice: stockName.lastTradePrice,
     };
-    console.log(data);
     if (orderType == "buy") {
       const { error } = await supabase.from("Holdings").insert(data);
     }
+    //Reset to default
+    setNumShares(null);
+    setOrderPrice(null);
+    setExpiryType("gtc");
+    setInstructionType("limit");
+    setOrderType("buy");
   };
 
   return (
@@ -148,7 +149,6 @@ function OrderPage({ stocksInput }: OrderPageProps) {
               }}
             />
           </ToggleButtonGroup>
-          <p>Checking: {orderType}</p>
         </Paper>
         <Paper elevation={2}>
           <p>Instructions</p>
@@ -180,7 +180,6 @@ function OrderPage({ stocksInput }: OrderPageProps) {
               }}
             />
           )}
-          <p>Checking: {instructionType}</p>
         </Paper>
         <Paper elevation={2}>
           <p>Expiry</p>
@@ -198,7 +197,6 @@ function OrderPage({ stocksInput }: OrderPageProps) {
               Day Only
             </ToggleButton>
           </ToggleButtonGroup>
-          <p>Checking: {expiryType}</p>
         </Paper>
         <Button variant="contained" type="submit">
           Submit Order Ticket

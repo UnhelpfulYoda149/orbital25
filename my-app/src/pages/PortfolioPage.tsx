@@ -49,7 +49,6 @@ function PortfolioPage() {
           return { stock: result, numShares: numShares };
         })
       );
-      console.log(portfolio);
       return portfolio;
     };
 

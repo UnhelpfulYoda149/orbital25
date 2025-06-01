@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import Header from "./components/Header";
 import "./App.css";
 import Login from "./components/Login";
@@ -12,19 +12,45 @@ import { createClient, Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import DashboardPage from "./pages/DashboardPage";
-import Layout from "./Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-console.log(process.env.REACT_APP_SUPABASE_KEY);
+// import NavBar from "./components/Navbar";
+import { ToggleButton } from "@mui/material";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 export const supabase = createClient(
   "https://eaotlxhwxspeozxjexnv.supabase.co",
   process.env.REACT_APP_SUPABASE_KEY!
 );
 
+type Page = "login" | "dashboard" | "order" | "portfolio";
+
 function App() {
   const [session, setSession] = useState<Session | null>();
   const [stocks, setStocks] = useState<Stock[]>([]);
+  const [page, setPage] = useState<Page>("portfolio");
+
+  function NavBar() {
+    return (
+      <ToggleButtonGroup
+        color="info" // just playing ard
+        value={page}
+        exclusive
+        onChange={handlePageChange}
+        aria-label="text alignment"
+      >
+        <ToggleButton value="dashboard" aria-label="left aligned">
+          Dashboard
+        </ToggleButton>
+        <ToggleButton value="order" aria-label="centered">
+          Order
+        </ToggleButton>
+        <ToggleButton value="portfolio" aria-label="right aligned">
+          Portfolio
+        </ToggleButton>
+      </ToggleButtonGroup>
+    );
+  }
+
   useEffect(() => {
     const loadData = async () => {
       const { data, error } = await supabase.from("Stocks").select();
@@ -37,7 +63,6 @@ function App() {
 
     loadData().then((stocks) => setStocks(stocks));
   }, []);
-  // const [page, setPage] = useState<Page>("dashboard");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -53,28 +78,45 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  if (!session) {
+  const handlePageChange = (
+    event: MouseEvent<HTMLElement>,
+    newPageType: Page
+  ) => {
+    if (newPageType !== null) {
+      setPage(newPageType);
+    }
+  };
+
+  if (!session || page == "login") {
     return (
       <>
         <Header user="" />
         <LoginPage />
       </>
     );
+  } else if (page == "dashboard") {
+    return (
+      <>
+        <Header user={", " + session.user.email || ""} />
+        <NavBar />
+        <DashboardPage stocksInput={stocks} />
+      </>
+    );
+  } else if (page == "order") {
+    return (
+      <>
+        <Header user={", " + session.user.email || ""} />
+        <NavBar />
+        <OrderPage stocksInput={stocks} />
+      </>
+    );
   } else {
     return (
-      // <Router>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<DashboardPage stocksInput={stocks} />} />
-          <Route
-            path="/dashboard"
-            element={<DashboardPage stocksInput={stocks} />}
-          />
-          <Route path="/order" element={<OrderPage stocksInput={stocks} />} />
-          <Route path="/portfolio" element={<PortfolioPage />} />
-        </Route>
-      </Routes>
-      // </Router>
+      <>
+        <Header user={", " + session.user.email || ""} />
+        <NavBar />
+        <PortfolioPage />
+      </>
     );
   }
 }

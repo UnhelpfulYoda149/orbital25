@@ -5,7 +5,6 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const onUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("triggered");
     setUsername(e.target.value);
   };
 
@@ -17,7 +16,6 @@ function Login() {
     e.preventDefault();
 
     // Check login details
-    console.log(username, password);
     setUsername("");
     setPassword("");
   };
