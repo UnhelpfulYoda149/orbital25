@@ -1,0 +1,45 @@
+import { useEffect, useState } from "react";
+import { getSymbolPrice, getOpenPrice } from "../fetchPrices";
+import StockCard from "../components/StockCard"; // make sure this exists
+import { Stock } from "../types";
+
+
+const stockSymbols = ["AAPL", "GOOG", "MSFT", "NVDA", "AMZN", "TSLA", "META", "NFLX", "INTC", "AMD"];
+
+export default function DashboardPage() {
+  const [stocks, setStocks] = useState<Stock[]>([]);
+
+  useEffect(() => {
+    const loadStockData = async () => {
+      const results: Stock[] = [];
+
+      for (const symbol of stockSymbols) {
+        const lastPrice = await getSymbolPrice(symbol);
+        const openPrice = await getOpenPrice(symbol);
+
+        if (lastPrice !== null && openPrice !== null) {
+          results.push({
+            id: symbol,
+            lastTradePrice: lastPrice,
+            openPrice: openPrice,
+          });
+        }
+      }
+
+      setStocks(results);
+    };
+
+    loadStockData();
+  }, []);
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <div className="grid grid-cols-2 gap-4">
+        {stocks.map((stock) => (
+          <StockCard key={stock.id} stock={stock} />
+        ))}
+      </div>
+    </div>
+  );
+}

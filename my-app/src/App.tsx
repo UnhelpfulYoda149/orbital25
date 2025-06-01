@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import { createClient, Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import DashboardPage from "./pages/DashboardPage";
 
 const goog: Stock = { id: "GOOG", lastTradePrice: 1.0, openPrice: 0.95 };
 const app: Stock = { id: "APPL", lastTradePrice: 5.03, openPrice: 5.05 };
@@ -44,7 +45,7 @@ function App() {
   return (
     <>
       <Header user="admin" />
-      <LoginPage />
+      <DashboardPage />
     </>
   );
 }
