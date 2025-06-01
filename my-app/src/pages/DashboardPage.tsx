@@ -4,65 +4,63 @@ import StockCard from "../components/StockCard"; // make sure this exists
 import { Stock } from "../types";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
+import { supabase } from "../App";
+import { useNavigate } from "react-router-dom";
+import OrderPage from "./OrderPage";
 
-const stockSymbols = [
-  "AAPL",
-  "GOOG",
-  "MSFT",
-  "NVDA",
-  "AMZN",
-  "TSLA",
-  "META",
-  "NFLX",
-  "INTC",
-  "AMD",
-];
+interface DashboardPageProps {
+  stocksInput: Stock[];
+}
 
-export default function DashboardPage() {
+export default function DashboardPage({ stocksInput }: DashboardPageProps) {
   const [stocks, setStocks] = useState<Stock[]>([]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadStockData = async () => {
-      const promises = stockSymbols.map(async (symbol) => {
-        const [name, lastPrice, openPrice] = await Promise.all([
-          getCompanyName(symbol),
-          getSymbolPrice(symbol),
-          getOpenPrice(symbol),
-        ]);
+  const handleClick = () => {
+    navigate("/OrderPage");
+  };
 
-        if (lastPrice !== null && openPrice !== null) {
-          return {
-            id: symbol,
-            lastTradePrice: lastPrice,
-            openPrice: openPrice,
-          };
-        }
-        if (name && lastPrice !== null && openPrice !== null) {
-          return {
-            id: symbol,
-            name,
-            lastTradePrice: lastPrice,
-            openPrice: openPrice,
-          };
-        }
+  // useEffect(() => {
+  //   const loadStockData = async () => {
+  //     const promises = stockSymbols.map(async (symbol) => {
+  //       const [name, lastPrice, openPrice] = await Promise.all([
+  //         getCompanyName(symbol),
+  //         getSymbolPrice(symbol),
+  //         getOpenPrice(symbol),
+  //       ]);
 
-        return null;
-      });
+  //       if (lastPrice !== null && openPrice !== null) {
+  //         return {
+  //           id: symbol,
+  //           lastTradePrice: lastPrice,
+  //           openPrice: openPrice,
+  //         };
+  //       }
+  //       if (name && lastPrice !== null && openPrice !== null) {
+  //         return {
+  //           id: symbol,
+  //           name,
+  //           lastTradePrice: lastPrice,
+  //           openPrice: openPrice,
+  //         };
+  //       }
 
-      const results = await Promise.all(promises);
-      setStocks(results.filter((stock): stock is Stock => stock !== null));
-    };
+  //       return null;
+  //     });
 
-    loadStockData();
-  }, []);
+  //     const results = await Promise.all(promises);
+  //     setStocks(results.filter((stock): stock is Stock => stock !== null));
+  //   };
+
+  //   loadStockData();
 
   return (
     <div>
       <h1>Dashboard</h1>
       <div className="grid grid-cols-2 gap-4">
-        {stocks.map((stock) => (
+        {stocksInput.map((stock) => (
           <Card variant="outlined" sx={{ minWidth: 500 }}>
-            <CardActionArea>
+            <CardActionArea onClick={handleClick}>
               <StockCard key={stock.id} stock={stock} />
             </CardActionArea>
           </Card>
