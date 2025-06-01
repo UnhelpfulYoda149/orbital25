@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSymbolPrice, getOpenPrice } from "../fetchPrices";
+import { getCompanyName, getSymbolPrice, getOpenPrice } from "../fetchPrices";
 import StockCard from "../components/StockCard"; // make sure this exists
 import { Stock } from "../types";
 import Card from "@mui/material/Card";
@@ -24,7 +24,8 @@ export default function DashboardPage() {
   useEffect(() => {
     const loadStockData = async () => {
       const promises = stockSymbols.map(async (symbol) => {
-        const [lastPrice, openPrice] = await Promise.all([
+        const [name, lastPrice, openPrice] = await Promise.all([
+          getCompanyName(symbol),
           getSymbolPrice(symbol),
           getOpenPrice(symbol),
         ]);
@@ -32,6 +33,14 @@ export default function DashboardPage() {
         if (lastPrice !== null && openPrice !== null) {
           return {
             id: symbol,
+            lastTradePrice: lastPrice,
+            openPrice: openPrice,
+          };
+        }
+        if (name && lastPrice !== null && openPrice !== null) {
+          return {
+            id: symbol,
+            name,
             lastTradePrice: lastPrice,
             openPrice: openPrice,
           };
