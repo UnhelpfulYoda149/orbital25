@@ -19,7 +19,7 @@ function Header({ user }: HeaderProps) {
       <h1>
         Welcome to <strong>TradeConnect</strong>, {user}
       </h1>
-      <Button variant="contained" onSubmit={signOut}>
+      <Button variant="contained" onClick={signOut}>
         Sign Out
       </Button>
     </header>

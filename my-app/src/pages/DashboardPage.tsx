@@ -2,9 +2,21 @@ import { useEffect, useState } from "react";
 import { getSymbolPrice, getOpenPrice } from "../fetchPrices";
 import StockCard from "../components/StockCard"; // make sure this exists
 import { Stock } from "../types";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 
-
-const stockSymbols = ["AAPL", "GOOG", "MSFT", "NVDA", "AMZN", "TSLA", "META", "NFLX", "INTC", "AMD"];
+const stockSymbols = [
+  "AAPL",
+  "GOOG",
+  "MSFT",
+  "NVDA",
+  "AMZN",
+  "TSLA",
+  "META",
+  "NFLX",
+  "INTC",
+  "AMD",
+];
 
 export default function DashboardPage() {
   const [stocks, setStocks] = useState<Stock[]>([]);
@@ -17,22 +29,22 @@ export default function DashboardPage() {
           getOpenPrice(symbol),
         ]);
 
-    if (lastPrice !== null && openPrice !== null) {
-      return {
-        id: symbol,
-        lastTradePrice: lastPrice,
-        openPrice: openPrice,
-      };
-    }
+        if (lastPrice !== null && openPrice !== null) {
+          return {
+            id: symbol,
+            lastTradePrice: lastPrice,
+            openPrice: openPrice,
+          };
+        }
 
-    return null;
-  });
+        return null;
+      });
 
-  const results = await Promise.all(promises);
-  setStocks(results.filter((stock): stock is Stock => stock !== null));
-  };
+      const results = await Promise.all(promises);
+      setStocks(results.filter((stock): stock is Stock => stock !== null));
+    };
 
-  loadStockData();
+    loadStockData();
   }, []);
 
   return (
@@ -40,7 +52,11 @@ export default function DashboardPage() {
       <h1>Dashboard</h1>
       <div className="grid grid-cols-2 gap-4">
         {stocks.map((stock) => (
-          <StockCard key={stock.id} stock={stock} />
+          <Card variant="outlined" sx={{ minWidth: 500 }}>
+            <CardActionArea>
+              <StockCard key={stock.id} stock={stock} />
+            </CardActionArea>
+          </Card>
         ))}
       </div>
     </div>

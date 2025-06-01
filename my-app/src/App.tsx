@@ -20,6 +20,8 @@ const portfolio: Stock[] = [goog, app, nvidia];
 
 console.log(process.env.REACT_APP_SUPABASE_KEY);
 
+type Page = "login" | "order" | "dashboard" | "portfolio";
+
 export const supabase = createClient(
   "https://eaotlxhwxspeozxjexnv.supabase.co",
   process.env.REACT_APP_SUPABASE_KEY!
@@ -27,6 +29,7 @@ export const supabase = createClient(
 
 function App() {
   const [session, setSession] = useState<Session | null>();
+  const [page, setPage] = useState<Page>("dashboard");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -42,12 +45,35 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  return (
-    <>
-      <Header user="admin" />
-      <DashboardPage />
-    </>
-  );
+  if (!session) {
+    return (
+      <>
+        <Header user="" />
+        <LoginPage />
+      </>
+    );
+  } else if (page == "dashboard") {
+    return (
+      <>
+        <Header user={session.user.email || ""} />
+        <DashboardPage />
+      </>
+    );
+  } else if (page == "order") {
+    return (
+      <>
+        <Header user={session.user.email || ""} />
+        <DashboardPage />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Header user={session.user.email || ""} />
+        <DashboardPage />
+      </>
+    );
+  }
 }
 
 export default App;
