@@ -71,10 +71,7 @@ function App() {
             element={<DashboardPage stocksInput={stocks} />}
           />
           <Route path="/order" element={<OrderPage stocksInput={stocks} />} />
-          <Route
-            path="/portfolio"
-            element={<PortfolioPage stocks={stocks} />}
-          />
+          <Route path="/portfolio" element={<PortfolioPage />} />
         </Route>
       </Routes>
       // </Router>
