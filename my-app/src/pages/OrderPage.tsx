@@ -1,33 +1,43 @@
-import { Stock, StockNames } from "../types";
+import { Stock } from "../types";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { MouseEvent, useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { MouseEvent, useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import { supabase } from "../App";
 import StockCard from "../components/StockCard";
-import { log } from "console";
-// import { useNavigate } from "react-router-dom";
+import { loadAllStockData } from "../App";
 
 interface OrderPageProps {
-  stocksInput: Stock[];
+  initStock?: Stock;
 }
 
 type Order = "buy" | "sell";
 type Instruction = "market" | "limit";
 type Expiry = "gtc" | "day";
 
-function OrderPage({ stocksInput }: OrderPageProps) {
-  const stocks = stocksInput;
+function OrderPage({ initStock }: OrderPageProps) {
+  const [stocks, setStocks] = useState<Stock[]>([]);
   const [orderType, setOrderType] = useState<Order>("buy");
   const [instructionType, setInstructionType] = useState<Instruction>("limit");
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
   const [numShares, setNumShares] = useState<number>(0);
   const [orderPrice, setOrderPrice] = useState<number>(0);
-  const [stockName, setStockName] = useState<Stock>(stocksInput[0]);
-  // const navigate = useNavigate();
+  const [stockName, setStockName] = useState<Stock>(
+    initStock ? initStock : stocks[0]
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      loadAllStockData().then((r) => {
+        setStocks(r);
+        setStockName(r[0]);
+      });
+    };
+    fetchData();
+  }, []);
 
   const handleOrderChange = (
     event: MouseEvent<HTMLElement>,
@@ -71,9 +81,12 @@ function OrderPage({ stocksInput }: OrderPageProps) {
     }
   };
 
-  const defaultProps = {
-    options: stocks,
-    getOptionLabel: (option: Stock) => option.id + ": " + option.name,
+  const resetForm = () => {
+    setNumShares(0);
+    setOrderPrice(0);
+    setExpiryType("gtc");
+    setInstructionType("limit");
+    setOrderType("buy");
   };
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -99,12 +112,13 @@ function OrderPage({ stocksInput }: OrderPageProps) {
         console.log(error);
       }
     }
-    //Reset to default
-    setNumShares(0);
-    setOrderPrice(0);
-    setExpiryType("gtc");
-    setInstructionType("limit");
-    setOrderType("buy");
+    //Reset to default form inputs
+    resetForm();
+  };
+
+  const defaultProps = {
+    options: stocks,
+    getOptionLabel: (option: Stock) => option.id + ": " + option.name,
   };
 
   return (
@@ -118,20 +132,24 @@ function OrderPage({ stocksInput }: OrderPageProps) {
     >
       <form onSubmit={handleOrderSubmit}>
         <Paper elevation={2}>
-          <Autocomplete
-            sx={{ width: 300 }}
-            {...defaultProps}
-            id="Stock"
-            disableClearable
-            value={stockName}
-            onChange={(event: any, newValue: Stock) => {
-              setStockName(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField {...params} label="Stock" variant="standard" />
-            )}
-          />
-          <StockCard stock={stockName} />
+          {stockName && (
+            <>
+              <Autocomplete
+                sx={{ width: 300 }}
+                {...defaultProps}
+                id="Stock"
+                disableClearable
+                value={stockName}
+                onChange={(event: any, newValue: Stock) => {
+                  setStockName(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Stock" variant="standard" />
+                )}
+              />
+              <StockCard stock={stockName} />
+            </>
+          )}
         </Paper>
         <Paper elevation={2}>
           <p>Action</p>
@@ -165,7 +183,7 @@ function OrderPage({ stocksInput }: OrderPageProps) {
         <Paper elevation={2}>
           <p>Instructions</p>
           <ToggleButtonGroup
-            color="info" // just playing ard
+            color="info"
             value={instructionType}
             exclusive
             onChange={handleInstructionChange}
@@ -196,7 +214,7 @@ function OrderPage({ stocksInput }: OrderPageProps) {
         <Paper elevation={2}>
           <p>Expiry</p>
           <ToggleButtonGroup
-            color="info" // just playing ard
+            color="info"
             value={expiryType}
             exclusive
             onChange={handleExpiryChange}

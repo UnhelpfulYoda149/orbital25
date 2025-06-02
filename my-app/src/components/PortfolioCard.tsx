@@ -1,6 +1,5 @@
-import { Stock, StockNames } from "../types";
+import { Stock } from "../types";
 import { Card } from "@mui/material";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 

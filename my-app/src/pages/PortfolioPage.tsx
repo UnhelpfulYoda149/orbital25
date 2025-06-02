@@ -74,11 +74,13 @@ function PortfolioPage() {
         );
       })}
       <h4>
-        Total Portfolio Value:{" "}
-        {stocks.reduce(
-          (acc, cur) => acc + cur.stock.lastTradePrice * cur.numShares,
-          0
-        )}
+        Total Portfolio Value:{" $"}
+        {stocks
+          .reduce(
+            (acc, cur) => acc + cur.stock.lastTradePrice * cur.numShares,
+            0
+          )
+          .toFixed(2)}
       </h4>
     </div>
   );

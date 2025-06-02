@@ -1,8 +1,5 @@
-import logo from "../logo.svg";
 import { supabase } from "../App";
 import Button from "@mui/material/Button";
-import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
 
 interface HeaderProps {
   user: string | null;
