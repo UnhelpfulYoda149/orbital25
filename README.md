@@ -40,13 +40,13 @@ TradeConnect is a gamified stock trading simulator designed to educate users abo
 
 ```
 gh repo clone UnhelpfulYoda149/orbital25
- cd orbital25
+cd orbital25
 ```
 
 2. Install Dependencies
 
 ```
-   npm install
+npm install
 ```
 
 3. Environment Variables
@@ -55,5 +55,5 @@ gh repo clone UnhelpfulYoda149/orbital25
 4. Run the Development Server
 
 ```
-   npm start
+npm start
 ```
