@@ -30,7 +30,7 @@ export const loadAllStockData = async () => {
 function App() {
   const [session, setSession] = useState<Session | null>();
   const [stocks, setStocks] = useState<Stock[]>([]);
-  const [page, setPage] = useState<Page>("portfolio");
+  const [page, setPage] = useState<Page>("dashboard");
 
   function NavBar() {
     return (
