@@ -38,7 +38,8 @@ TradeConnect is a gamified stock trading simulator designed to educate users abo
 
 1. Clone the Repository
 
-```gh repo clone UnhelpfulYoda149/orbital25
+```
+gh repo clone UnhelpfulYoda149/orbital25
  cd orbital25
 ```
 
