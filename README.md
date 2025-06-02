@@ -37,14 +37,22 @@ TradeConnect is a gamified stock trading simulator designed to educate users abo
 ### Setup
 
 1. Clone the Repository
-   gh repo clone UnhelpfulYoda149/orbital25
-   cd orbital25
+
+```gh repo clone UnhelpfulYoda149/orbital25
+ cd orbital25
+```
 
 2. Install Dependencies
+
+```
    npm install
+```
 
 3. Environment Variables
    Create a .env file
 
 4. Run the Development Server
+
+```
    npm start
+```
