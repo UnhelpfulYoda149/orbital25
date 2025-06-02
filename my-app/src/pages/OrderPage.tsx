@@ -8,6 +8,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
 import { supabase } from "../App";
 import StockCard from "../components/StockCard";
+import { log } from "console";
 // import { useNavigate } from "react-router-dom";
 
 interface OrderPageProps {
@@ -23,8 +24,8 @@ function OrderPage({ stocksInput }: OrderPageProps) {
   const [orderType, setOrderType] = useState<Order>("buy");
   const [instructionType, setInstructionType] = useState<Instruction>("limit");
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
-  const [numShares, setNumShares] = useState<number | null>(null);
-  const [orderPrice, setOrderPrice] = useState<number | null>(null);
+  const [numShares, setNumShares] = useState<number>(0);
+  const [orderPrice, setOrderPrice] = useState<number>(0);
   const [stockName, setStockName] = useState<Stock>(stocksInput[0]);
   // const navigate = useNavigate();
 
@@ -59,6 +60,7 @@ function OrderPage({ stocksInput }: OrderPageProps) {
     const num = Number(e.target.value);
     if (!isNaN(num)) {
       setNumShares(num);
+      console.log(numShares);
     }
   };
 
@@ -76,20 +78,30 @@ function OrderPage({ stocksInput }: OrderPageProps) {
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(numShares);
     const data = {
       user_id: await supabase.auth
         .getSession()
         .then((val) => val.data.session?.user.id),
-      stockID: stockName.id,
+      stock_id: stockName.id,
       numShares: numShares,
       purchasePrice: stockName.lastTradePrice,
     };
     if (orderType == "buy") {
       const { error } = await supabase.from("Holdings").insert(data);
+      if (error) {
+        console.log(error);
+      }
+    } else {
+      const sellData = { ...data, numShares: -1 * numShares };
+      const { error } = await supabase.from("Holdings").insert(sellData);
+      if (error) {
+        console.log(error);
+      }
     }
     //Reset to default
-    setNumShares(null);
-    setOrderPrice(null);
+    setNumShares(0);
+    setOrderPrice(0);
     setExpiryType("gtc");
     setInstructionType("limit");
     setOrderType("buy");
@@ -137,7 +149,7 @@ function OrderPage({ stocksInput }: OrderPageProps) {
               Sell
             </ToggleButton>
             <TextField
-              id="num-shares"
+              id="numShares"
               label="Number of Shares"
               type="number"
               value={numShares}
