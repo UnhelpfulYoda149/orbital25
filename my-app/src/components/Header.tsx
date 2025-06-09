@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../App";
 import Button from "@mui/material/Button";
 
@@ -6,8 +7,10 @@ interface HeaderProps {
 }
 
 function Header({ user }: HeaderProps) {
+  const navigate = useNavigate();
   async function signOut() {
     const { error } = await supabase.auth.signOut();
+    navigate("/login");
     if (error != null) {
       console.error("There is an error when signing out..." + error);
     }

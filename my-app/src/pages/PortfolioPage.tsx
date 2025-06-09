@@ -2,6 +2,9 @@ import { Stock } from "../types";
 import PortfolioCard from "../components/PortfolioCard";
 import { useState, useEffect } from "react";
 import { supabase } from "../App";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import { useNavigate } from "react-router-dom";
 
 type PortfolioSummary = {
   stock: Stock;
@@ -15,8 +18,11 @@ type StockSummary = {
 
 function PortfolioPage() {
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getUserStocks = async () => {
+      // Find all stocks in database belonging to current user
       const { data, error } = await supabase
         .from("Holdings")
         .select("stock_id, numShares")
@@ -55,6 +61,14 @@ function PortfolioPage() {
     getUserStocks().then((stocks) => setStocks(stocks));
   }, []);
 
+  const handleClick = (stock: Stock) => {
+    navigate("/order", {
+      state: {
+        stock: stock,
+      },
+    });
+  };
+
   return (
     <div
       style={{
@@ -67,10 +81,14 @@ function PortfolioPage() {
       <h2>My Stocks</h2>
       {stocks.map((portfolioStock) => {
         return (
-          <PortfolioCard
-            stock={portfolioStock.stock}
-            numShares={portfolioStock.numShares}
-          />
+          <Card variant="outlined">
+            <CardActionArea onClick={() => handleClick(portfolioStock.stock)}>
+              <PortfolioCard
+                stock={portfolioStock.stock}
+                numShares={portfolioStock.numShares}
+              />
+            </CardActionArea>
+          </Card>
         );
       })}
       <h4>

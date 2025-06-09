@@ -9,31 +9,28 @@ import Button from "@mui/material/Button";
 import { supabase } from "../App";
 import StockCard from "../components/StockCard";
 import { loadAllStockData } from "../App";
-
-interface OrderPageProps {
-  initStock?: Stock;
-}
+import { useLocation } from "react-router-dom";
 
 type Order = "buy" | "sell";
 type Instruction = "market" | "limit";
 type Expiry = "gtc" | "day";
 
-function OrderPage({ initStock }: OrderPageProps) {
+function OrderPage() {
+  const location = useLocation();
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [orderType, setOrderType] = useState<Order>("buy");
   const [instructionType, setInstructionType] = useState<Instruction>("limit");
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
   const [numShares, setNumShares] = useState<number>(0);
   const [orderPrice, setOrderPrice] = useState<number>(0);
-  const [stockName, setStockName] = useState<Stock>(
-    initStock ? initStock : stocks[0]
-  );
+  const stockName: Stock = location.state.stock;
+
+  console.log(location.state.stock);
 
   useEffect(() => {
     const fetchData = async () => {
       loadAllStockData().then((r) => {
         setStocks(r);
-        setStockName(r[0]);
       });
     };
     fetchData();
@@ -132,24 +129,7 @@ function OrderPage({ initStock }: OrderPageProps) {
     >
       <form onSubmit={handleOrderSubmit}>
         <Paper elevation={2}>
-          {stockName && (
-            <>
-              <Autocomplete
-                sx={{ width: 300 }}
-                {...defaultProps}
-                id="Stock"
-                disableClearable
-                value={stockName}
-                onChange={(event: any, newValue: Stock) => {
-                  setStockName(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Stock" variant="standard" />
-                )}
-              />
-              <StockCard stock={stockName} />
-            </>
-          )}
+          <StockCard stock={stockName} />
         </Paper>
         <Paper elevation={2}>
           <p>Action</p>
