@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../App";
+//import { supabase } from "../App";
 import Button from "@mui/material/Button";
 
 interface HeaderProps {
   user: string | null;
 }
 
-function Header({ user }: HeaderProps) {
+function Header({ user }: HeaderProps) { /*
   const navigate = useNavigate();
   async function signOut() {
     const { error } = await supabase.auth.signOut();
@@ -28,7 +28,7 @@ function Header({ user }: HeaderProps) {
         </Button>
       )}
     </header>
-  );
+  );*/
 }
 
 export default Header;

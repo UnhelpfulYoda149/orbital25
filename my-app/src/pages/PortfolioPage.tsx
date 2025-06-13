@@ -1,7 +1,7 @@
 import { Stock } from "../types";
 import PortfolioCard from "../components/PortfolioCard";
 import { useState, useEffect } from "react";
-import { supabase } from "../App";
+//import { supabase } from "../App";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ type StockSummary = {
   numShares: number;
 };
 
-function PortfolioPage() {
+function PortfolioPage() {/*
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
   const navigate = useNavigate();
 
@@ -101,7 +101,7 @@ function PortfolioPage() {
           .toFixed(2)}
       </h4>
     </div>
-  );
+  );*/
 }
 
 export default PortfolioPage;

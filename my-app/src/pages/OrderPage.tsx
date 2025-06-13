@@ -6,9 +6,9 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-import { supabase } from "../App";
+//import { supabase } from "../App";
 import StockCard from "../components/StockCard";
-import { loadAllStockData } from "../App";
+//import { loadAllStockData } from "../App";
 import { useLocation } from "react-router-dom";
 
 type Order = "buy" | "sell";
@@ -16,6 +16,7 @@ type Instruction = "market" | "limit";
 type Expiry = "gtc" | "day";
 
 function OrderPage() {
+  /*
   const location = useLocation();
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [orderType, setOrderType] = useState<Order>("buy");
@@ -213,7 +214,7 @@ function OrderPage() {
         </Button>
       </form>
     </div>
-  );
+  );*/
 }
 
 export default OrderPage;

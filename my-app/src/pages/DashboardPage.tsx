@@ -2,10 +2,10 @@ import StockCard from "../components/StockCard"; // make sure this exists
 import { Stock } from "../types";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
-import { loadAllStockData } from "../App";
+//import { loadAllStockData } from "../App";
 import { useEffect, useState, MouseEvent } from "react";
 import { getSymbolPrice, getOpenPrice, getCompanyName } from "../fetchPrices";
-import { supabase } from "../App";
+//import { supabase } from "../App";
 import { useNavigate } from "react-router-dom";
 
 const stockSymbols = [
@@ -21,7 +21,7 @@ const stockSymbols = [
   "AMD",
 ];
 
-export default function DashboardPage() {
+export default function DashboardPage() {/*
   const [stocks, setStocks] = useState<Stock[]>([]);
   const navigate = useNavigate();
 
@@ -95,5 +95,5 @@ export default function DashboardPage() {
         ))}
       </div>
     </div>
-  );
+  );*/
 }

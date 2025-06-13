@@ -1,23 +1,7 @@
-import "../App.css";
-import { supabase } from "../App";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/LoginForm"
 
 function LoginPage() {
-  const navigate = useNavigate();
-  supabase.auth.getSession().then((val) => {
-    if (val) {
-      navigate("/");
-    }
-  });
-  return (
-    <Auth
-      supabaseClient={supabase}
-      appearance={{ theme: ThemeSupa }}
-      providers={[]}
-    />
-  );
+    return <LoginForm route="/api/token/" method="login" />
 }
 
-export default LoginPage;
+export default LoginPage
