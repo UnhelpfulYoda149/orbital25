@@ -29,6 +29,27 @@ function Header({ user }: HeaderProps) { /*
       )}
     </header>
   );*/
+  const navigate = useNavigate();
+
+  function signOut() {
+    // Clear local storage or any authentication token
+    localStorage.clear(); // or localStorage.removeItem("ACCESS_TOKEN")
+    navigate("/login");
+  }
+
+  return (
+    <header className="App-header">
+      <h1>
+        Welcome to <strong>TradeConnect</strong>
+        {user ? `, ${user}` : ""}
+      </h1>
+      {user && (
+        <Button variant="contained" onClick={signOut}>
+          Sign Out
+        </Button>
+      )}
+    </header>
+  );
 }
 
 export default Header;
