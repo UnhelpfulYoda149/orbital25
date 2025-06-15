@@ -3,7 +3,13 @@ import { useState, useEffect, MouseEvent } from "react";
 import "./App.css";
 import { Stock } from "./types";
 import { createClient, Session } from "@supabase/supabase-js";
-import { Route, Routes, useLocation, Navigate, BrowserRouter } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+  BrowserRouter,
+} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -14,15 +20,17 @@ import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import DashboardPage from "./pages/DashboardPage";
+import PortfolioPage from "./pages/PortfolioPage";
 
 function Logout() {
-  localStorage.clear()
-  return <Navigate to="/login" />
+  localStorage.clear();
+  return <Navigate to="/login" />;
 }
 
 function RegisterAndLogout() {
-  localStorage.clear()
-  return <RegisterPage />
+  localStorage.clear();
+  return <RegisterPage />;
 }
 
 function App() {
@@ -33,6 +41,22 @@ function App() {
         element={
           <ProtectedRoute>
             <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/portfolio"
+        element={
+          <ProtectedRoute>
+            <PortfolioPage />
           </ProtectedRoute>
         }
       />

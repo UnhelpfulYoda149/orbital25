@@ -7,6 +7,7 @@ import { useEffect, useState, MouseEvent } from "react";
 import { getSymbolPrice, getOpenPrice, getCompanyName } from "../fetchPrices";
 //import { supabase } from "../App";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 const stockSymbols = [
   "AAPL",
@@ -21,7 +22,9 @@ const stockSymbols = [
   "AMD",
 ];
 
-export default function DashboardPage() {/*
+export default function DashboardPage() {
+  const username = localStorage.getItem("username"); // or whatever key you're using
+  /*
   const [stocks, setStocks] = useState<Stock[]>([]);
   const navigate = useNavigate();
 
@@ -96,4 +99,9 @@ export default function DashboardPage() {/*
       </div>
     </div>
   );*/
+  return (
+    <>
+      <Header user={username} />
+    </>
+  );
 }

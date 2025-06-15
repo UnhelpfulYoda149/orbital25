@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 type PortfolioSummary = {
   stock: Stock;
@@ -16,7 +17,9 @@ type StockSummary = {
   numShares: number;
 };
 
-function PortfolioPage() {/*
+function PortfolioPage() {
+  const username = localStorage.getItem("username"); // or whatever key you're using
+  /*
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
   const navigate = useNavigate();
 
@@ -102,6 +105,11 @@ function PortfolioPage() {/*
       </h4>
     </div>
   );*/
+  return (
+    <>
+      <Header user={username} />
+    </>
+  );
 }
 
 export default PortfolioPage;

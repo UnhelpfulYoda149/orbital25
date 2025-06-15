@@ -1,34 +1,13 @@
 import { useNavigate } from "react-router-dom";
 //import { supabase } from "../App";
 import Button from "@mui/material/Button";
+import NavBar from "./NavBar";
 
 interface HeaderProps {
   user: string | null;
 }
 
-function Header({ user }: HeaderProps) { /*
-  const navigate = useNavigate();
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    navigate("/login");
-    if (error != null) {
-      console.error("There is an error when signing out..." + error);
-    }
-  }
-
-  return (
-    <header className="App-header">
-      <h1>
-        Welcome to <strong>TradeConnect</strong>
-        {user}
-      </h1>
-      {user && (
-        <Button variant="contained" onClick={signOut}>
-          Sign Out
-        </Button>
-      )}
-    </header>
-  );*/
+function Header({ user }: HeaderProps) {
   const navigate = useNavigate();
 
   function signOut() {
@@ -37,19 +16,31 @@ function Header({ user }: HeaderProps) { /*
     navigate("/login");
   }
 
-  return (
-    <header className="App-header">
-      <h1>
-        Welcome to <strong>TradeConnect</strong>
-        {user ? `, ${user}` : ""}
-      </h1>
-      {user && (
-        <Button variant="contained" onClick={signOut}>
-          Sign Out
-        </Button>
-      )}
-    </header>
-  );
+  if (!user) {
+    return (
+      <header className="App-header">
+        <h1>
+          Welcome to <strong>TradeConnect</strong>
+        </h1>
+      </header>
+    );
+  } else {
+    return (
+      <header className="App-header">
+        <>
+          <h5 style={{ position: "absolute", left: 50 }}>
+            Welcome to <strong>TradeConnect</strong>, {user}
+          </h5>
+          <NavBar />
+          <div style={{ position: "absolute", right: 50 }}>
+            <Button variant="contained" onClick={signOut}>
+              Sign Out
+            </Button>
+          </div>
+        </>
+      </header>
+    );
+  }
 }
 
 export default Header;
