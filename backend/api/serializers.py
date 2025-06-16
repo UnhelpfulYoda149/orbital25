@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from .models import Stock
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,3 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
         print(validated_data)
         user = User.objects.create_user(**validated_data)
         return user
+
+class StockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = "__all__"
+
+    
