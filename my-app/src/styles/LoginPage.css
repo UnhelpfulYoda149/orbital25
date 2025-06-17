@@ -1,0 +1,19 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;  /* prevents it from being too wide or too narrow */
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
