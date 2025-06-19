@@ -11,10 +11,7 @@ import StockCard from "../components/StockCard";
 //import { loadAllStockData } from "../App";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
-
-type Order = "buy" | "sell";
-type Instruction = "market" | "limit";
-type Expiry = "gtc" | "day";
+import { Order, Instruction, Expiry } from "../types";
 
 function OrderPage() {
   const location = useLocation();

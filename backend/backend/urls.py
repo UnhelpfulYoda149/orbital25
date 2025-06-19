@@ -16,12 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, StockViewSet
+from api.views import CreateUserView, StockViewSet, LiveStockViewSet, HistoryStockViewSet, StockNamesViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r"stock", StockViewSet, basename="stock")
+router.register(r"liveStock", LiveStockViewSet, basename="liveStock")
+router.register(r"historyStock", HistoryStockViewSet, basename="historyStock")
+router.register(r"stockNames", StockNamesViewSet, basename="stockNames")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
