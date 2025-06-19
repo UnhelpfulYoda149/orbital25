@@ -14,14 +14,14 @@ function PortfolioCard({ stock, numShares }: PortfolioCardProps) {
       <CardContent>
         <Typography variant="h5">{stock.name}</Typography>
         <Typography variant="body2" color="textSecondary">
-          ({stock.id})
+          ({stock.symbol})
         </Typography>
         <Typography variant="body1">Total units: {numShares}</Typography>
         <Typography variant="body1">
-          Price: {stock.lastTradePrice.toFixed(2)}
+          Price: {stock.lastTrade.toFixed(2)}
         </Typography>
         <Typography variant="body1">
-          Value: {(stock.lastTradePrice * numShares).toFixed(2)}
+          Value: {(stock.lastTrade * numShares).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

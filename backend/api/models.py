@@ -2,6 +2,7 @@ from django.db import models
 
 class HistoryStock(models.Model):
     symbol = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
     timestamp = models.DateTimeField()
     open = models.FloatField()
     lastTrade = models.FloatField()
@@ -20,6 +21,7 @@ class HistoryStock(models.Model):
 
 class LiveStock(models.Model):
     symbol = models.CharField(max_length=10, primary_key=True)
+    name = models.CharField(max_length=255)
     timestamp = models.DateTimeField()
     open = models.FloatField()
     lastTrade = models.FloatField()

@@ -8,18 +8,19 @@ interface StockCardProps {
 }
 
 function StockCard({ stock }: StockCardProps) {
+  console.log("StockCard received:", stock);
   return (
     <Card variant="outlined" sx={{ minWidth: 500 }}>
       <CardContent>
         <Typography variant="h5">{stock.name}</Typography>
         <Typography variant="body2" color="textSecondary">
-          ({stock.id})
+          ({stock.symbol})
         </Typography>
         <Typography variant="body1">
-          Last Trade Price: {stock.lastTradePrice.toFixed(2)}
+          Last Trade Price: {stock.lastTrade.toFixed(2)}
         </Typography>
         <Typography variant="body1">
-          Open Price: {stock.openPrice.toFixed(2)}
+          Open Price: {stock.open.toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

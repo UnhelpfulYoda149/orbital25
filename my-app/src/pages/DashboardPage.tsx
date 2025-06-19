@@ -30,7 +30,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function loadAllStockData() {
-      api.get<Stock[]>("/stock/").then((r) => {
+      api.get<Stock[]>("/liveStock/").then((r) => {
         setStocks(r.data);
       });
     }
@@ -103,7 +103,7 @@ export default function DashboardPage() {
         {stocks.map((stock) => (
           <Card variant="outlined">
             <CardActionArea onClick={() => handleClick(stock)}>
-              <StockCard key={stock.id} stock={stock} />
+              <StockCard key={stock.symbol} stock={stock} />
             </CardActionArea>
           </Card>
         ))}

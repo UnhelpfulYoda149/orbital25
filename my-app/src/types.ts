@@ -1,5 +1,6 @@
 export interface Stock {
   symbol: string; // e.g., "AAPL"
+  name: string;
   timestamp: Date; // e.g., "Apple Inc."
   open: number;
   lastTrade: number;
