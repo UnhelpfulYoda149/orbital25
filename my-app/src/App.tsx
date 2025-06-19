@@ -22,6 +22,7 @@ import RegisterPage from "./pages/RegisterPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import DashboardPage from "./pages/DashboardPage";
 import PortfolioPage from "./pages/PortfolioPage";
+import OrderPage from "./pages/OrderPage";
 
 function Logout() {
   localStorage.clear();
@@ -57,6 +58,14 @@ function App() {
         element={
           <ProtectedRoute>
             <PortfolioPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/order"
+        element={
+          <ProtectedRoute>
+            <OrderPage />
           </ProtectedRoute>
         }
       />

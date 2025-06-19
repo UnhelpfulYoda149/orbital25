@@ -9,7 +9,6 @@ import { getSymbolPrice, getOpenPrice, getCompanyName } from "../fetchPrices";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import api from "../api";
-import axios from "axios";
 
 const stockSymbols = [
   "AAPL",
@@ -23,19 +22,22 @@ const stockSymbols = [
   "INTC",
   "AMD",
 ];
-async function loadAllStockData() {
-  const res = axios
-    .get("http://localhost:8000/stock")
-    .then((res) => console.log("Success:", res.data))
-    .catch((err) => console.error("Error:", err));
-  console.log(res);
-}
 
 export default function DashboardPage() {
   const username = localStorage.getItem("username");
   const [stocks, setStocks] = useState<Stock[]>([]);
   const navigate = useNavigate();
-  loadAllStockData();
+
+  useEffect(() => {
+    async function loadAllStockData() {
+      api.get<Stock[]>("/stock/").then((r) => {
+        setStocks(r.data);
+      });
+    }
+
+    loadAllStockData();
+  }, []);
+
   // useEffect(() => {
   //   const updateStockData = async () => {
   //     const promises = stockSymbols.map(async (symbol) => {
@@ -85,31 +87,27 @@ export default function DashboardPage() {
   //   fetchData();
   // }, []);
 
-  // const handleClick = (stock: Stock) => {
-  //   navigate("/order", {
-  //     state: {
-  //       stock: stock,
-  //     },
-  //   });
-  // };
+  const handleClick = (stock: Stock) => {
+    navigate("/order", {
+      state: {
+        stock: stock,
+      },
+    });
+  };
 
-  // return (
-  //   <div>
-  //     <h1>Dashboard</h1>
-  //     <div className="grid grid-cols-2 gap-4">
-  //       {stocks.map((stock) => (
-  //         <Card variant="outlined">
-  //           <CardActionArea onClick={() => handleClick(stock)}>
-  //             <StockCard key={stock.id} stock={stock} />
-  //           </CardActionArea>
-  //         </Card>
-  //       ))}
-  //     </div>
-  //   </div>
-  // );
   return (
-    <>
+    <div>
       <Header user={username} />
-    </>
+      <h1>Dashboard</h1>
+      <div className="grid grid-cols-2 gap-4">
+        {stocks.map((stock) => (
+          <Card variant="outlined">
+            <CardActionArea onClick={() => handleClick(stock)}>
+              <StockCard key={stock.id} stock={stock} />
+            </CardActionArea>
+          </Card>
+        ))}
+      </div>
+    </div>
   );
 }

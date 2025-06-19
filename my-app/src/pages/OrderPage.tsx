@@ -10,15 +10,15 @@ import Button from "@mui/material/Button";
 import StockCard from "../components/StockCard";
 //import { loadAllStockData } from "../App";
 import { useLocation } from "react-router-dom";
+import Header from "../components/Header";
 
 type Order = "buy" | "sell";
 type Instruction = "market" | "limit";
 type Expiry = "gtc" | "day";
 
 function OrderPage() {
-  /*
   const location = useLocation();
-  const [stocks, setStocks] = useState<Stock[]>([]);
+  const username = localStorage.getItem("username");
   const [orderType, setOrderType] = useState<Order>("buy");
   const [instructionType, setInstructionType] = useState<Instruction>("limit");
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
@@ -27,15 +27,6 @@ function OrderPage() {
   const stockName: Stock = location.state.stock;
 
   console.log(location.state.stock);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      loadAllStockData().then((r) => {
-        setStocks(r);
-      });
-    };
-    fetchData();
-  }, []);
 
   const handleOrderChange = (
     event: MouseEvent<HTMLElement>,
@@ -90,131 +81,129 @@ function OrderPage() {
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(numShares);
-    const data = {
-      user_id: await supabase.auth
-        .getSession()
-        .then((val) => val.data.session?.user.id),
-      stock_id: stockName.id,
-      numShares: numShares,
-      purchasePrice: stockName.lastTradePrice,
-    };
-    if (orderType == "buy") {
-      const { error } = await supabase.from("Holdings").insert(data);
-      if (error) {
-        console.log(error);
-      }
-    } else {
-      const sellData = { ...data, numShares: -1 * numShares };
-      const { error } = await supabase.from("Holdings").insert(sellData);
-      if (error) {
-        console.log(error);
-      }
-    }
+    // const data = {
+    //   user_id: await supabase.auth
+    //     .getSession()
+    //     .then((val) => val.data.session?.user.id),
+    //   stock_id: stockName.id,
+    //   numShares: numShares,
+    //   purchasePrice: stockName.lastTradePrice,
+    // };
+    // if (orderType == "buy") {
+    //   const { error } = await supabase.from("Holdings").insert(data);
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    // } else {
+    //   const sellData = { ...data, numShares: -1 * numShares };
+    //   const { error } = await supabase.from("Holdings").insert(sellData);
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    // }
     //Reset to default form inputs
     resetForm();
   };
 
-  const defaultProps = {
-    options: stocks,
-    getOptionLabel: (option: Stock) => option.id + ": " + option.name,
-  };
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <form onSubmit={handleOrderSubmit}>
-        <Paper elevation={2}>
-          <StockCard stock={stockName} />
-        </Paper>
-        <Paper elevation={2}>
-          <p>Action</p>
-          <ToggleButtonGroup
-            color="info" // just playing ard
-            value={orderType}
-            exclusive
-            onChange={handleOrderChange}
-            aria-label="text alignment"
-          >
-            <ToggleButton value="buy" aria-label="left aligned">
-              Buy
-            </ToggleButton>
-            <ToggleButton value="sell" aria-label="right aligned">
-              Sell
-            </ToggleButton>
-            <TextField
-              id="numShares"
-              label="Number of Shares"
-              type="number"
-              value={numShares}
-              onChange={handleNumSharesChange}
-              slotProps={{
-                inputLabel: {
-                  shrink: true,
-                },
-              }}
-            />
-          </ToggleButtonGroup>
-        </Paper>
-        <Paper elevation={2}>
-          <p>Instructions</p>
-          <ToggleButtonGroup
-            color="info"
-            value={instructionType}
-            exclusive
-            onChange={handleInstructionChange}
-            aria-label="text alignment"
-          >
-            <ToggleButton value="limit" aria-label="left aligned">
-              Limit
-            </ToggleButton>
-            <ToggleButton value="market" aria-label="right aligned">
-              At Market Price
-            </ToggleButton>
-          </ToggleButtonGroup>
-          {instructionType === "limit" && (
-            <TextField
-              id="limit-price"
-              label="Price"
-              type="number"
-              value={orderPrice}
-              onChange={handlePriceChange}
-              slotProps={{
-                inputLabel: {
-                  shrink: true,
-                },
-              }}
-            />
-          )}
-        </Paper>
-        <Paper elevation={2}>
-          <p>Expiry</p>
-          <ToggleButtonGroup
-            color="info"
-            value={expiryType}
-            exclusive
-            onChange={handleExpiryChange}
-            aria-label="text alignment"
-          >
-            <ToggleButton value="gtc" aria-label="left aligned">
-              GTC
-            </ToggleButton>
-            <ToggleButton value="day" aria-label="right aligned">
-              Day Only
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Paper>
-        <Button variant="contained" type="submit">
-          Submit Order Ticket
-        </Button>
-      </form>
-    </div>
-  );*/
+    <>
+      <Header user={username} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <form onSubmit={handleOrderSubmit}>
+          <Paper elevation={2}>
+            <StockCard stock={stockName} />
+          </Paper>
+          <Paper elevation={2}>
+            <p>Action</p>
+            <ToggleButtonGroup
+              color="info" // just playing ard
+              value={orderType}
+              exclusive
+              onChange={handleOrderChange}
+              aria-label="text alignment"
+            >
+              <ToggleButton value="buy" aria-label="left aligned">
+                Buy
+              </ToggleButton>
+              <ToggleButton value="sell" aria-label="right aligned">
+                Sell
+              </ToggleButton>
+              <TextField
+                id="numShares"
+                label="Number of Shares"
+                type="number"
+                value={numShares}
+                onChange={handleNumSharesChange}
+                slotProps={{
+                  inputLabel: {
+                    shrink: true,
+                  },
+                }}
+              />
+            </ToggleButtonGroup>
+          </Paper>
+          <Paper elevation={2}>
+            <p>Instructions</p>
+            <ToggleButtonGroup
+              color="info"
+              value={instructionType}
+              exclusive
+              onChange={handleInstructionChange}
+              aria-label="text alignment"
+            >
+              <ToggleButton value="limit" aria-label="left aligned">
+                Limit
+              </ToggleButton>
+              <ToggleButton value="market" aria-label="right aligned">
+                At Market Price
+              </ToggleButton>
+            </ToggleButtonGroup>
+            {instructionType === "limit" && (
+              <TextField
+                id="limit-price"
+                label="Price"
+                type="number"
+                value={orderPrice}
+                onChange={handlePriceChange}
+                slotProps={{
+                  inputLabel: {
+                    shrink: true,
+                  },
+                }}
+              />
+            )}
+          </Paper>
+          <Paper elevation={2}>
+            <p>Expiry</p>
+            <ToggleButtonGroup
+              color="info"
+              value={expiryType}
+              exclusive
+              onChange={handleExpiryChange}
+              aria-label="text alignment"
+            >
+              <ToggleButton value="gtc" aria-label="left aligned">
+                GTC
+              </ToggleButton>
+              <ToggleButton value="day" aria-label="right aligned">
+                Day Only
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Paper>
+          <Button variant="contained" type="submit">
+            Submit Order Ticket
+          </Button>
+        </form>
+      </div>
+    </>
+  );
 }
 
 export default OrderPage;
