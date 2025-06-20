@@ -23,7 +23,7 @@ print(all_objects)
 
 import requests
 from django.core.management.base import BaseCommand
-from api.models import LiveStock
+from api.models import LiveStock, Stock
 from django.utils import timezone
 
 FINNHUB_API_KEY = "d0t6tapr01qid5qd4bb0d0t6tapr01qid5qd4bbg"
@@ -54,11 +54,13 @@ class Command(BaseCommand):
                 # Fetch company profile (to get name)
                 profile_url = f"{BASE_URL}/stock/profile2?symbol={symbol}&token={FINNHUB_API_KEY}"
                 profile_res = requests.get(profile_url).json()
+                company_name = profile_res.get("name", "Unknown")
 
+                # Update or create LiveStock entry
                 LiveStock.objects.update_or_create(
                     symbol=symbol,
                     defaults={
-                        "name": profile_res.get("name", "Unknown"),
+                        "name": company_name,
                         "timestamp": timezone.now(),
                         "open": quote_res.get("o", 0.0),
                         "lastTrade": quote_res.get("c", 0.0),
@@ -67,6 +69,12 @@ class Command(BaseCommand):
                         "close": quote_res.get("pc", 0.0),
                         "volume": quote_res.get("v", 0),
                     },
+                )
+
+                # Ensure Stock table has the matching record
+                Stock.objects.update_or_create(
+                    symbol=symbol,
+                    defaults={"name": company_name}
                 )
 
                 self.stdout.write(self.style.SUCCESS(f"Updated {symbol}"))

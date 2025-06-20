@@ -6,12 +6,11 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-//import { supabase } from "../App";
 import StockCard from "../components/StockCard";
-//import { loadAllStockData } from "../App";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import { Order, Instruction, Expiry } from "../types";
+import api from "../api";
 
 function OrderPage() {
   const location = useLocation();
@@ -77,28 +76,21 @@ function OrderPage() {
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(numShares);
-    // const data = {
-    //   user_id: await supabase.auth
-    //     .getSession()
-    //     .then((val) => val.data.session?.user.id),
-    //   stock_id: stockName.id,
-    //   numShares: numShares,
-    //   purchasePrice: stockName.lastTradePrice,
-    // };
-    // if (orderType == "buy") {
-    //   const { error } = await supabase.from("Holdings").insert(data);
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    // } else {
-    //   const sellData = { ...data, numShares: -1 * numShares };
-    //   const { error } = await supabase.from("Holdings").insert(sellData);
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    // }
-    //Reset to default form inputs
+    
+    try {
+      const res = await api.post("/api/place-order/", {
+        stock: stockName.symbol,
+        action: orderType,
+        quantity: numShares,
+        price: instructionType === "limit" ? orderPrice : stockName.lastTrade,
+      });
+      console.log(res.data);
+      alert("Order submitted!");
+    } catch (error) {
+      console.error("Order error:", error);
+      alert("Failed to submit order.");
+    }
+
     resetForm();
   };
 

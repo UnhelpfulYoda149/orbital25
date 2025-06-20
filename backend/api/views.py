@@ -3,18 +3,16 @@ from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
 from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Stock, LiveStock, HistoryStock, StockNames
+from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+
 
 # Create your views here
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
-
-class StockViewSet(viewsets.ModelViewSet):
-    queryset = Stock.objects.all()
-    serializer_class = StockSerializer
     permission_classes = [AllowAny]
 
 class LiveStockViewSet(viewsets.ModelViewSet):
@@ -27,7 +25,53 @@ class HistoryStockViewSet(viewsets.ModelViewSet):
     serializer_class = HistoryStockSerializer
     permission_classes = [AllowAny]
 
-class StockNamesViewSet(viewsets.ModelViewSet):
-    queryset = StockNames.objects.all()
-    serializer_class = StockNamesSerializer
-    permission_classes = [AllowAny]
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def place_order(request):
+    data = request.data
+    user = request.user
+
+    stock_symbol = data.get("stock")
+    action = data.get("action")
+    quantity = int(data.get("quantity"))
+    price = float(data.get("price"))
+
+    # Get Stock model instance (not LiveStock)
+    try:
+        stock = Stock.objects.get(symbol=stock_symbol)
+    except Stock.DoesNotExist:
+        return Response({"error": f"Stock '{stock_symbol}' does not exist in Stock table."}, status=404)
+
+    # Create Transaction
+    Transaction.objects.create(
+        user=user,
+        stock=stock,
+        action=action,
+        quantity=quantity,
+        price=price,
+    )
+
+    # Update Portfolio
+    portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 1, "average_price": 1})
+    if action == "buy":
+        if created:
+            portfolio.quantity = quantity
+            portfolio.average_price = price
+        else:
+            total_shares = portfolio.quantity + quantity
+            portfolio.average_price = (
+                (portfolio.average_price * portfolio.quantity + price * quantity) / total_shares
+            )
+            portfolio.quantity = total_shares
+        portfolio.save()
+
+    elif action == "sell":
+        if quantity > portfolio.quantity:
+            return Response({"error": "Not enough shares to sell."}, status=400)
+        portfolio.quantity -= quantity
+        if portfolio.quantity == 0:
+            portfolio.delete()
+        else:
+            portfolio.save()
+
+    return Response({'message': 'Order processed successfully'})
