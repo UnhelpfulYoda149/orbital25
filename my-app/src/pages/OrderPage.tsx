@@ -76,14 +76,18 @@ function OrderPage() {
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
-      const res = await api.post("/api/place-order/", {
-        stock: stockName.symbol,
-        action: orderType,
-        quantity: numShares,
-        price: instructionType === "limit" ? orderPrice : stockName.lastTrade,
-      });
+      const res = await api.post(
+        "/api/place-order/",
+        {
+          stock: stockName.symbol,
+          action: orderType,
+          quantity: numShares,
+          price: instructionType === "limit" ? orderPrice : stockName.lastTrade,
+        },
+        { withCredentials: true }
+      );
       console.log(res.data);
       alert("Order submitted!");
     } catch (error) {

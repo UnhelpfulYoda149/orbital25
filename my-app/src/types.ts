@@ -23,6 +23,12 @@ export interface StockTransaction {
   numShares: number; // Negative for sell, Postiive for buy
 }
 
+export interface PortfolioSummary {
+  stock: Stock;
+  quantity: number;
+  averagePrice: number;
+}
+
 export type Order = "buy" | "sell";
 export type Instruction = "market" | "limit";
 export type Expiry = "gtc" | "day";

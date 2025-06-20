@@ -71,7 +71,7 @@ class Portfolio(models.Model):
         unique_together = ("user", "stock")
 
     def __str__(self):
-        return f"{self.user.username} - {self.stock}: {self.quantity}"
+        return f"{self.user.username} - {self.stock}: {self.quantity} @ {self.average_price}"
     
 
 class StockNames(models.Model):

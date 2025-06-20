@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer, PortfolioSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock
 from rest_framework.decorators import api_view, permission_classes
@@ -25,6 +25,22 @@ class HistoryStockViewSet(viewsets.ModelViewSet):
     serializer_class = HistoryStockSerializer
     permission_classes = [AllowAny]
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def portfolio_request(request):
+    user = request.user
+    portfolio_ls = Portfolio.objects.filter(user=user)
+    serializer = PortfolioSerializer(portfolio_ls, many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def live_stock_request(request):
+    symbol = request.data.get("symbol")
+    stock = LiveStock.objects.get(symbol=symbol)
+    serializer = LiveStockSerializer(stock)
+    return Response(serializer.data)
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def place_order(request):
@@ -33,7 +49,7 @@ def place_order(request):
 
     stock_symbol = data.get("stock")
     action = data.get("action")
-    quantity = int(data.get("quantity"))
+    quantity = int(data.get("quantity")) #numStocks
     price = float(data.get("price"))
 
     # Get Stock model instance (not LiveStock)

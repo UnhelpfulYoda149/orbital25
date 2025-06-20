@@ -18,10 +18,10 @@ function PortfolioCard({ stock, numShares }: PortfolioCardProps) {
         </Typography>
         <Typography variant="body1">Total units: {numShares}</Typography>
         <Typography variant="body1">
-          Price: {stock.lastTrade.toFixed(2)}
+          Current Price: ${stock.lastTrade.toFixed(2)}
         </Typography>
         <Typography variant="body1">
-          Value: {(stock.lastTrade * numShares).toFixed(2)}
+          Value: ${(stock.lastTrade * numShares).toFixed(2)}
         </Typography>
       </CardContent>
     </Card>

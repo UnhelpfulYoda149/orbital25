@@ -6,11 +6,8 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-
-type PortfolioSummary = {
-  stock: Stock;
-  numShares: number;
-};
+import api from "../api";
+import { PortfolioSummary } from "../types";
 
 type StockSummary = {
   stock_id: string;
@@ -18,50 +15,49 @@ type StockSummary = {
 };
 
 function PortfolioPage() {
-  const username = localStorage.getItem("username"); // or whatever key you're using
-  /*
+  const username = localStorage.getItem("username");
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserStocks = async () => {
       // Find all stocks in database belonging to current user
-      const { data, error } = await supabase
-        .from("Holdings")
-        .select("stock_id, numShares")
-        .eq(
-          "user_id",
-          await supabase.auth
-            .getSession()
-            .then((val) => val.data.session?.user.id)
+      try {
+        const res = await api.get("/api/portfolio-request/", {
+          withCredentials: true,
+        });
+        const fetchedStocks = await Promise.all(
+          res.data.map(
+            async (obj: {
+              stock: string;
+              quantity: number;
+              average_price: number;
+            }) => {
+              const res2 = await api.post(
+                "/api/live-stock-request/",
+                {
+                  symbol: obj.stock,
+                },
+                { withCredentials: true }
+              );
+              const stock = res2.data;
+              return {
+                stock: stock,
+                quantity: obj.quantity,
+                averagePrice: obj.average_price,
+              };
+            }
+          )
         );
-      if (error) {
-        return [];
+        setStocks(fetchedStocks);
+        console.log(stocks);
+      } catch (error) {
+        console.error("Portfolio retrieval error:", error);
+        alert("Failed to retrieve your portfolio.");
       }
-
-      const results: StockSummary[] = data;
-      const acc: Record<string, number> = {};
-      for (const { stock_id, numShares } of results) {
-        acc[stock_id] = (acc[stock_id] || 0) + Number(numShares);
-      }
-
-      const portfolio: PortfolioSummary[] = await Promise.all(
-        Object.entries(acc).map(async ([stock_id, numShares]) => {
-          const { data, error } = await supabase
-            .from("Stocks")
-            .select()
-            .eq("id", stock_id);
-          if (error) {
-            throw error;
-          }
-          const result: Stock = data[0];
-          return { stock: result, numShares: numShares };
-        })
-      );
-      return portfolio;
     };
 
-    getUserStocks().then((stocks) => setStocks(stocks));
+    getUserStocks();
   }, []);
 
   const handleClick = (stock: Stock) => {
@@ -73,41 +69,36 @@ function PortfolioPage() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <h2>My Stocks</h2>
-      {stocks.map((portfolioStock) => {
-        return (
-          <Card variant="outlined">
-            <CardActionArea onClick={() => handleClick(portfolioStock.stock)}>
-              <PortfolioCard
-                stock={portfolioStock.stock}
-                numShares={portfolioStock.numShares}
-              />
-            </CardActionArea>
-          </Card>
-        );
-      })}
-      <h4>
-        Total Portfolio Value:{" $"}
-        {stocks
-          .reduce(
-            (acc, cur) => acc + cur.stock.lastTradePrice * cur.numShares,
-            0
-          )
-          .toFixed(2)}
-      </h4>
-    </div>
-  );*/
-  return (
     <>
       <Header user={username} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h2>My Stocks</h2>
+        {stocks.map((portfolioStock) => {
+          return (
+            <Card variant="outlined">
+              <CardActionArea onClick={() => handleClick(portfolioStock.stock)}>
+                <PortfolioCard
+                  stock={portfolioStock.stock}
+                  numShares={portfolioStock.quantity}
+                />
+              </CardActionArea>
+            </Card>
+          );
+        })}
+        <h4>
+          Total Portfolio Value:{" $"}
+          {stocks
+            .reduce((acc, cur) => acc + cur.stock.lastTrade * cur.quantity, 0)
+            .toFixed(2)}
+        </h4>
+      </div>
     </>
   );
 }

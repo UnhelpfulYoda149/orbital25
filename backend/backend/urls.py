@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order
+from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
