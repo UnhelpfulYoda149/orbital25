@@ -52,7 +52,7 @@ def place_order(request):
     )
 
     # Update Portfolio
-    portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 1, "average_price": 1})
+    portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
     if action == "buy":
         if created:
             portfolio.quantity = quantity
