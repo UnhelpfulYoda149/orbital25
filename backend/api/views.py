@@ -91,3 +91,10 @@ def place_order(request):
             portfolio.save()
 
     return Response({'message': 'Order processed successfully'})
+
+# Username check
+@api_view(["GET"])
+def check_username(request):
+    username = request.GET.get("username")
+    exists = User.objects.filter(username=username).exists()
+    return Response({"exists": exists})
