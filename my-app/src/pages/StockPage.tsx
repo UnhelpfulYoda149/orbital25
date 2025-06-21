@@ -4,13 +4,14 @@ import { Stock } from "../types";
 import { Card, Grid, Box } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import StockChange from "../components/StockChange";
 
 function StockPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
   const stock: Stock = location.state.stock;
-  const upArrow = "/uparrow.png";
 
   const handleClick = (stock: Stock) => {
     navigate("/order", {
@@ -36,23 +37,41 @@ function StockPage() {
             spacing={1}
             marginTop={2}
           >
-            <Box
-              component="img"
-              src={
-                process.env.PUBLIC_URL +
-                (stock.lastTrade - stock.open > 0
-                  ? "/uparrow.png"
-                  : "/downarrow.png")
-              }
-              sx={{ height: "1vw" }}
-            />
-            <Typography variant="body1">${stock.lastTrade}</Typography>
-            <Typography variant="body1">
-              {(((stock.lastTrade - stock.open) / stock.open) * 100).toFixed(2)}
-              %
-            </Typography>
+            <StockChange lastTrade={stock.lastTrade} open={stock.open} />
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            spacing={2}
+            marginTop={2}
+          >
+            <Grid container direction="column" alignItems="center" spacing={0}>
+              <Typography variant="body1">Open</Typography>
+              <Typography variant="body1">${stock.open.toFixed(2)}</Typography>
+            </Grid>
+            <Grid container direction="column" alignItems="center" spacing={0}>
+              <Typography variant="body1">Previous Close</Typography>
+              <Typography variant="body1">${stock.close.toFixed(2)}</Typography>
+            </Grid>
+            <Grid container direction="column" alignItems="center" spacing={0}>
+              <Typography variant="body1">Day Low</Typography>
+              <Typography variant="body1">${stock.low.toFixed(2)}</Typography>
+            </Grid>
+            <Grid container direction="column" alignItems="center" spacing={0}>
+              <Typography variant="body1">Day High</Typography>
+              <Typography variant="body1">${stock.high.toFixed(2)}</Typography>
+            </Grid>
           </Grid>
         </CardContent>
+        <Button
+          variant="contained"
+          onClick={() => handleClick(stock)}
+          size="small"
+          color="primary"
+        >
+          Order
+        </Button>
       </Card>
     </>
   );

@@ -1,7 +1,8 @@
 import { Stock } from "../types";
-import { Card } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import StockChange from "./StockChange";
 
 interface StockCardProps {
   stock: Stock;
@@ -16,12 +17,9 @@ function StockCard({ stock }: StockCardProps) {
         <Typography variant="body2" color="textSecondary">
           ({stock.symbol})
         </Typography>
-        <Typography variant="body1">
-          Last Trade Price: {stock.lastTrade.toFixed(2)}
-        </Typography>
-        <Typography variant="body1">
-          Open Price: {stock.open.toFixed(2)}
-        </Typography>
+        <Grid container direction="row" alignItems="center" spacing={1}>
+          <StockChange lastTrade={stock.lastTrade} open={stock.open} />
+        </Grid>
       </CardContent>
     </Card>
   );
