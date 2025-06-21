@@ -40,6 +40,10 @@ class PortfolioSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class TransactionSerializer(serializers.ModelSerializer):
+    stock_name = serializers.CharField(source="stock.name", read_only=True)
+    stock_symbol = serializers.CharField(source="stock.symbol", read_only=True)
+
     class Meta:
         model = Transaction
-        fields = '__all__'
+        fields = ["id", "action", "quantity", "price", "timestamp", "realized_pnl", "stock_name", "stock_symbol"]
+

@@ -1,33 +1,51 @@
 import "../styles/TransactionCard.css";
 
-type TransactionCardProps = {
+type TransactionProps = {
+  id: number;
   action: string;
-  stock: string;
   quantity: number;
   price: number;
   timestamp: string;
-  realizedPnl?: number;
+  realized_pnl: number | null;
+  stock_name: string;
+  stock_symbol: string;
 };
 
 function TransactionCard({
   action,
-  stock,
   quantity,
   price,
   timestamp,
-  realizedPnl,
-}: TransactionCardProps) {
+  realized_pnl,
+  stock_name,
+  stock_symbol,
+}: TransactionProps) {
+  const date = new Date(timestamp).toLocaleString();
+  const isBuy = action === "buy";
+
   return (
-    <div className="transaction-card">
-      <h3>{stock} - {action.toUpperCase()}</h3>
-      <p>Quantity: {quantity}</p>
-      <p>Price: ${price.toFixed(2)}</p>
-      <p>Time: {new Date(timestamp).toLocaleString()}</p>
-      {realizedPnl !== null && realizedPnl !== undefined && (
-        <p>Realized P&L: ${realizedPnl.toFixed(2)}</p>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        padding: "1rem",
+        marginBottom: "1rem",
+        backgroundColor: isBuy ? "#e6f7ff" : "#fff1f0",
+      }}
+    >
+      <h3 style={{ margin: "0", fontWeight: "bold" }}>{isBuy ? "Buy" : "Sell"}</h3>
+      <p style={{ marginTop: "0.2rem", marginBottom: "1rem"}}>
+        {stock_name} ({stock_symbol})
+      </p>
+      <p><strong>Quantity:</strong> {quantity}</p>
+      <p><strong>Price:</strong> ${price.toFixed(2)}</p>
+      <p><strong>Date:</strong> {date}</p>
+      {realized_pnl !== null && (
+        <p><strong>Realized P&L:</strong> ${realized_pnl.toFixed(2)}</p>
       )}
     </div>
   );
 }
 
 export default TransactionCard;
+

@@ -6,12 +6,14 @@ import Header from "../components/Header";
 type Transaction = {
   id: number;
   action: string;
-  stock: string;
   quantity: number;
   price: number;
   timestamp: string;
   realized_pnl: number | null;
+  stock_name: string;
+  stock_symbol: string;
 };
+
 
 function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
