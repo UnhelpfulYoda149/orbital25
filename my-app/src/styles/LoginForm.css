@@ -41,3 +41,18 @@
   margin: 8px 0;
   text-align: left;
 }
+
+.password-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.password-checklist li.valid {
+  color: green;
+}
+
+.password-checklist li.invalid {
+  color: red;
+}

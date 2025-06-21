@@ -18,20 +18,22 @@ function LoginForm({ route, method }: FormProps) {
 
   const name = method === "login" ? "Login" : "Register";
 
-  // ✅ Password validation
-  const isPasswordValid = (pw: string) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
-    return regex.test(pw);
-  };
+  // Individual password rules
+  const isLongEnough = password.length >= 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasDigit = /\d/.test(password);
+  const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+  const allValid =
+    isLongEnough && hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
 
-  // ✅ Backend username availability check
   const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
       const res = await api.post("/api/user/check-username/", { username });
-      return !res.data.available; // If not available, it means username exists
+      return !res.data.available;
     } catch (err) {
       console.error("Username check failed", err);
-      return false; // assume unique to avoid blocking
+      return false;
     }
   };
 
@@ -41,17 +43,14 @@ function LoginForm({ route, method }: FormProps) {
     setError(null);
 
     if (method === "register") {
-      // ✅ Validate inputs
       if (!username || !password) {
         setError("Username and password cannot be empty.");
         setLoading(false);
         return;
       }
 
-      if (!isPasswordValid(password)) {
-        setError(
-          "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character."
-        );
+      if (!allValid) {
+        setError("Please meet the password requirements.");
         setLoading(false);
         return;
       }
@@ -64,7 +63,6 @@ function LoginForm({ route, method }: FormProps) {
       }
     }
 
-    // ✅ Proceed with login/register
     try {
       const res = await api.post(route, { username, password });
 
@@ -83,18 +81,11 @@ function LoginForm({ route, method }: FormProps) {
       if (error.response) {
         const data = error.response.data;
 
-        // Specific error message from our API
         if (typeof data.error === "string") {
           errorMsg = data.error;
-        }
-
-        // Django REST Framework default field error
-        else if (data.username && Array.isArray(data.username)) {
+        } else if (data.username && Array.isArray(data.username)) {
           errorMsg = data.username[0];
-        }
-
-        // Fallback to first error if it's a dict of arrays
-        else if (typeof data === "object") {
+        } else if (typeof data === "object") {
           const firstKey = Object.keys(data)[0];
           if (Array.isArray(data[firstKey])) {
             errorMsg = data[firstKey][0];
@@ -128,7 +119,32 @@ function LoginForm({ route, method }: FormProps) {
         placeholder="Password"
       />
 
-      {error && <p className="form-error" style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+      {/* Password Checklist */}
+      {method === "register" && password && !allValid && (
+        <ul className="password-checklist">
+          <li className={isLongEnough ? "valid" : "invalid"}>
+            {isLongEnough ? "✅" : "❌"} At least 8 characters
+          </li>
+          <li className={hasUppercase ? "valid" : "invalid"}>
+            {hasUppercase ? "✅" : "❌"} At least 1 uppercase letter
+          </li>
+          <li className={hasLowercase ? "valid" : "invalid"}>
+            {hasLowercase ? "✅" : "❌"} At least 1 lowercase letter
+          </li>
+          <li className={hasDigit ? "valid" : "invalid"}>
+            {hasDigit ? "✅" : "❌"} At least 1 digit
+          </li>
+          <li className={hasSpecialChar ? "valid" : "invalid"}>
+            {hasSpecialChar ? "✅" : "❌"} At least 1 special character
+          </li>
+        </ul>
+      )}
+
+      {error && (
+        <p className="form-error" style={{ color: "red", marginTop: "0.5rem" }}>
+          {error}
+        </p>
+      )}
 
       <button className="form-button" type="submit" disabled={loading}>
         {loading ? "Please wait..." : name}
