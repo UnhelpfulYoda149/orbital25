@@ -78,8 +78,30 @@ function LoginForm({ route, method }: FormProps) {
         navigate("/login");
       }
     } catch (error: any) {
-      const errorMsg =
-        error.response?.data?.error || "An error occurred. Please try again.";
+      let errorMsg = "An error occurred. Please try again.";
+
+      if (error.response) {
+        const data = error.response.data;
+
+        // Specific error message from our API
+        if (typeof data.error === "string") {
+          errorMsg = data.error;
+        }
+
+        // Django REST Framework default field error
+        else if (data.username && Array.isArray(data.username)) {
+          errorMsg = data.username[0];
+        }
+
+        // Fallback to first error if it's a dict of arrays
+        else if (typeof data === "object") {
+          const firstKey = Object.keys(data)[0];
+          if (Array.isArray(data[firstKey])) {
+            errorMsg = data[firstKey][0];
+          }
+        }
+      }
+
       setError(errorMsg);
     } finally {
       setLoading(false);
