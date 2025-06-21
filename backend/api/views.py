@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer, PortfolioSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock
 from rest_framework.decorators import api_view, permission_classes
@@ -98,3 +98,11 @@ def check_username(request):
     username = request.GET.get("username")
     exists = User.objects.filter(username=username).exists()
     return Response({"exists": exists})
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_transactions(request):
+    user = request.user
+    transactions = Transaction.objects.filter(user=user).order_by('-timestamp')
+    serializer = TransactionSerializer(transactions, many=True)
+    return Response(serializer.data)
