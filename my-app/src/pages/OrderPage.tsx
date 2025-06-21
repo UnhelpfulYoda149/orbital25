@@ -22,8 +22,6 @@ function OrderPage() {
   const [orderPrice, setOrderPrice] = useState<number>(0);
   const stockName: Stock = location.state.stock;
 
-  console.log(location.state.stock);
-
   const handleOrderChange = (
     event: MouseEvent<HTMLElement>,
     newOrderType: Order

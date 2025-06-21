@@ -37,7 +37,7 @@ export default function DashboardPage() {
   }, []);
 
   const handleClick = (stock: Stock) => {
-    navigate("/order", {
+    navigate("/stock", {
       state: {
         stock: stock,
       },
