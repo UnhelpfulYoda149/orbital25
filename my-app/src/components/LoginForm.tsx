@@ -3,7 +3,6 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import "../styles/LoginForm.css";
-//import LoadingIndicator from "./LoadingIndicator";
 
 type FormProps = {
   route: string;
@@ -14,27 +13,74 @@ function LoginForm({ route, method }: FormProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const name = method === "login" ? "Login" : "Register";
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    setLoading(true);
-    e.preventDefault();
+  // ✅ Password validation
+  const isPasswordValid = (pw: string) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+    return regex.test(pw);
+  };
 
+  // ✅ Backend username availability check
+  const checkUsernameExists = async (username: string): Promise<boolean> => {
+    try {
+      const res = await api.post("/api/user/check-username/", { username });
+      return !res.data.available; // If not available, it means username exists
+    } catch (err) {
+      console.error("Username check failed", err);
+      return false; // assume unique to avoid blocking
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (method === "register") {
+      // ✅ Validate inputs
+      if (!username || !password) {
+        setError("Username and password cannot be empty.");
+        setLoading(false);
+        return;
+      }
+
+      if (!isPasswordValid(password)) {
+        setError(
+          "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character."
+        );
+        setLoading(false);
+        return;
+      }
+
+      const usernameTaken = await checkUsernameExists(username);
+      if (usernameTaken) {
+        setError("Username is already taken. Please choose another.");
+        setLoading(false);
+        return;
+      }
+    }
+
+    // ✅ Proceed with login/register
     try {
       const res = await api.post(route, { username, password });
-      console.log(res);
+
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         localStorage.setItem("username", username);
         navigate("/");
       } else {
+        alert("Registration successful!");
         navigate("/login");
       }
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      const errorMsg =
+        error.response?.data?.error || "An error occurred. Please try again.";
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -43,6 +89,7 @@ function LoginForm({ route, method }: FormProps) {
   return (
     <form onSubmit={handleSubmit} className="form-container">
       <h1>{name}</h1>
+
       <input
         className="form-input"
         type="text"
@@ -50,6 +97,7 @@ function LoginForm({ route, method }: FormProps) {
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
       />
+
       <input
         className="form-input"
         type="password"
@@ -57,8 +105,11 @@ function LoginForm({ route, method }: FormProps) {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button className="form-button" type="submit">
-        {name}
+
+      {error && <p className="form-error" style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+
+      <button className="form-button" type="submit" disabled={loading}>
+        {loading ? "Please wait..." : name}
       </button>
     </form>
   );
