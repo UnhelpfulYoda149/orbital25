@@ -30,7 +30,7 @@ function TransactionCard({
         borderRadius: "8px",
         padding: "1rem",
         marginBottom: "1rem",
-        backgroundColor: isBuy ? "#e6f7ff" : "#fff1f0",
+        backgroundColor: isBuy ? "#D1FFBD" : "#FFC2C2",
       }}
     >
       <h3 style={{ margin: "0", fontWeight: "bold" }}>{isBuy ? "Buy" : "Sell"}</h3>
