@@ -23,6 +23,8 @@ function OrderPage() {
   const [orderPrice, setOrderPrice] = useState<number>(0);
   const [error, setError] = useState<string>(""); 
   const [portfolioQty, setPortfolioQty] = useState<number>(0); 
+  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [watchlist, setWatchlist] = useState<string[]>([]);
   const stock: Stock = location.state.stock;
 
   const fetchPortfolio = async () => {
@@ -40,6 +42,33 @@ function OrderPage() {
   useEffect(() => {
     fetchPortfolio();
     setOrderPrice(Number(stock.lastTrade.toFixed(2))); 
+  }, []);
+
+  const fetchWatchlist = async () => {
+    try {
+      const res = await api.get("/user/watchlist/");
+      console.log(res);
+      const symbols: string[] = res.data.map((item: any) => item.stock);
+      setWatchlist(symbols);
+
+      const promises = symbols.map((symbol) =>
+        api.post(
+          "/live-stock-request/",
+          { symbol: symbol },
+          { withCredentials: true }
+        )
+      );
+
+      const detailedRes = await Promise.all(promises);
+      const detailedStocks = detailedRes.map((r) => r.data);
+      setStocks(detailedStocks);
+    } catch (err) {
+      console.error("Failed to fetch watchlist", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWatchlist();
   }, []);
 
   const handleOrderChange = (_: MouseEvent<HTMLElement>, newOrderType: Order) => {
@@ -126,8 +155,8 @@ function OrderPage() {
           <Paper elevation={2} sx={{ padding: 2, marginBottom: 2 }}>
             <StockCard
               stock={stock}
-              isWatchlisted={false}
-              onToggleWatchlist={() => {}}
+              isWatchlisted={watchlist.includes(stock.symbol)}
+              onToggleWatchlist={fetchWatchlist}
             />
             <Typography variant="body2" color="text.secondary">
               You currently hold: <strong>{portfolioQty}</strong> shares of {stock.symbol}
