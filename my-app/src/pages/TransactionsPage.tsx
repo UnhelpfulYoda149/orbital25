@@ -14,7 +14,6 @@ type Transaction = {
   stock_symbol: string;
 };
 
-
 function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const username = localStorage.getItem("username");
@@ -22,10 +21,11 @@ function TransactionsPage() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const res = await api.get("/api/user/transactions/");
+        const res = await api.get("/user/transactions/");
         // Sort by timestamp DESC
-        const sorted = res.data.sort((a: Transaction, b: Transaction) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        const sorted = res.data.sort(
+          (a: Transaction, b: Transaction) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
         setTransactions(sorted);
       } catch (err) {
@@ -44,9 +44,7 @@ function TransactionsPage() {
         {transactions.length === 0 ? (
           <p>No transactions found.</p>
         ) : (
-          transactions.map((tx) => (
-            <TransactionCard key={tx.id} {...tx} />
-          ))
+          transactions.map((tx) => <TransactionCard key={tx.id} {...tx} />)
         )}
       </div>
     </>

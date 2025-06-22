@@ -27,7 +27,7 @@ function StockCard({
     e.stopPropagation(); // Prevent navigation
 
     await api.post(
-      "/api/user/watchlist/toggle/",
+      "/user/watchlist/toggle/",
       { symbol: stock.symbol },
       { withCredentials: true }
     );

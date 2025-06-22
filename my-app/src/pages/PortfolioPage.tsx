@@ -23,7 +23,7 @@ function PortfolioPage() {
     const getUserStocks = async () => {
       // Find all stocks in database belonging to current user
       try {
-        const res = await api.get("/api/portfolio-request/", {
+        const res = await api.get("/portfolio-request/", {
           withCredentials: true,
         });
         const fetchedStocks = await Promise.all(
@@ -34,7 +34,7 @@ function PortfolioPage() {
               average_price: number;
             }) => {
               const res2 = await api.post(
-                "/api/live-stock-request/",
+                "/live-stock-request/",
                 {
                   symbol: obj.stock,
                 },

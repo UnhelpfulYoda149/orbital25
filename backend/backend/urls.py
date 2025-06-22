@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet
+from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
@@ -31,5 +31,13 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth", include("rest_framework.urls")),
     path("", include(router.urls)),
-    path('api/', include('api.urls')),
+    # path('api/', include('api.urls')),
+    path('place-order/', place_order, name='place-order'),
+    path('portfolio-request/', portfolio_request, name='portfolio-request'),
+    path('live-stock-request/', live_stock_request, name='live-stock-request'),
+    path("user/check-username/", check_username, name="check_username"),
+    path("user/transactions/", get_transactions, name="get_transactions"),
+    path("user/watchlist/", get_watchlist, name="get_watchlist"),
+    path("user/watchlist/toggle/", toggle_watchlist, name="toggle_watchlist"),
+    path("search-stock/", search_stock, name="search_stock"),
 ]

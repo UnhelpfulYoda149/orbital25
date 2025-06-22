@@ -29,7 +29,7 @@ function LoginForm({ route, method }: FormProps) {
 
   const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
-      const res = await api.post("/api/user/check-username/", { username });
+      const res = await api.post("/user/check-username/", { username });
       return !res.data.available;
     } catch (err) {
       console.error("Username check failed", err);

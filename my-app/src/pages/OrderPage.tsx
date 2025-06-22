@@ -25,7 +25,7 @@ function OrderPage() {
 
   const fetchWatchlist = async () => {
     try {
-      const res = await api.get("/api/user/watchlist/");
+      const res = await api.get("/user/watchlist/");
       console.log(res);
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
@@ -93,7 +93,7 @@ function OrderPage() {
 
     try {
       const res = await api.post(
-        "/api/place-order/",
+        "/place-order/",
         {
           stock: stock.symbol,
           action: orderType,
