@@ -48,19 +48,27 @@ function StockPage() {
           >
             <Grid container direction="column" alignItems="center" spacing={0}>
               <Typography variant="body1">Open</Typography>
-              <Typography variant="body1">${stock.open.toFixed(2)}</Typography>
+              <Typography variant="body1">
+                ${stock.open !== undefined ? stock.open.toFixed(2) : "N/A"}
+              </Typography>
             </Grid>
             <Grid container direction="column" alignItems="center" spacing={0}>
               <Typography variant="body1">Previous Close</Typography>
-              <Typography variant="body1">${stock.close.toFixed(2)}</Typography>
+              <Typography variant="body1">
+                ${stock.close !== undefined ? stock.close.toFixed(2) : "N/A"}
+              </Typography>
             </Grid>
             <Grid container direction="column" alignItems="center" spacing={0}>
               <Typography variant="body1">Day Low</Typography>
-              <Typography variant="body1">${stock.low.toFixed(2)}</Typography>
+              <Typography variant="body1">
+                ${stock.low !== undefined ? stock.low.toFixed(2) : "N/A"}
+              </Typography>
             </Grid>
             <Grid container direction="column" alignItems="center" spacing={0}>
               <Typography variant="body1">Day High</Typography>
-              <Typography variant="body1">${stock.high.toFixed(2)}</Typography>
+              <Typography variant="body1">
+                ${stock.high !== undefined ? stock.high.toFixed(2) : "N/A"}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>

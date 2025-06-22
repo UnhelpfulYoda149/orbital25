@@ -5,6 +5,7 @@ const apiUrl = process.env.REACT_APP_API_URL || "/choreo-apis/awbo/backend/rest-
 
 const api = axios.create({
   baseURL: apiUrl,
+  withCredentials: true, // for session cookie auth
 });
 
 api.interceptors.request.use(
