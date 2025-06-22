@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, StockNamesSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist
 from rest_framework.decorators import api_view, permission_classes

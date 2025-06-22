@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Stock, LiveStock, HistoryStock, StockNames, Portfolio, Transaction, Watchlist
+from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,11 +27,6 @@ class LiveStockSerializer(serializers.ModelSerializer):
 class HistoryStockSerializer(serializers.ModelSerializer):
     class Meta:
         model = HistoryStock
-        fields = "__all__"
-
-class StockNamesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StockNames
         fields = "__all__"
 
 class PortfolioSerializer(serializers.ModelSerializer):

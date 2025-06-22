@@ -20,7 +20,7 @@ function OrderPage() {
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
   const [numShares, setNumShares] = useState<number>(0);
   const [orderPrice, setOrderPrice] = useState<number>(0);
-  const stockName: Stock = location.state.stock;
+  const stock: Stock = location.state.stock;
   const [watchlist, setWatchlist] = useState<string[]>([]);
 
   const fetchWatchlist = async () => {
@@ -95,10 +95,10 @@ function OrderPage() {
       const res = await api.post(
         "/api/place-order/",
         {
-          stock: stockName.symbol,
+          stock: stock.symbol,
           action: orderType,
           quantity: numShares,
-          price: instructionType === "limit" ? orderPrice : stockName.lastTrade,
+          price: instructionType === "limit" ? orderPrice : stock.lastTrade,
         },
         { withCredentials: true }
       );
@@ -126,8 +126,8 @@ function OrderPage() {
         <form onSubmit={handleOrderSubmit}>
           <Paper elevation={2}>
             <StockCard
-              stock={stockName}
-              isWatchlisted={watchlist.includes(stockName.symbol)}
+              stock={stock}
+              isWatchlisted={watchlist.includes(stock.symbol)}
               onToggleWatchlist={fetchWatchlist}
             />
           </Paper>
