@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import api from "../api";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { watch } from "fs";
 
 export default function DashboardPage() {
   const username = localStorage.getItem("username");
@@ -83,21 +84,6 @@ export default function DashboardPage() {
         </Button>
       </div>
 
-      <h2>Watchlist</h2>
-      <div className="grid grid-cols-2 gap-4">
-        {stocks.map((stock) => (
-          <Card key={stock.symbol} variant="outlined">
-            <CardActionArea onClick={() => handleClick(stock)}>
-              <StockCard
-                stock={stock}
-                isWatchlisted={watchlist.includes(stock.symbol)}
-                onToggleWatchlist={fetchWatchlist}
-              />
-            </CardActionArea>
-          </Card>
-        ))}
-      </div>
-
       {results.length > 0 && (
         <>
           <h2>Search Results</h2>
@@ -116,6 +102,21 @@ export default function DashboardPage() {
           </div>
         </>
       )}
+      <h2>Watchlist</h2>
+      {watchlist.length == 0 && <h3>Your Watchlist is empty :(</h3>}
+      <div className="grid grid-cols-2 gap-4">
+        {stocks.map((stock) => (
+          <Card key={stock.symbol} variant="outlined">
+            <CardActionArea onClick={() => handleClick(stock)}>
+              <StockCard
+                stock={stock}
+                isWatchlisted={watchlist.includes(stock.symbol)}
+                onToggleWatchlist={fetchWatchlist}
+              />
+            </CardActionArea>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

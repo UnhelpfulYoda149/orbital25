@@ -128,6 +128,7 @@ function OrderPage() {
             <StockCard
               stock={stockName}
               isWatchlisted={watchlist.includes(stockName.symbol)}
+              onToggleWatchlist={fetchWatchlist}
             />
           </Paper>
           <Paper elevation={2}>

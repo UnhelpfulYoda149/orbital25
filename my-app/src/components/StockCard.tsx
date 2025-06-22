@@ -12,8 +12,8 @@ import { useNavigate } from "react-router-dom";
 
 interface StockCardProps {
   stock: Stock;
-  isWatchlisted?: boolean;
-  onToggleWatchlist?: () => void;
+  isWatchlisted: boolean;
+  onToggleWatchlist: () => void;
 }
 
 function StockCard({
@@ -31,7 +31,7 @@ function StockCard({
       { symbol: stock.symbol },
       { withCredentials: true }
     );
-    onToggleWatchlist?.();
+    onToggleWatchlist();
   };
 
   return (
