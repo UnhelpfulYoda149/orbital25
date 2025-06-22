@@ -21,6 +21,22 @@ function OrderPage() {
   const [numShares, setNumShares] = useState<number>(0);
   const [orderPrice, setOrderPrice] = useState<number>(0);
   const stockName: Stock = location.state.stock;
+  const [watchlist, setWatchlist] = useState<string[]>([]);
+
+  const fetchWatchlist = async () => {
+    try {
+      const res = await api.get("/api/user/watchlist/");
+      console.log(res);
+      const symbols: string[] = res.data.map((item: any) => item.stock);
+      setWatchlist(symbols);
+    } catch (err) {
+      console.error("Failed to fetch watchlist", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWatchlist();
+  }, []);
 
   const handleOrderChange = (
     event: MouseEvent<HTMLElement>,
@@ -109,7 +125,10 @@ function OrderPage() {
       >
         <form onSubmit={handleOrderSubmit}>
           <Paper elevation={2}>
-            <StockCard stock={stockName} />
+            <StockCard
+              stock={stockName}
+              isWatchlisted={watchlist.includes(stockName.symbol)}
+            />
           </Paper>
           <Paper elevation={2}>
             <p>Action</p>

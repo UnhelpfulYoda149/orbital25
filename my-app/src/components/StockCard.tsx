@@ -7,6 +7,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState, useEffect } from "react";
 import api from "../api";
+import CardActionArea from "@mui/material/CardActionArea";
+import { useNavigate } from "react-router-dom";
 
 interface StockCardProps {
   stock: Stock;
@@ -14,9 +16,21 @@ interface StockCardProps {
   onToggleWatchlist?: () => void;
 }
 
-function StockCard({ stock, isWatchlisted, onToggleWatchlist }: StockCardProps) {
-  const handleWatchlistToggle = (e: React.MouseEvent) => {
-    e.stopPropagation(); // ⛔ Prevent navigation
+function StockCard({
+  stock,
+  isWatchlisted,
+  onToggleWatchlist,
+}: StockCardProps) {
+  const navigate = useNavigate();
+
+  const handleWatchlistToggle = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation
+
+    await api.post(
+      "/api/user/watchlist/toggle/",
+      { symbol: stock.symbol },
+      { withCredentials: true }
+    );
     onToggleWatchlist?.();
   };
 
@@ -33,7 +47,6 @@ function StockCard({ stock, isWatchlisted, onToggleWatchlist }: StockCardProps) 
             <FavoriteBorderIcon />
           )}
         </IconButton>
-
         <Typography variant="h5">{stock.name}</Typography>
         <Typography variant="body2" color="textSecondary">
           ({stock.symbol})

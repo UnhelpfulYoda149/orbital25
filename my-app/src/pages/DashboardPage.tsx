@@ -20,12 +20,16 @@ export default function DashboardPage() {
   const fetchWatchlist = async () => {
     try {
       const res = await api.get("/api/user/watchlist/");
-      const symbols: string[] = res.data.map((item: any) => item.stock.symbol);
+      console.log(res);
+      const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
 
       const promises = symbols.map((symbol) =>
-        api.post("/api/live-stock-request/", 
-          { symbol }, { withCredentials: true})
+        api.post(
+          "/api/live-stock-request/",
+          { symbol: symbol },
+          { withCredentials: true }
+        )
       );
 
       const detailedRes = await Promise.all(promises);
@@ -74,7 +78,9 @@ export default function DashboardPage() {
           onChange={(e) => setSearch(e.target.value)}
           style={{ marginRight: "0.5rem" }}
         />
-        <Button variant="contained" onClick={handleSearch}>Search</Button>
+        <Button variant="contained" onClick={handleSearch}>
+          Search
+        </Button>
       </div>
 
       <h2>Watchlist</h2>
