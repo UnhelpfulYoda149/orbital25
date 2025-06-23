@@ -149,6 +149,7 @@ function OrderPage() {
       alert("Order submitted!");
       resetForm();
       fetchPortfolio();
+      fetchMoney();
     } catch (error) {
       console.error("Order error:", error);
       alert("Failed to submit order.");

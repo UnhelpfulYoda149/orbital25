@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 //import { supabase } from "../App";
 import Button from "@mui/material/Button";
 import NavBar from "./NavBar";
+import { Grid } from "@mui/material";
 
 interface HeaderProps {
   user: string | null;
@@ -29,13 +30,16 @@ function Header({ user }: HeaderProps) {
       <header className="App-header">
         <>
           <h5 style={{ position: "absolute", left: 50 }}>
-            Welcome to <strong>TradeConnect</strong>, {user}
+            <strong>TradeConnect</strong>
           </h5>
           <NavBar />
           <div style={{ position: "absolute", right: 50 }}>
-            <Button variant="contained" onClick={signOut}>
-              Sign Out
-            </Button>
+            <Grid container direction="row" alignItems="center" spacing={1}>
+              <h5>{user}</h5>
+              <Button variant="contained" onClick={signOut}>
+                Sign Out
+              </Button>
+            </Grid>
           </div>
         </>
       </header>

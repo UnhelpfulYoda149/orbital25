@@ -1,76 +1,40 @@
-import { ThemeProvider } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
-import { createTheme } from "@mui/material/styles";
-import { blue } from "@mui/material/colors";
+import { useLocation, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: blue[300],
-      main: blue[500],
-      dark: blue[700],
-    },
-  },
-});
+const pages = ["home", "dashboard", "portfolio", "transactions", "friends"];
 
 function NavBar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const selectedPage = location.pathname.slice(1);
+
+  const onPageSelect = (page: string) => {
+    navigate("/" + page);
+  };
+
   return (
     <nav>
-      <ThemeProvider theme={theme}>
-        <ToggleButtonGroup exclusive>
-          
-          <ToggleButton value="home">
-            <NavLink
-              to="/"
-              style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
-                color: isActive ? "blue" : "black",
-              })}
-            >
-              Home
-            </NavLink>
-          </ToggleButton>
-
-          <ToggleButton value="dashboard">
-            <NavLink
-              to="/dashboard"
-              style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
-                color: isActive ? "blue" : "black",
-              })}
-            >
-              Dashboard
-            </NavLink>
-          </ToggleButton>
-
-          <ToggleButton value="portfolio">
-            <NavLink
-              to="/portfolio"
-              style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
-                color: isActive ? "blue" : "black",
-              })}
-            >
-              Portfolio
-            </NavLink>
-          </ToggleButton>
-
-          <ToggleButton value="transactions">
-            <NavLink
-              to="/transactions"
-              style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
-                color: isActive ? "blue" : "black",
-              })}
-            >
-              Transactions
-            </NavLink>
-          </ToggleButton>
-
-        </ToggleButtonGroup>
-      </ThemeProvider>
+      <Box sx={{ flexGrow: 1, display: "flex" }}>
+        {pages.map((page) => (
+          <Button
+            key={page}
+            onClick={() => onPageSelect(page)}
+            sx={{
+              my: 2,
+              color: selectedPage === page ? "white" : "grey",
+              fontWeight: selectedPage === page ? "bold" : "normal",
+              "&:hover": {
+                opacity: 1,
+                color: "primary.main",
+              },
+              display: "block",
+            }}
+          >
+            {page}
+          </Button>
+        ))}
+      </Box>
     </nav>
   );
 }

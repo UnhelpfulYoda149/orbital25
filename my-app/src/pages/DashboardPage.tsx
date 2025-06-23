@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import api from "../api";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { Grid } from "@mui/material";
 
 export default function DashboardPage() {
   const username = localStorage.getItem("username");
@@ -67,55 +68,56 @@ export default function DashboardPage() {
   };
 
   return (
-    <div>
+    <>
       <Header user={username} />
-      <h1>Dashboard</h1>
-
-      <div style={{ marginBottom: "1rem" }}>
-        <TextField
-          label="Search Stocks"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ marginRight: "0.5rem" }}
-        />
-        <Button variant="contained" onClick={handleSearch}>
-          Search
-        </Button>
+      <div style={{ padding: "1rem", maxWidth: "1000px", margin: "auto" }}>
+        <h1>Dashboard</h1>
+        <h2>Search</h2>
+        <Grid container direction="row" alignItems="center" spacing={1}>
+          <TextField
+            label="Search Stocks"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ marginRight: "0.5rem" }}
+          />
+          <Button variant="contained" onClick={handleSearch}>
+            Search
+          </Button>
+        </Grid>
+        {results.length > 0 && (
+          <>
+            <h2>Search Results</h2>
+            <Grid container direction="column" alignItems="center" spacing={1}>
+              {results.map((stock) => (
+                <Card key={stock.symbol} variant="outlined">
+                  <CardActionArea onClick={() => handleClick(stock)}>
+                    <StockCard
+                      stock={stock}
+                      isWatchlisted={watchlist.includes(stock.symbol)}
+                      onToggleWatchlist={fetchWatchlist}
+                    />
+                  </CardActionArea>
+                </Card>
+              ))}
+            </Grid>
+          </>
+        )}
+        <h2>Watchlist</h2>
+        {watchlist.length == 0 && <h3>Your Watchlist is empty :(</h3>}
+        <div className="grid grid-cols-2 gap-4">
+          {stocks.map((stock) => (
+            <Card key={stock.symbol} variant="outlined">
+              <CardActionArea onClick={() => handleClick(stock)}>
+                <StockCard
+                  stock={stock}
+                  isWatchlisted={watchlist.includes(stock.symbol)}
+                  onToggleWatchlist={fetchWatchlist}
+                />
+              </CardActionArea>
+            </Card>
+          ))}
+        </div>
       </div>
-
-      {results.length > 0 && (
-        <>
-          <h2>Search Results</h2>
-          <div className="grid grid-cols-2 gap-4">
-            {results.map((stock) => (
-              <Card key={stock.symbol} variant="outlined">
-                <CardActionArea onClick={() => handleClick(stock)}>
-                  <StockCard
-                    stock={stock}
-                    isWatchlisted={watchlist.includes(stock.symbol)}
-                    onToggleWatchlist={fetchWatchlist}
-                  />
-                </CardActionArea>
-              </Card>
-            ))}
-          </div>
-        </>
-      )}
-      <h2>Watchlist</h2>
-      {watchlist.length == 0 && <h3>Your Watchlist is empty :(</h3>}
-      <div className="grid grid-cols-2 gap-4">
-        {stocks.map((stock) => (
-          <Card key={stock.symbol} variant="outlined">
-            <CardActionArea onClick={() => handleClick(stock)}>
-              <StockCard
-                stock={stock}
-                isWatchlisted={watchlist.includes(stock.symbol)}
-                onToggleWatchlist={fetchWatchlist}
-              />
-            </CardActionArea>
-          </Card>
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

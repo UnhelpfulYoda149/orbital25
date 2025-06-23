@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile
+from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
@@ -178,3 +178,37 @@ def user_money(request):
     user_profile = UserProfile.objects.get(user=user)
     serializer = UserProfileSerializer(user_profile)
     return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def search_user(request):
+    query = request.GET.get("query", "").upper()
+    if not query:
+        return Response([])
+
+    matches = User.objects.filter(Q(username__icontains=query))
+
+    serializer = UserSerializer(matches, many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def send_friend_request(request):
+    user = request.user
+    data = request.data.get("username")
+
+    target = User.objects.get(username=data)
+
+    FriendRequest.objects.create(from_user=user, to_user=target)
+
+    return Response({"status": "request sent"})
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_sent_requests(request):
+    user = request.user
+
+    requests_list = FriendRequest.objects.filter(from_user=user)
+    res = [req.to_user.username for req in requests_list]
+
+    return Response(res)

@@ -43,3 +43,8 @@ export interface TradeOrder {
   instruction: Instruction;
   expiry: Expiry;
 }
+
+export interface Friend {
+  username: string;
+  timestamp: string;
+}
