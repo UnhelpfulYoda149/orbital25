@@ -17,46 +17,58 @@ type StockSummary = {
 function PortfolioPage() {
   const username = localStorage.getItem("username");
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
+  const [money, setMoney] = useState<number>(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUserStocks = async () => {
-      // Find all stocks in database belonging to current user
-      try {
-        const res = await api.get("/portfolio-request/", {
-          withCredentials: true,
-        });
-        const fetchedStocks = await Promise.all(
-          res.data.map(
-            async (obj: {
-              stock: string;
-              quantity: number;
-              average_price: number;
-            }) => {
-              const res2 = await api.post(
-                "/live-stock-request/",
-                {
-                  symbol: obj.stock,
-                },
-                { withCredentials: true }
-              );
-              const stock = res2.data;
-              return {
-                stock: stock,
-                quantity: obj.quantity,
-                averagePrice: obj.average_price,
-              };
-            }
-          )
-        );
-        setStocks(fetchedStocks);
-        console.log(stocks);
-      } catch (error) {
-        console.error("Portfolio retrieval error:", error);
-        alert("Failed to retrieve your portfolio.");
-      }
-    };
+  const getUserStocks = async () => {
+    // Find all stocks in database belonging to current user
+    try {
+      const res = await api.get("/portfolio-request/", {
+        withCredentials: true,
+      });
+      const fetchedStocks = await Promise.all(
+        res.data.map(
+          async (obj: {
+            stock: string;
+            quantity: number;
+            average_price: number;
+          }) => {
+            const res2 = await api.post(
+              "/live-stock-request/",
+              {
+                symbol: obj.stock,
+              },
+              { withCredentials: true }
+            );
+            const stock = res2.data;
+            return {
+              stock: stock,
+              quantity: obj.quantity,
+              averagePrice: obj.average_price,
+            };
+          }
+        )
+      );
+      setStocks(fetchedStocks);
+    } catch (error) {
+      console.error("Portfolio retrieval error:", error);
+      alert("Failed to retrieve your portfolio.");
+    }
+  };
 
+  const getUserMoney = async () => {
+    try {
+      const res = await api.get("/user/money/", {
+        withCredentials: true,
+      });
+      setMoney(res.data.money);
+    } catch (err) {
+      console.error("Failed to fetch cash data", err);
+    }
+  };
+
+  useEffect(() => {
+    getUserMoney();
     getUserStocks();
   }, []);
 
@@ -68,6 +80,7 @@ function PortfolioPage() {
     });
   };
 
+  console.log(typeof money);
   return (
     <>
       <Header user={username} />
@@ -92,11 +105,22 @@ function PortfolioPage() {
             </Card>
           );
         })}
-        <h4>
-          Total Portfolio Value:{" $"}
+        <h3>
+          Total Stock Value: $
           {stocks
             .reduce((acc, cur) => acc + cur.stock.lastTrade * cur.quantity, 0)
             .toFixed(2)}
+        </h3>
+        <h3>Cash Holdings: ${money.toFixed(2)}</h3>
+        <h4>
+          Total Portfolio Value:{" $"}
+          {(
+            money +
+            stocks.reduce(
+              (acc, cur) => acc + cur.stock.lastTrade * cur.quantity,
+              0
+            )
+          ).toFixed(2)}
         </h4>
       </div>
     </>

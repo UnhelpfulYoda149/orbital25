@@ -19,13 +19,13 @@ function OrderPage() {
   const [orderType, setOrderType] = useState<Order>("buy");
   const [instructionType, setInstructionType] = useState<Instruction>("limit");
   const [expiryType, setExpiryType] = useState<Expiry>("gtc");
-  const [numShares, setNumShares] = useState<number>(1); 
+  const [numShares, setNumShares] = useState<number>(1);
   const [orderPrice, setOrderPrice] = useState<number>(0);
-  const [error, setError] = useState<string>(""); 
-  const [portfolioQty, setPortfolioQty] = useState<number>(0); 
-  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [error, setError] = useState<string>("");
+  const [portfolioQty, setPortfolioQty] = useState<number>(0);
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const stock: Stock = location.state.stock;
+  const [money, setMoney] = useState<number>(0);
 
   const fetchPortfolio = async () => {
     try {
@@ -39,10 +39,14 @@ function OrderPage() {
     }
   };
 
-  useEffect(() => {
-    fetchPortfolio();
-    setOrderPrice(Number(stock.lastTrade.toFixed(2))); 
-  }, []);
+  const fetchMoney = async () => {
+    try {
+      const res = await api.get("user/money/", { withCredentials: true });
+      setMoney(res.data.money);
+    } catch (err) {
+      console.error("Failed to fetch cash data", err);
+    }
+  };
 
   const fetchWatchlist = async () => {
     try {
@@ -50,18 +54,6 @@ function OrderPage() {
       console.log(res);
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
-
-      const promises = symbols.map((symbol) =>
-        api.post(
-          "/live-stock-request/",
-          { symbol: symbol },
-          { withCredentials: true }
-        )
-      );
-
-      const detailedRes = await Promise.all(promises);
-      const detailedStocks = detailedRes.map((r) => r.data);
-      setStocks(detailedStocks);
     } catch (err) {
       console.error("Failed to fetch watchlist", err);
     }
@@ -69,16 +61,25 @@ function OrderPage() {
 
   useEffect(() => {
     fetchWatchlist();
+    fetchPortfolio();
+    fetchMoney();
+    setOrderPrice(Number(stock.lastTrade.toFixed(2)));
   }, []);
 
-  const handleOrderChange = (_: MouseEvent<HTMLElement>, newOrderType: Order) => {
+  const handleOrderChange = (
+    _: MouseEvent<HTMLElement>,
+    newOrderType: Order
+  ) => {
     if (newOrderType !== null) {
       setOrderType(newOrderType);
       setError("");
     }
   };
 
-  const handleInstructionChange = (_: MouseEvent<HTMLElement>, newType: Instruction) => {
+  const handleInstructionChange = (
+    _: MouseEvent<HTMLElement>,
+    newType: Instruction
+  ) => {
     if (newType !== null) {
       setInstructionType(newType);
     }
@@ -126,6 +127,13 @@ function OrderPage() {
       return;
     }
 
+    if (orderType === "buy" && money < numShares * orderPrice) {
+      setError(
+        "You do not have sufficient cash holdings to purchase this stock."
+      );
+      return;
+    }
+
     try {
       const res = await api.post(
         "/place-order/",
@@ -150,8 +158,17 @@ function OrderPage() {
   return (
     <>
       <Header user={username} />
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <form onSubmit={handleOrderSubmit} style={{ width: "100%", maxWidth: "600px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <form
+          onSubmit={handleOrderSubmit}
+          style={{ width: "100%", maxWidth: "600px" }}
+        >
           <Paper elevation={2} sx={{ padding: 2, marginBottom: 2 }}>
             <StockCard
               stock={stock}
@@ -159,14 +176,22 @@ function OrderPage() {
               onToggleWatchlist={fetchWatchlist}
             />
             <Typography variant="body2" color="text.secondary">
-              You currently hold: <strong>{portfolioQty}</strong> shares of {stock.symbol}
+              Your cash holdings: <strong>${money.toFixed(2)}</strong>
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              You currently hold: <strong>{portfolioQty}</strong> shares of{" "}
+              {stock.symbol}
             </Typography>
           </Paper>
 
           <Paper elevation={2} sx={{ padding: 2, marginBottom: 2 }}>
             <Typography variant="h6">Action</Typography>
             <Box display="flex" gap={2} alignItems="center">
-              <ToggleButtonGroup value={orderType} exclusive onChange={handleOrderChange}>
+              <ToggleButtonGroup
+                value={orderType}
+                exclusive
+                onChange={handleOrderChange}
+              >
                 <ToggleButton value="buy">Buy</ToggleButton>
                 <ToggleButton value="sell">Sell</ToggleButton>
               </ToggleButtonGroup>

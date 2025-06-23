@@ -8,7 +8,7 @@ class Stock(models.Model):
     def __str__(self):
         return self.name
     
-class HistoryStock(models.Model):
+class HistoryStock(models.Model): #To store historical stock info
     symbol = models.CharField(max_length=10)
     name = models.CharField(max_length=255)
     timestamp = models.DateTimeField()
@@ -27,7 +27,7 @@ class HistoryStock(models.Model):
         return self.name
     
 
-class LiveStock(models.Model):
+class LiveStock(models.Model): #To store live stock data
     symbol = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=255)
     timestamp = models.DateTimeField()
@@ -74,8 +74,6 @@ class Portfolio(models.Model):
         return f"{self.user.username} - {self.stock}: {self.quantity} @ {self.average_price}"
     
 
-
-
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
@@ -85,3 +83,10 @@ class Watchlist(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.stock.symbol}"
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    money = models.FloatField(default=10000)
+
+    def __str__(self):
+        return f"{self.user.username}"

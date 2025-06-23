@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist
+from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
@@ -59,6 +59,7 @@ def place_order(request):
     action = data.get("action")
     quantity = int(data.get("quantity")) #numStocks
     price = float(data.get("price"))
+    user_profile = UserProfile.objects.get(user=user)
 
     # Get Stock model instance (not LiveStock)
     try:
@@ -78,6 +79,8 @@ def place_order(request):
     # Update Portfolio
     portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
     if action == "buy":
+        user_profile.money -= price * quantity
+        user_profile.save()
         if created:
             portfolio.quantity = quantity
             portfolio.average_price = price
@@ -92,6 +95,8 @@ def place_order(request):
     elif action == "sell":
         if quantity > portfolio.quantity:
             return Response({"error": "Not enough shares to sell."}, status=400)
+        user_profile.money += price * quantity
+        user_profile.save()
         portfolio.quantity -= quantity
         if portfolio.quantity == 0:
             portfolio.delete()
@@ -164,4 +169,12 @@ def search_stock(request):
         pass  # implement external fetch logic
 
     serializer = StockSerializer(matches, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def user_money(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
+    serializer = UserProfileSerializer(user_profile)
     return Response(serializer.data)

@@ -67,7 +67,7 @@ class Command(BaseCommand):
                         "high": quote_res.get("h", 0.0),
                         "low": quote_res.get("l", 0.0),
                         "close": quote_res.get("pc", 0.0),
-                        "volume": quote_res.get("v", 0),
+                        "volume": quote_res.get("t", 0),
                     },
                 )
 
