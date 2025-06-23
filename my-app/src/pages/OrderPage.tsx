@@ -24,8 +24,12 @@ function OrderPage() {
   const [error, setError] = useState<string>("");
   const [portfolioQty, setPortfolioQty] = useState<number>(0);
   const [watchlist, setWatchlist] = useState<string[]>([]);
-  const stock: Stock = location.state.stock;
   const [money, setMoney] = useState<number>(0);
+  const [livePrice, setLivePrice] = useState<number>(0);
+  const [previousPrice, setPreviousPrice] = useState<number>(0);
+  const [blinkColor, setBlinkColor] = useState<"green" | "red" | "">("");
+
+  const stock: Stock = location.state.stock;
 
   const fetchPortfolio = async () => {
     try {
@@ -51,7 +55,6 @@ function OrderPage() {
   const fetchWatchlist = async () => {
     try {
       const res = await api.get("/user/watchlist/");
-      console.log(res);
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
     } catch (err) {
@@ -59,11 +62,40 @@ function OrderPage() {
     }
   };
 
+  // Live price fetch every second
+  useEffect(() => {
+    const fetchLivePrice = async () => {
+      try {
+        const res = await api.post(
+          "/live-stock-request/",
+          { symbol: stock.symbol },
+          { withCredentials: true }
+        );
+        const price = res.data.lastTrade;
+        if (price !== livePrice) {
+          setPreviousPrice(livePrice);
+          setLivePrice(price);
+          if (livePrice !== 0) {
+            setBlinkColor(price > livePrice ? "green" : "red");
+            setTimeout(() => setBlinkColor(""), 500);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch live price", err);
+      }
+    };
+
+    fetchLivePrice(); // fetch initially
+    const interval = setInterval(fetchLivePrice, 1000);
+    return () => clearInterval(interval);
+  }, [stock.symbol, livePrice]);
+
   useEffect(() => {
     fetchWatchlist();
     fetchPortfolio();
     fetchMoney();
     setOrderPrice(Number(stock.lastTrade.toFixed(2)));
+    setLivePrice(stock.lastTrade);
   }, []);
 
   const handleOrderChange = (
@@ -107,7 +139,7 @@ function OrderPage() {
 
   const resetForm = () => {
     setNumShares(1);
-    setOrderPrice(Number(stock.lastTrade.toFixed(2)));
+    setOrderPrice(Number(livePrice.toFixed(2)));
     setExpiryType("gtc");
     setInstructionType("limit");
     setOrderType("buy");
@@ -141,11 +173,10 @@ function OrderPage() {
           stock: stock.symbol,
           action: orderType,
           quantity: numShares,
-          price: instructionType === "limit" ? orderPrice : stock.lastTrade,
+          price: instructionType === "limit" ? orderPrice : livePrice,
         },
         { withCredentials: true }
       );
-      console.log(res.data);
       alert("Order submitted!");
       resetForm();
       fetchPortfolio();
@@ -172,10 +203,28 @@ function OrderPage() {
         >
           <Paper elevation={2} sx={{ padding: 2, marginBottom: 2 }}>
             <StockCard
-              stock={stock}
+              stock={{ ...stock, lastTrade: livePrice }} // use updated price
               isWatchlisted={watchlist.includes(stock.symbol)}
               onToggleWatchlist={fetchWatchlist}
             />
+            <Typography
+              variant="h6"
+              sx={{
+                backgroundColor:
+                  blinkColor === "green"
+                    ? "rgba(0,255,0,0.2)"
+                    : blinkColor === "red"
+                    ? "rgba(255,0,0,0.2)"
+                    : "transparent",
+                borderRadius: "4px",
+                padding: "4px 8px",
+                display: "inline-block",
+                marginTop: 1,
+                transition: "background-color 0.3s ease",
+              }}
+            >
+              Live Price: ${livePrice.toFixed(2)}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               Your cash holdings: <strong>${money.toFixed(2)}</strong>
             </Typography>

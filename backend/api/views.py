@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 import requests
 from django.conf import settings
+import os
 
 
 # Create your views here
@@ -36,16 +37,34 @@ def portfolio_request(request):
     serializer = PortfolioSerializer(portfolio_ls, many=True)
     return Response(serializer.data)
 
+FINNHUB_API_KEY = os.getenv("REACT_APP_FINNHUB_KEY")
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def live_stock_request(request):
     symbol = request.data.get("symbol")
 
-    try:
-        stock = LiveStock.objects.get(symbol=symbol)
-    except LiveStock.DoesNotExist:
-        return Response({"error": f"Live data for stock '{symbol}' not found."}, status=404)
+    # Step 1: Fetch from Finnhub
+    finnhub_url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}"
+    finnhub_res = requests.get(finnhub_url)
 
+    if finnhub_res.status_code != 200:
+        return Response({"error": "Failed to fetch from Finnhub."}, status=500)
+
+    finnhub_data = finnhub_res.json()
+    last_price = finnhub_data.get("c")
+
+    if last_price is None:
+        return Response({"error": "Invalid data from Finnhub."}, status=500)
+
+    print(f"[live_stock_request] Updating {symbol}: {last_price}")
+
+    # Step 2: Update or create
+    stock, created = LiveStock.objects.get_or_create(symbol=symbol)
+    stock.lastTrade = last_price
+    stock.save()
+
+    # Step 3: Return
     serializer = LiveStockSerializer(stock)
     return Response(serializer.data)
 
