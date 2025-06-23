@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock, user_money, search_user, send_friend_request, get_sent_requests
+from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock, get_money, search_user, toggle_friend_request, get_sent_requests, get_received_requests, reject_friend_request, accept_friend_request, get_friends, remove_friend, get_friend_data
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
@@ -31,17 +31,22 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
     path("api-auth", include("rest_framework.urls")),
     path("", include(router.urls)),
-    # path('api/', include('api.urls')),
     path('place-order/', place_order, name='place-order'),
     path('portfolio-request/', portfolio_request, name='portfolio-request'),
     path('live-stock-request/', live_stock_request, name='live-stock-request'),
     path("user/check-username/", check_username, name="check_username"),
+    path("user/friends/", get_friends, name="get_friends"),
     path("user/transactions/", get_transactions, name="get_transactions"),
     path("user/watchlist/", get_watchlist, name="get_watchlist"),
     path("user/watchlist/toggle/", toggle_watchlist, name="toggle_watchlist"),
-    path("user/money/", user_money, name="user_money"),
+    path("user/money/", get_money, name="get_money"),
+    path("user/received-requests/", get_received_requests, name="get_received_requests"),
     path("user/sent-requests/", get_sent_requests, name="get_sent_requests"),
     path("search-stock/", search_stock, name="search_stock"),
     path("search-user/", search_user, name="search_user"),
-    path("send-friend-request/", send_friend_request, name="send_friend_request"),
+    path("toggle-friend-request/", toggle_friend_request, name="toggle_friend_request"),
+    path("accept-friend-request/", accept_friend_request, name="accept_friend_request"),
+    path("reject-friend-request/", reject_friend_request, name="reject_friend_request"),
+    path("remove-friend/", remove_friend, name="remove_friend"),
+    path("get-friend-data/", get_friend_data, name="get_friend_data"),
 ]

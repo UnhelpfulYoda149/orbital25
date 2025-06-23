@@ -173,7 +173,7 @@ def search_stock(request):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def user_money(request):
+def get_money(request):
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
     serializer = UserProfileSerializer(user_profile)
@@ -182,26 +182,81 @@ def user_money(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def search_user(request):
+    user = request.user
     query = request.GET.get("query", "").upper()
     if not query:
         return Response([])
 
-    matches = User.objects.filter(Q(username__icontains=query))
+    matches = User.objects.filter(Q(username__icontains=query)).exclude(username=user.username)
 
     serializer = UserSerializer(matches, many=True)
     return Response(serializer.data)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def send_friend_request(request):
+def toggle_friend_request(request):
     user = request.user
     data = request.data.get("username")
-
     target = User.objects.get(username=data)
 
-    FriendRequest.objects.create(from_user=user, to_user=target)
+    result = FriendRequest.objects.filter(from_user=user, to_user=target)
 
-    return Response({"status": "request sent"})
+    if not result:
+        FriendRequest.objects.create(from_user=user, to_user=target)
+    else:
+        result.delete()
+
+    return Response({"status": "request successful"})
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def accept_friend_request(request):
+    user = request.user
+    data = request.data.get("username")
+    target = User.objects.get(username=data)
+
+    #Create Friend row between 2 users
+    Friend.objects.create(user1=user, user2=target)
+
+    #Remove friend requests from FriendRequest table
+    result = FriendRequest.objects.filter(from_user=target, to_user=user)
+    if result:
+        result.delete()
+
+    result2 = FriendRequest.objects.filter(from_user=user, to_user=target)
+    if result2:
+        result2.delete()
+
+    return Response({"status": "accept successful"})
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def reject_friend_request(request):
+    user = request.user
+    data = request.data.get("username")
+    target = User.objects.get(username=data)
+
+    #Remove FriendRequest from FriendRequest Table
+    result = FriendRequest.objects.filter(from_user=target, to_user=user)
+    result.delete()
+
+    return Response({"status": "reject successful"})
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def remove_friend(request):
+    user = request.user
+    data = request.data.get("username")
+    target = User.objects.get(username=data)
+
+    #Remove FriendRequest from FriendRequest Table
+    result = Friend.objects.filter(user1=user, user2=target)
+    if result:
+        result.delete()
+    else:
+        Friend.objects.filter(user1=target, user2=user).delete()
+
+    return Response({"status": "remove successful"})
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -212,3 +267,38 @@ def get_sent_requests(request):
     res = [req.to_user.username for req in requests_list]
 
     return Response(res)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_received_requests(request):
+    user = request.user
+
+    requests_list = FriendRequest.objects.filter(to_user=user)
+    res = [req.from_user.username for req in requests_list]
+
+    return Response(res)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_friends(request):
+    user = request.user
+
+    friends_list = Friend.objects.filter(Q(user1=user) | Q(user2=user))
+    friends = [pair.user1 if pair.user2 == user else pair.user2 for pair in friends_list]
+    res = [user.username for user in friends]
+
+    return Response(res)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def get_friend_data(request):
+    user = request.user
+    friend_username = request.data.get("username")
+    friend = User.objects.get(username=friend_username)
+
+    friend_money = UserProfile.objects.get(user=friend).money
+    friend_portfolio = Portfolio.objects.filter(user=friend)
+    for item in friend_portfolio:
+        friend_money += item.quantity * LiveStock.objects.get(symbol=item.stock.symbol).lastTrade
+
+    return Response({"portfolio_value": friend_money})

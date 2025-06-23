@@ -25,7 +25,8 @@ import PortfolioPage from "./pages/PortfolioPage";
 import OrderPage from "./pages/OrderPage";
 import StockPage from "./pages/StockPage";
 import TransactionsPage from "./pages/TransactionsPage";
-import FriendPage from "./pages/FriendPage";
+import FindFriendsPage from "./pages/FindFriendsPage";
+import FriendsPage from "./pages/FriendsPage";
 
 function Logout() {
   localStorage.clear();
@@ -42,14 +43,6 @@ function App() {
     <Routes>
       <Route
         path="/"
-        element={
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/home"
         element={
           <ProtectedRoute>
             <HomePage />
@@ -97,10 +90,18 @@ function App() {
         }
       />
       <Route
+        path="/find-friends"
+        element={
+          <ProtectedRoute>
+            <FindFriendsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/friends"
         element={
           <ProtectedRoute>
-            <FriendPage />
+            <FriendsPage />
           </ProtectedRoute>
         }
       />

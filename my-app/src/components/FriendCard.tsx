@@ -1,48 +1,46 @@
-import { Friend } from "../types";
 import { Card, Grid, Button } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import StockChange from "./StockChange";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useState, useEffect } from "react";
 import api from "../api";
-import CardActionArea from "@mui/material/CardActionArea";
-import { useNavigate } from "react-router-dom";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { useEffect, useState } from "react";
+import { prototype } from "events";
 
 interface FriendCardProps {
   username: string;
-  requested: boolean;
+  handleClick: (name: string) => void;
 }
 
-function FriendCard({ username, requested }: FriendCardProps) {
-  const handleClick = async () => {
+function FriendCard({ username, handleClick }: FriendCardProps) {
+  const [portfolioValue, setPortfolioValue] = useState<number>();
+  const getFriendData = async () => {
     try {
       const res = await api.post(
-        "/send-friend-request/",
+        "/get-friend-data/",
         { username: username },
         { withCredentials: true }
       );
-      console.log(res);
+      setPortfolioValue(res.data.portfolio_value);
     } catch (err) {
-      console.error("Unable to send friend request", err);
+      console.log("Error fetching friend data", err);
     }
   };
+
+  useEffect(() => {
+    getFriendData();
+  }, []);
 
   return (
     <Card variant="outlined" sx={{ minWidth: 500, position: "relative" }}>
       <CardContent>
-        <Grid container direction="row" alignItems="center" spacing={1}>
+        <Grid container direction="row" alignItems="center" spacing={3}>
           <Typography variant="h5">{username}</Typography>
+          <Typography variant="body1">
+            Portfolio Value: ${portfolioValue?.toFixed(2)}
+          </Typography>
           <div style={{ position: "absolute", right: 50 }}>
-            {!requested ? (
-              <Button variant="contained" onClick={handleClick}>
-                Send Request
-              </Button>
-            ) : (
-              <Button onClick={handleClick}>Request Sent</Button>
-            )}
+            <Button variant="contained" onClick={() => handleClick(username)}>
+              Remove Friend
+            </Button>
           </div>
         </Grid>
       </CardContent>
