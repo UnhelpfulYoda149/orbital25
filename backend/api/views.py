@@ -335,3 +335,69 @@ def get_feed(request):
     friend_posts = Post.objects.filter(user__in=friends)[:20]
     serializer = PostSerializer(friend_posts, many=True)
     return Response(serializer.data)
+
+# Returns the user's post only if the requester is a friend. Otherwise, return a permission error
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_posts(request, username):
+    try:
+        target_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
+    requester = request.user
+    is_friend = Friend.objects.filter(
+        Q(user1=requester, user2=target_user) | Q(user1=target_user, user2=requester)
+    ).exists()
+
+    if not is_friend and requester != target_user:
+        return Response([])
+
+    posts = Post.objects.filter(user=target_user)
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)
+
+
+# Allow logged-in user to edit their bio.
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def update_bio(request):
+    bio = request.data.get("bio", "")
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    profile.bio = bio
+    profile.save()
+    return Response({"success": True})
+    
+# Returns profile info, friend count, post count and a flag indicating whether the requester is a friend.
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request, username):
+    try:
+        target_user = User.objects.get(username=username)
+        profile = UserProfile.objects.get(user=target_user)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+    except UserProfile.DoesNotExist:
+        return Response({"error": "User profile not found"}, status=404)
+
+    # Check if requester is friend
+    requester = request.user
+    is_friend = Friend.objects.filter(
+        Q(user1=requester, user2=target_user) | Q(user1=target_user, user2=requester)
+    ).exists()
+
+    # Post count
+    post_count = Post.objects.filter(user=target_user).count()
+
+    # Friend count
+    friend_count = Friend.objects.filter(Q(user1=target_user) | Q(user2=target_user)).count()
+
+    data = {
+        "username": target_user.username,
+        "bio": profile.bio if hasattr(profile, "bio") else "",
+        "post_count": post_count,
+        "friend_count": friend_count,
+        "is_friend": is_friend,
+    }
+
+    return Response(data)

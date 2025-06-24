@@ -52,7 +52,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ["id", "user", "money"]
+        fields = ["id", "user", "money", "bio"]
 
 class FriendSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,3 +71,10 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ["id", "user", "transaction", "timestamp"]
+
+class PublicProfileSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    bio = serializers.CharField()
+    num_friends = serializers.IntegerField()
+    num_posts = serializers.IntegerField()
+    is_friend = serializers.BooleanField()

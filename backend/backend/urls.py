@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock, get_money, search_user, toggle_friend_request, get_sent_requests, get_received_requests, reject_friend_request, accept_friend_request, get_friends, remove_friend, get_friend_data, get_feed
+from api.views import *
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
@@ -50,4 +50,7 @@ urlpatterns = [
     path("reject-friend-request/", reject_friend_request, name="reject_friend_request"),
     path("remove-friend/", remove_friend, name="remove_friend"),
     path("get-friend-data/", get_friend_data, name="get_friend_data"),
+    path("user/<str:username>/profile/", get_user_profile),
+    path("user/<str:username>/posts/", get_user_posts),
+    path("user/update-bio/", update_bio),
 ]

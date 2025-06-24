@@ -87,6 +87,7 @@ class Watchlist(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     money = models.FloatField(default=10000)
+    bio = models.TextField(blank=True, default="") 
 
     def __str__(self):
         return f"{self.user.username}"

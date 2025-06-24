@@ -27,6 +27,7 @@ import StockPage from "./pages/StockPage";
 import TransactionsPage from "./pages/TransactionsPage";
 import FindFriendsPage from "./pages/FindFriendsPage";
 import FriendsPage from "./pages/FriendsPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function Logout() {
   localStorage.clear();
@@ -102,6 +103,14 @@ function App() {
         element={
           <ProtectedRoute>
             <FriendsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/:username"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />
