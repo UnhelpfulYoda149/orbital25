@@ -332,6 +332,6 @@ def get_feed(request):
     friends_list = Friend.objects.filter(Q(user1=user) | Q(user2=user))
     friends = [pair.user1 if pair.user2 == user else pair.user2 for pair in friends_list]
 
-    friend_posts = Post.objects.filter(user__in=friends)
+    friend_posts = Post.objects.filter(user__in=friends)[:20]
     serializer = PostSerializer(friend_posts, many=True)
     return Response(serializer.data)
