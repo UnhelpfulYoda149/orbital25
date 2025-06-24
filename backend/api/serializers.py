@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist, UserProfile, FriendRequest, Friend
+from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist, UserProfile, FriendRequest, Friend, Post
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -48,9 +48,11 @@ class WatchlistSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = UserProfile
-        fields = "__all__"
+        fields = ["id", "user", "money"]
 
 class FriendSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,3 +63,11 @@ class FriendRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = FriendRequest
         fields = "__all__"
+
+class PostSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    transaction = TransactionSerializer(read_only=True)
+
+    class Meta:
+        model = Post
+        fields = ["id", "user", "transaction", "timestamp"]

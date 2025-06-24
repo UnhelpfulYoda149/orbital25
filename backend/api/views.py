@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer, PostSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend
+from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend, Post
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
@@ -87,7 +87,7 @@ def place_order(request):
         return Response({"error": f"Stock '{stock_symbol}' does not exist in Stock table."}, status=404)
 
     # Create Transaction
-    Transaction.objects.create(
+    transaction = Transaction.objects.create(
         user=user,
         stock=stock,
         action=action,
@@ -95,8 +95,12 @@ def place_order(request):
         price=price,
     )
 
+    #Update Post
+    post = Post.objects.create(user=user, transaction=transaction)
+
     # Update Portfolio
     portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+
     if action == "buy":
         user_profile.money -= price * quantity
         user_profile.save()
@@ -140,7 +144,6 @@ def get_transactions(request):
     serializer = TransactionSerializer(transactions, many=True)
     return Response(serializer.data)
 
-# Retrieve Watchlist
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_watchlist(request):
@@ -321,3 +324,14 @@ def get_friend_data(request):
         friend_money += item.quantity * LiveStock.objects.get(symbol=item.stock.symbol).lastTrade
 
     return Response({"portfolio_value": friend_money})
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_feed(request):
+    user = request.user
+    friends_list = Friend.objects.filter(Q(user1=user) | Q(user2=user))
+    friends = [pair.user1 if pair.user2 == user else pair.user2 for pair in friends_list]
+
+    friend_posts = Post.objects.filter(user__in=friends)
+    serializer = PostSerializer(friend_posts, many=True)
+    return Response(serializer.data)

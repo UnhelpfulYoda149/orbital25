@@ -117,3 +117,15 @@ class Friend(models.Model):
 
     def __str__(self):
         return f"{self.user1.username} and {self.user2.username} are friends"
+    
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "transaction")
+        ordering = ["-timestamp"]  
+        
+    def __str__(self):
+        return f"{self.user.username} posted {self.transaction}"

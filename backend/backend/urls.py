@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock, get_money, search_user, toggle_friend_request, get_sent_requests, get_received_requests, reject_friend_request, accept_friend_request, get_friends, remove_friend, get_friend_data
+from api.views import CreateUserView, LiveStockViewSet, HistoryStockViewSet, place_order, portfolio_request, live_stock_request, check_username, get_transactions, get_watchlist, toggle_watchlist, search_stock, get_money, search_user, toggle_friend_request, get_sent_requests, get_received_requests, reject_friend_request, accept_friend_request, get_friends, remove_friend, get_friend_data, get_feed
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
 
@@ -35,6 +35,7 @@ urlpatterns = [
     path('portfolio-request/', portfolio_request, name='portfolio-request'),
     path('live-stock-request/', live_stock_request, name='live-stock-request'),
     path("user/check-username/", check_username, name="check_username"),
+    path("user/feed/", get_feed, name="get_feed"),
     path("user/friends/", get_friends, name="get_friends"),
     path("user/transactions/", get_transactions, name="get_transactions"),
     path("user/watchlist/", get_watchlist, name="get_watchlist"),
