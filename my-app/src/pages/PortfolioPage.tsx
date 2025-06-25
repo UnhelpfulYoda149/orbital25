@@ -81,39 +81,22 @@ function PortfolioPage() {
   };
 
   console.log(typeof money);
-  return (
-    <>
-      <Header user={username} />
+return (
+  <>
+    <Header user={username} />
+    <div style={{ padding: "2rem" }}>
+      {/* Portfolio Summary */}
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          marginBottom: "2rem",
+          padding: "1.5rem",
+          border: "1px solid #ccc",
+          borderRadius: "10px",
+          backgroundColor: "#f9f9f9",
         }}
       >
-        <h2>My Stocks</h2>
-        {stocks.map((portfolioStock) => {
-          return (
-            <Card variant="outlined">
-              <CardActionArea onClick={() => handleClick(portfolioStock.stock)}>
-                <PortfolioCard
-                  stock={portfolioStock.stock}
-                  numShares={portfolioStock.quantity}
-                />
-              </CardActionArea>
-            </Card>
-          );
-        })}
-        <h3>
-          Total Stock Value: $
-          {stocks
-            .reduce((acc, cur) => acc + cur.stock.lastTrade * cur.quantity, 0)
-            .toFixed(2)}
-        </h3>
-        <h3>Cash Holdings: ${money.toFixed(2)}</h3>
-        <h4>
-          Total Portfolio Value:{" $"}
+        <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+          Total Portfolio Value: $
           {(
             money +
             stocks.reduce(
@@ -121,10 +104,91 @@ function PortfolioPage() {
               0
             )
           ).toFixed(2)}
-        </h4>
+        </h1>
+
+        <p>
+          <strong>Buying Power (Cash):</strong> ${money.toFixed(2)}
+        </p>
+        <p>
+          <strong>Stock Holdings Value:</strong> $
+          {stocks
+            .reduce((acc, cur) => acc + cur.stock.lastTrade * cur.quantity, 0)
+            .toFixed(2)}
+        </p>
+
+        {/* Unrealized P&L */}
+        {(() => {
+          const totalCostBasis = stocks.reduce(
+            (acc, cur) => acc + cur.averagePrice * cur.quantity,
+            0
+          );
+          const totalMarketValue = stocks.reduce(
+            (acc, cur) => acc + cur.stock.lastTrade * cur.quantity,
+            0
+          );
+          const unrealizedPnL = totalMarketValue - totalCostBasis;
+          const pnlColor = unrealizedPnL >= 0 ? "green" : "red";
+          const pnlPrefix = unrealizedPnL >= 0 ? "+" : "";
+          const pnlPercentage =
+            totalCostBasis > 0
+              ? ((unrealizedPnL / totalCostBasis) * 100).toFixed(2)
+              : "0.00";
+
+          return (
+            <p>
+              <strong>Total Unrealized P&L:</strong>{" "}
+              <span style={{ color: pnlColor, fontWeight: "bold" }}>
+                {pnlPrefix}${unrealizedPnL.toFixed(2)} ({pnlPrefix}
+                {pnlPercentage}%)
+              </span>
+            </p>
+          );
+        })()}
+
+        {/* Realized P&L */}
+        <p>
+          <strong>Total Realized P&L:</strong>{" "}
+          <span style={{ fontWeight: "bold" }}>Coming soon</span>
+        </p>
+
+        {/* Daily Change */}
+        <p>
+          <strong>Today's Change:</strong>{" "}
+          <span style={{ fontWeight: "bold" }}>Coming soon</span>
+        </p>
       </div>
-    </>
-  );
+
+      {/* Stock Holdings List */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+          alignItems: "center",
+        }}
+      >
+        <h2>My Stocks</h2>
+        {stocks.map((portfolioStock) => (
+          <Card
+            key={portfolioStock.stock.symbol}
+            variant="outlined"
+            sx={{ width: 500 }}
+          >
+            <CardActionArea
+              onClick={() => handleClick(portfolioStock.stock)}
+            >
+              <PortfolioCard
+                stock={portfolioStock.stock}
+                numShares={portfolioStock.quantity}
+                averagePrice={portfolioStock.averagePrice}
+              />
+            </CardActionArea>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </>
+);
 }
 
 export default PortfolioPage;

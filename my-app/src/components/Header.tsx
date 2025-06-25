@@ -12,6 +12,7 @@ interface HeaderProps {
 
 function Header({ user }: HeaderProps) {
   const navigate = useNavigate();
+  const username = localStorage.getItem("username");
 
   function signOut() {
     // Clear local storage or any authentication token
@@ -37,12 +38,12 @@ function Header({ user }: HeaderProps) {
           <NavBar />
           <div style={{ position: "absolute", right: 50 }}>
             <Grid container direction="row" alignItems="center" spacing={1}>
-              {user && (
+              {username && (
                 <Avatar
                   sx={{ cursor: "pointer", bgcolor: "primary.main" }}
-                  onClick={() => navigate(`/profile/${user}`)}
+                  onClick={() => navigate(`/profile/${username}`)}
                 >
-                  {user.charAt(0).toUpperCase()}
+                  {username.charAt(0).toUpperCase()}
                 </Avatar>
               )}
               <Button variant="contained" onClick={signOut}>

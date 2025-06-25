@@ -3,7 +3,8 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import api from "../api";
 import { useEffect, useState } from "react";
-import { prototype } from "events";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 interface FriendCardProps {
   username: string;
@@ -11,6 +12,7 @@ interface FriendCardProps {
 }
 
 function FriendCard({ username, handleClick }: FriendCardProps) {
+  const navigate = useNavigate();
   const [portfolioValue, setPortfolioValue] = useState<number>();
   const getFriendData = async () => {
     try {
@@ -33,6 +35,14 @@ function FriendCard({ username, handleClick }: FriendCardProps) {
     <Card variant="outlined" sx={{ minWidth: 500, position: "relative" }}>
       <CardContent>
         <Grid container direction="row" alignItems="center" spacing={3}>
+            {username && (
+              <Avatar
+                sx={{ cursor: "pointer", bgcolor: "primary.main" }}
+                onClick={() => navigate(`/profile/${username}`)}
+              >
+                {username.charAt(0).toUpperCase()}
+              </Avatar>
+            )}
           <Typography variant="h5">{username}</Typography>
           <Typography variant="body1">
             Portfolio Value: ${portfolioValue?.toFixed(2)}

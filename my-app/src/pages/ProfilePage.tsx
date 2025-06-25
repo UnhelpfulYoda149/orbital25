@@ -6,15 +6,16 @@ import {
   TextField,
   Button,
   Container,
-  Box,
 } from "@mui/material";
 import api from "../api";
 import PostCard from "../components/PostCard";
 import Header from "../components/Header";
 
 function ProfilePage() {
-  const username = localStorage.getItem("username");
-  //const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username: string }>(); // Username from URL
+  const currentUser = localStorage.getItem("username");   // Logged-in user
+  const isOwnProfile = currentUser === username;
+
   const [bio, setBio] = useState("");
   const [newBio, setNewBio] = useState("");
   const [editingBio, setEditingBio] = useState(false);
@@ -22,15 +23,9 @@ function ProfilePage() {
   const [postCount, setPostCount] = useState(0);
   const [isFriend, setIsFriend] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
-  const [currentUser, setCurrentUser] = useState("");
-
-  const isOwnProfile = currentUser === username;
 
   useEffect(() => {
-    const fetchCurrentUser = () => {
-      const user = localStorage.getItem("username");
-      if (user) setCurrentUser(user);
-    };
+    if (!username) return;
 
     const fetchProfile = async () => {
       try {
@@ -57,7 +52,6 @@ function ProfilePage() {
       }
     };
 
-    fetchCurrentUser();
     fetchProfile();
     fetchPosts();
   }, [username]);
@@ -78,7 +72,7 @@ function ProfilePage() {
 
   return (
     <>
-      <Header user={username} />
+      <Header user={username || ""} />
       <Container maxWidth="md" sx={{ mt: 4 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <Avatar sx={{ width: 100, height: 100 }}>
@@ -138,7 +132,7 @@ function ProfilePage() {
         </div>
 
         <div style={{ marginTop: "2rem" }}>
-          {(isFriend || isOwnProfile) ? (
+          {isOwnProfile || isFriend ? (
             <>
               <Typography variant="h6">Posts</Typography>
               {posts.length === 0 ? (
