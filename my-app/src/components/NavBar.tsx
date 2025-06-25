@@ -34,15 +34,6 @@ function NavBar() {
           </Button>
         ))}
       </Box>
-      {me && (
-        <Avatar
-          sx={{ cursor: "pointer", bgcolor: "primary.main" }}
-          onClick={() => navigate(`/profile/${me}`)}
-        >
-          {me.charAt(0).toUpperCase()}
-        </Avatar>
-      )}
-      <Button onClick={() => {/* sign-out logic */}}>Sign Out</Button>
     </nav>
   );
 }

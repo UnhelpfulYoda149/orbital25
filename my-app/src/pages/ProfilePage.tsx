@@ -10,9 +10,11 @@ import {
 } from "@mui/material";
 import api from "../api";
 import PostCard from "../components/PostCard";
+import Header from "../components/Header";
 
 function ProfilePage() {
-  const { username } = useParams<{ username: string }>();
+  const username = localStorage.getItem("username");
+  //const { username } = useParams<{ username: string }>();
   const [bio, setBio] = useState("");
   const [newBio, setNewBio] = useState("");
   const [editingBio, setEditingBio] = useState(false);
@@ -75,93 +77,96 @@ function ProfilePage() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <Avatar sx={{ width: 100, height: 100 }}>
-          {username?.charAt(0).toUpperCase()}
-        </Avatar>
-        <div>
-          <Typography variant="h5">@{username}</Typography>
-          <Typography>Friends: {friendCount}</Typography>
-          <Typography>Posts: {postCount}</Typography>
+    <>
+      <Header user={username} />
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Avatar sx={{ width: 100, height: 100 }}>
+            {username?.charAt(0).toUpperCase()}
+          </Avatar>
+          <div>
+            <Typography variant="h5">@{username}</Typography>
+            <Typography>Friends: {friendCount}</Typography>
+            <Typography>Posts: {postCount}</Typography>
+          </div>
         </div>
-      </div>
 
-      <div style={{ marginTop: "1rem" }}>
-        <Typography variant="subtitle1">Bio:</Typography>
-        {isOwnProfile ? (
-          editingBio ? (
-            <>
-              <TextField
-                fullWidth
-                multiline
-                rows={2}
-                value={newBio}
-                onChange={(e) => setNewBio(e.target.value)}
-              />
-              <div style={{ marginTop: "0.5rem" }}>
-                <Button onClick={handleBioSubmit}>Save</Button>
+        <div style={{ marginTop: "1rem" }}>
+          <Typography variant="subtitle1">Bio:</Typography>
+          {isOwnProfile ? (
+            editingBio ? (
+              <>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  value={newBio}
+                  onChange={(e) => setNewBio(e.target.value)}
+                />
+                <div style={{ marginTop: "0.5rem" }}>
+                  <Button onClick={handleBioSubmit}>Save</Button>
+                  <Button
+                    onClick={() => setEditingBio(false)}
+                    color="secondary"
+                    sx={{ ml: 1 }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  {bio || "No bio yet."}
+                </Typography>
                 <Button
-                  onClick={() => setEditingBio(false)}
-                  color="secondary"
-                  sx={{ ml: 1 }}
+                  onClick={() => {
+                    setNewBio(bio);
+                    setEditingBio(true);
+                  }}
+                  sx={{ mt: 1 }}
                 >
-                  Cancel
+                  Edit Bio
                 </Button>
-              </div>
+              </>
+            )
+          ) : (
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              {bio || "No bio yet."}
+            </Typography>
+          )}
+        </div>
+
+        <div style={{ marginTop: "2rem" }}>
+          {(isFriend || isOwnProfile) ? (
+            <>
+              <Typography variant="h6">Posts</Typography>
+              {posts.length === 0 ? (
+                <Typography>No posts to show.</Typography>
+              ) : (
+                posts.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    username={post.user.username}
+                    action={post.transaction.action}
+                    price={post.transaction.price}
+                    quantity={post.transaction.quantity}
+                    symbol={post.transaction.stock_symbol}
+                    timestamp={post.timestamp}
+                    isWatchlisted={false}
+                    onToggleWatchlist={() => {}}
+                  />
+                ))
+              )}
             </>
           ) : (
-            <>
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {bio || "No bio yet."}
-              </Typography>
-              <Button
-                onClick={() => {
-                  setNewBio(bio);
-                  setEditingBio(true);
-                }}
-                sx={{ mt: 1 }}
-              >
-                Edit Bio
-              </Button>
-            </>
-          )
-        ) : (
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            {bio || "No bio yet."}
-          </Typography>
-        )}
-      </div>
-
-      <div style={{ marginTop: "2rem" }}>
-        {(isFriend || isOwnProfile) ? (
-          <>
-            <Typography variant="h6">Posts</Typography>
-            {posts.length === 0 ? (
-              <Typography>No posts to show.</Typography>
-            ) : (
-              posts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  username={post.user.username}
-                  action={post.transaction.action}
-                  price={post.transaction.price}
-                  quantity={post.transaction.quantity}
-                  symbol={post.transaction.stock_symbol}
-                  timestamp={post.timestamp}
-                  isWatchlisted={false}
-                  onToggleWatchlist={() => {}}
-                />
-              ))
-            )}
-          </>
-        ) : (
-          <Typography variant="body2" sx={{ mt: 2 }} color="text.secondary">
-            Only friends can view posts.
-          </Typography>
-        )}
-      </div>
-    </Container>
+            <Typography variant="body2" sx={{ mt: 2 }} color="text.secondary">
+              Only friends can view posts.
+            </Typography>
+          )}
+        </div>
+      </Container>
+    </>
   );
 }
 

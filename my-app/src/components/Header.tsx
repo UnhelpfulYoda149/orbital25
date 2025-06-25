@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import NavBar from "./NavBar";
 import { Grid } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+
 
 interface HeaderProps {
   user: string | null;
@@ -35,7 +37,14 @@ function Header({ user }: HeaderProps) {
           <NavBar />
           <div style={{ position: "absolute", right: 50 }}>
             <Grid container direction="row" alignItems="center" spacing={1}>
-              <h5>{user}</h5>
+              {user && (
+                <Avatar
+                  sx={{ cursor: "pointer", bgcolor: "primary.main" }}
+                  onClick={() => navigate(`/profile/${user}`)}
+                >
+                  {user.charAt(0).toUpperCase()}
+                </Avatar>
+              )}
               <Button variant="contained" onClick={signOut}>
                 Sign Out
               </Button>
