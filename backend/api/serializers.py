@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist, UserProfile, FriendRequest, Friend, Post
+from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist, UserProfile, FriendRequest, Friend, Post, Comment, Like
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -67,10 +67,26 @@ class FriendRequestSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     transaction = TransactionSerializer(read_only=True)
+    comments_count = serializers.IntegerField(source="comments.count", read_only=True)
+    likes_count = serializers.IntegerField(source="likes.count", read_only=True)
 
     class Meta:
         model = Post
-        fields = ["id", "user", "transaction", "timestamp"]
+        fields = ["id", "user", "transaction", "timestamp", "comments_count", "likes_count"]
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ["id", "user", "text", "timestamp"]
+
+class LikeSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Like
+        fields = ["id", "user", "post", "timestamp"]
 
 class PublicProfileSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -78,3 +94,4 @@ class PublicProfileSerializer(serializers.Serializer):
     num_friends = serializers.IntegerField()
     num_posts = serializers.IntegerField()
     is_friend = serializers.BooleanField()
+

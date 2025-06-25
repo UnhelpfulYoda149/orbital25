@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer, PostSerializer
+from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer, PostSerializer, LikeSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend, Post
+from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend, Post, Like, Comment
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
@@ -334,12 +334,49 @@ def get_feed(request):
 
     friend_posts = Post.objects.filter(user__in=friends)[:20]
     serializer = PostSerializer(friend_posts, many=True)
-    return Response(serializer.data)
+    post_data = serializer.data
+
+    for post in post_data:
+        post_obj = Post.objects.get(id=post["id"])
+        comments = Comment.objects.filter(post=post_obj)
+        serializer = CommentSerializer(comments, many=True)
+        
+        post["isLiked"] = Like.objects.filter(user=user, post=post_obj).exists()
+        post["comments"] = serializer.data
+
+    return Response(post_data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def post_comment(request):
+    user = request.user
+    comment = request.data.get("comment")
+    post_id = request.data.get("id")
+    post_obj = Post.objects.get(id=post_id)
+
+    Comment.objects.create(user=user, text=comment, post=post_obj)
+
+    return Response({"status": "commented"})
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def toggle_like(request):
+    user = request.user
+    post_id = request.data.get("id")
+    post_obj = Post.objects.get(id=post_id)
+
+    try:
+        Like.objects.get(user=user, post=post_obj).delete()
+    except Like.DoesNotExist:
+        Like.objects.create(user=user, post=post_obj)
+
+    return Response({"status": "toggled"})
 
 # Returns the user's post only if the requester is a friend. Otherwise, return a permission error
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_user_posts(request, username):
+    user = request.user
     try:
         target_user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -355,7 +392,17 @@ def get_user_posts(request, username):
 
     posts = Post.objects.filter(user=target_user)
     serializer = PostSerializer(posts, many=True)
-    return Response(serializer.data)
+    post_data = serializer.data
+
+    for post in post_data:
+        post_obj = Post.objects.get(id=post["id"])
+        comments = Comment.objects.filter(post=post_obj)
+        serializer = CommentSerializer(comments, many=True)
+
+        post["isLiked"] = Like.objects.filter(user=user, post=post_obj).exists()
+        post["comments"] = serializer.data
+
+    return Response(post_data)
 
 
 # Allow logged-in user to edit their bio.

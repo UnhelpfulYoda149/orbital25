@@ -9,32 +9,39 @@ function HomePage() {
   const [props, setProps] = useState<PostCardProps[]>([]);
   const [watchlist, setWatchlist] = useState<string[]>([]);
 
+  const toggleLike = async (id: number) => {
+    try {
+      const res = await api.post(
+        "/toggle-post-like/",
+        { id: id },
+        { withCredentials: true }
+      );
+      fetchFeed();
+    } catch (err) {
+      console.error("Error toggling like on post", err);
+    }
+  };
+
   const fetchFeed = async () => {
     try {
       const res = await api.get("/user/feed/", { withCredentials: true });
       console.log(res);
-      const updatedData = res.data.map(
-        (item: {
-          user: { username: string };
-          transaction: {
-            action: string;
-            price: number;
-            quantity: number;
-            timestamp: string;
-            stock_symbol: string;
-          };
-        }) => {
-          console.log(watchlist);
-          return {
-            username: item.user.username,
-            action: item.transaction.action,
-            price: item.transaction.price,
-            quantity: item.transaction.quantity,
-            symbol: item.transaction.stock_symbol,
-            timestamp: item.transaction.timestamp,
-          };
-        }
-      );
+      const updatedData = res.data.map((item: any) => {
+        console.log(watchlist);
+        return {
+          id: item.id,
+          username: item.user.username,
+          action: item.transaction.action,
+          price: item.transaction.price,
+          quantity: item.transaction.quantity,
+          symbol: item.transaction.stock_symbol,
+          timestamp: item.transaction.timestamp,
+          isLiked: item.isLiked,
+          likes_count: item.likes_count,
+          comments_count: item.comments_count,
+          comments: item.comments,
+        };
+      });
       setProps(updatedData);
     } catch (err) {
       console.error("Problem retrieving user feed", err);
@@ -70,6 +77,8 @@ function HomePage() {
               {...prop}
               onToggleWatchlist={fetchWatchlist}
               isWatchlisted={watchlist.includes(prop.symbol)}
+              toggleLike={() => toggleLike(prop.id)}
+              handleCommentSubmit={fetchFeed}
             />
           ))
         )}

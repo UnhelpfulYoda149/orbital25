@@ -13,7 +13,7 @@ import Header from "../components/Header";
 
 function ProfilePage() {
   const { username } = useParams<{ username: string }>(); // Username from URL
-  const currentUser = localStorage.getItem("username");   // Logged-in user
+  const currentUser = localStorage.getItem("username"); // Logged-in user
   const isOwnProfile = currentUser === username;
 
   const [bio, setBio] = useState("");
@@ -24,34 +24,46 @@ function ProfilePage() {
   const [isFriend, setIsFriend] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
 
+  const toggleLike = async (id: number) => {
+    try {
+      const res = await api.post(
+        "/toggle-post-like/",
+        { id: id },
+        { withCredentials: true }
+      );
+      fetchPosts();
+    } catch (err) {
+      console.error("Error toggling like on post", err);
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const res = await api.get(`/user/${username}/profile/`, {
+        withCredentials: true,
+      });
+      setBio(res.data.bio || "");
+      setFriendCount(res.data.friend_count);
+      setPostCount(res.data.post_count);
+      setIsFriend(res.data.is_friend);
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await api.get(`/user/${username}/posts/`, {
+        withCredentials: true,
+      });
+      setPosts(res.data);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
+  };
+
   useEffect(() => {
     if (!username) return;
-
-    const fetchProfile = async () => {
-      try {
-        const res = await api.get(`/user/${username}/profile/`, {
-          withCredentials: true,
-        });
-        setBio(res.data.bio || "");
-        setFriendCount(res.data.friend_count);
-        setPostCount(res.data.post_count);
-        setIsFriend(res.data.is_friend);
-      } catch (err) {
-        console.error("Error fetching profile:", err);
-      }
-    };
-
-    const fetchPosts = async () => {
-      try {
-        const res = await api.get(`/user/${username}/posts/`, {
-          withCredentials: true,
-        });
-        setPosts(res.data);
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-      }
-    };
-
     fetchProfile();
     fetchPosts();
   }, [username]);
@@ -141,6 +153,7 @@ function ProfilePage() {
                 posts.map((post) => (
                   <PostCard
                     key={post.id}
+                    id={post.id}
                     username={post.user.username}
                     action={post.transaction.action}
                     price={post.transaction.price}
@@ -149,6 +162,12 @@ function ProfilePage() {
                     timestamp={post.timestamp}
                     isWatchlisted={false}
                     onToggleWatchlist={() => {}}
+                    isLiked={post.isLiked}
+                    comments_count={post.comments_count}
+                    comments={post.comments}
+                    likes_count={post.likes_count}
+                    toggleLike={() => toggleLike(post.id)}
+                    handleCommentSubmit={fetchPosts}
                   />
                 ))
               )}
