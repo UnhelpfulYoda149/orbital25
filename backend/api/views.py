@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, viewsets   
-from .serializers import UserSerializer, StockSerializer, LiveStockSerializer, HistoryStockSerializer, PortfolioSerializer, TransactionSerializer, WatchlistSerializer, UserProfileSerializer, FriendRequestSerializer, FriendSerializer, PostSerializer, LikeSerializer, CommentSerializer
+from .serializers import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import LiveStock, HistoryStock, Transaction, Portfolio, Stock, Watchlist, UserProfile, FriendRequest, Friend, Post, Like, Comment
+from .models import *
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
@@ -64,7 +64,70 @@ def live_stock_request(request):
     stock.lastTrade = last_price
     stock.save()
 
-    # Step 3: Return
+    s = Stock.objects.get(symbol=stock.symbol)
+    orders_list = Order.objects.filter(stock=s)
+    for order in orders_list:
+        #If stock price is lower than price user is willing to buy at
+        if order.action == "buy" and order.price >= stock.lastTrade:
+            #Transaction occurs
+            transaction = Transaction.objects.create(
+                user=order.user,
+                stock=s,
+                action=order.action,
+                quantity=order.quantity,
+                price=stock.lastTrade,
+            )
+
+            # Create Post
+            post = Post.objects.create(user=order.user, transaction=transaction)
+
+            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+
+            #Refund user the diff between order and transaction
+            user_profile = UserProfile.objects.get(user=order.user)
+            user_profile.money += order.quantity * (order.price - stock.lastTrade)
+            user_profile.save()
+
+            if created:
+                portfolio.quantity = order.quantity
+                portfolio.average_price = stock.lastTrade
+            else:
+                total_shares = portfolio.quantity + order.quantity
+                portfolio.average_price = (
+                    (portfolio.average_price * portfolio.quantity + stock.lastTrade * order.quantity) / total_shares
+                )
+                portfolio.quantity = total_shares
+            portfolio.save()
+            order.delete()
+
+        if order.action == "sell" and order.price <= stock.lastTrade:
+            #Transaction occurs
+            transaction = Transaction.objects.create(
+                user=order.user,
+                stock=s,
+                action=order.action,
+                quantity=order.quantity,
+                price=stock.lastTrade,
+            )
+
+            # Create Post
+            post = Post.objects.create(user=order.user, transaction=transaction)
+
+            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+
+            if order.quantity < portfolio.quantity:
+                user_profile = UserProfile.objects.get(user=order.user)
+                user_profile.money += stock.lastTrade * order.quantity
+                user_profile.save()
+
+                portfolio.quantity -= order.quantity
+
+                if portfolio.quantity == 0:
+                    portfolio.delete()
+                else:
+                    portfolio.save()
+            order.delete()
+
     serializer = LiveStockSerializer(stock)
     return Response(serializer.data)
 
@@ -78,6 +141,8 @@ def place_order(request):
     action = data.get("action")
     quantity = int(data.get("quantity")) #numStocks
     price = float(data.get("price"))
+    instruction = data.get("instruction")
+    expiry = data.get("expiry")
     user_profile = UserProfile.objects.get(user=user)
 
     # Get Stock model instance (not LiveStock)
@@ -86,47 +151,89 @@ def place_order(request):
     except Stock.DoesNotExist:
         return Response({"error": f"Stock '{stock_symbol}' does not exist in Stock table."}, status=404)
 
-    # Create Transaction
-    transaction = Transaction.objects.create(
-        user=user,
-        stock=stock,
-        action=action,
-        quantity=quantity,
-        price=price,
-    )
+    if instruction == "limit":
+        order = Order.objects.create(
+            user=user,
+            stock=stock,
+            action=action,
+            expiry=expiry,
+            quantity=quantity,
+            price=price
+        )
+        if action == "buy":
+            user_profile.money -= price * quantity
+            user_profile.save()
 
-    #Update Post
-    post = Post.objects.create(user=user, transaction=transaction)
+        return Response({"message": "Order submitted"})
+    else:
+        # Create Transaction
+        transaction = Transaction.objects.create(
+            user=user,
+            stock=stock,
+            action=action,
+            quantity=quantity,
+            price=price,
+        )
 
-    # Update Portfolio
-    portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+        # Create Post
+        post = Post.objects.create(user=user, transaction=transaction)
 
-    if action == "buy":
-        user_profile.money -= price * quantity
-        user_profile.save()
-        if created:
-            portfolio.quantity = quantity
-            portfolio.average_price = price
-        else:
-            total_shares = portfolio.quantity + quantity
-            portfolio.average_price = (
-                (portfolio.average_price * portfolio.quantity + price * quantity) / total_shares
-            )
-            portfolio.quantity = total_shares
-        portfolio.save()
+        # Update Portfolio
+        portfolio, created = Portfolio.objects.get_or_create(user=user, stock=stock, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
 
-    elif action == "sell":
-        if quantity > portfolio.quantity:
-            return Response({"error": "Not enough shares to sell."}, status=400)
-        user_profile.money += price * quantity
-        user_profile.save()
-        portfolio.quantity -= quantity
-        if portfolio.quantity == 0:
-            portfolio.delete()
-        else:
+        if action == "buy":
+            user_profile.money -= price * quantity
+            user_profile.save()
+            if created:
+                portfolio.quantity = quantity
+                portfolio.average_price = price
+            else:
+                total_shares = portfolio.quantity + quantity
+                portfolio.average_price = (
+                    (portfolio.average_price * portfolio.quantity + price * quantity) / total_shares
+                )
+                portfolio.quantity = total_shares
             portfolio.save()
 
-    return Response({'message': 'Order processed successfully'})
+        elif action == "sell":
+            if quantity > portfolio.quantity:
+                return Response({"error": "Not enough shares to sell."}, status=400)
+            user_profile.money += price * quantity
+            user_profile.save()
+            portfolio.quantity -= quantity
+            if portfolio.quantity == 0:
+                portfolio.delete()
+            else:
+                portfolio.save()
+
+        return Response({'message': 'Order processed successfully'})
+    
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_orders(request):
+    user = request.user
+
+    order_list = Order.objects.filter(user=user).order_by('-timestamp')
+    serializer = OrderSerializer(order_list, many=True)
+
+    return Response(serializer.data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def cancel_order(request):
+    user = request.user
+    order_id = request.data.get("id")
+
+    order_obj = Order.objects.get(id=order_id, user=user)
+
+    if order_obj.action == "buy":
+        user_profile = UserProfile.objects.get(user=user)
+        user_profile.money += order_obj.price * order_obj.quantity
+        user_profile.save()
+
+    order_obj.delete()
+
+    return Response({"Status" : "deleted"})
 
 # Username check
 @api_view(["GET"])

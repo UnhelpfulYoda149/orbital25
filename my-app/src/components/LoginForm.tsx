@@ -81,14 +81,12 @@ function LoginForm({ route, method }: FormProps) {
       if (error.response) {
         const data = error.response.data;
 
-        if (typeof data.error === "string") {
-          errorMsg = data.error;
-        } else if (data.username && Array.isArray(data.username)) {
-          errorMsg = data.username[0];
+        if (typeof data.detail === "string") {
+          errorMsg = data.detail;
         } else if (typeof data === "object") {
           const firstKey = Object.keys(data)[0];
           if (Array.isArray(data[firstKey])) {
-            errorMsg = data[firstKey][0];
+            errorMsg = `${firstKey}: ${data[firstKey][0]}`;
           }
         }
       }

@@ -153,3 +153,32 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user.username} liked {self.post}"
+    
+class Order(models.Model):
+    BUY = 'buy'
+    SELL = 'sell'
+    PURCHASE_ACTIONS = [
+        (BUY, 'Buy'),
+        (SELL, 'Sell'),
+    ]
+
+    GTC = "gtc"
+    DAY = "day"
+    EXPIRY_ACTIONS = [
+        (GTC, "GTC"),
+        (DAY, "Day")
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    action = models.CharField(max_length=4, choices=PURCHASE_ACTIONS)
+    expiry = models.CharField(max_length=3, choices=EXPIRY_ACTIONS)
+    quantity = models.PositiveIntegerField()
+    price = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-timestamp"]  
+
+    def __str__(self):
+        return f"{self.user.username} orders {self.action} {self.quantity} {self.stock}: {self.expiry}"

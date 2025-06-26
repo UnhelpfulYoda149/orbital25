@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Stock, LiveStock, HistoryStock, Portfolio, Transaction, Watchlist, UserProfile, FriendRequest, Friend, Post, Comment, Like
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -95,3 +95,8 @@ class PublicProfileSerializer(serializers.Serializer):
     num_posts = serializers.IntegerField()
     is_friend = serializers.BooleanField()
 
+class OrderSerializer(serializers.ModelSerializer):
+    stock = StockSerializer(read_only=True)
+    class Meta:
+        model = Order
+        fields = ["id", "user", "stock", "action", "expiry", "quantity", "price", "timestamp"]

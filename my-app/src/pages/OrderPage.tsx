@@ -174,6 +174,8 @@ function OrderPage() {
           action: orderType,
           quantity: numShares,
           price: instructionType === "limit" ? orderPrice : livePrice,
+          expiry: expiryType,
+          instruction: instructionType,
         },
         { withCredentials: true }
       );

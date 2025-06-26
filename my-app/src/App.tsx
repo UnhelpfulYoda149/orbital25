@@ -23,6 +23,7 @@ import TransactionsPage from "./pages/TransactionsPage";
 import FindFriendsPage from "./pages/FindFriendsPage";
 import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
+import PendingOrderPage from "./pages/PendingOrderPage";
 
 function Logout() {
   localStorage.clear();
@@ -106,6 +107,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pending-orders"
+        element={
+          <ProtectedRoute>
+            <PendingOrderPage />
           </ProtectedRoute>
         }
       />

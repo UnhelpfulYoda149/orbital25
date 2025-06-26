@@ -8,6 +8,7 @@ const pages = [
   { name: "dashboard", url: "/dashboard" },
   { name: "portfolio", url: "/portfolio" },
   { name: "transactions", url: "/transactions" },
+  { name: "pending orders", url: "/pending-orders" },
   { name: "find friends", url: "/find-friends" },
   { name: "friends", url: "/friends" },
 ];
