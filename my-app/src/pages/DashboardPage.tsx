@@ -21,7 +21,6 @@ export default function DashboardPage() {
   const fetchWatchlist = async () => {
     try {
       const res = await api.get("/user/watchlist/");
-      console.log(res);
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
 

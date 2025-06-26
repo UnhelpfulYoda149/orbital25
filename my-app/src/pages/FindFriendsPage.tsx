@@ -11,6 +11,17 @@ function FindFriendsPage() {
   const [results, setResults] = useState<string[]>([]);
   const [requests, setRequests] = useState<string[]>([]);
   const [sentRequests, setSentRequests] = useState<string[]>([]);
+  const [friends, setFriends] = useState<string[]>([]);
+  const [hasSearched, setHasSearched] = useState<boolean>(false);
+
+  const fetchFriends = async () => {
+    try {
+      const res = await api.get("/user/friends/");
+      setFriends(res.data);
+    } catch (err) {
+      console.error("Error fetching friend requests", err);
+    }
+  };
 
   const fetchRequested = async () => {
     try {
@@ -32,10 +43,13 @@ function FindFriendsPage() {
 
   const handleSearch = async () => {
     try {
+      setHasSearched(true);
       const res = await api
         .get(`/search-user/?query=${search}`)
         .then((res) =>
-          res.data.map((item: { username: string }) => item.username)
+          res.data
+            .map((item: { username: string }) => item.username)
+            .filter((item: string) => !friends.includes(item))
         );
       setResults(res);
     } catch (err) {
@@ -51,7 +65,6 @@ function FindFriendsPage() {
         { withCredentials: true }
       );
       fetchRequested();
-      console.log(res);
     } catch (err) {
       console.error("Unable to send friend request", err);
     }
@@ -65,7 +78,6 @@ function FindFriendsPage() {
         { withCredentials: true }
       );
       fetchRequests();
-      console.log(res);
     } catch (err) {
       console.error("Error accepting friend request", err);
     }
@@ -79,18 +91,16 @@ function FindFriendsPage() {
         { withCredentials: true }
       );
       fetchRequests();
-      console.log(res);
     } catch (err) {
       console.error("Error rejecting friend request", err);
     }
   };
 
   useEffect(() => {
+    fetchFriends();
     fetchRequested();
     fetchRequests();
   }, []);
-
-  console.log(requests);
 
   return (
     <>
@@ -108,19 +118,22 @@ function FindFriendsPage() {
             Search
           </Button>
         </Grid>
-        {results.length > 0 && (
-          <>
-            <h2>Search Results</h2>
-            {results.map((username) => (
-              <UserCard
-                key={username}
-                username={username}
-                requested={sentRequests.includes(username)}
-                handleClick={() => handleToggle(username)}
-              />
-            ))}
-          </>
-        )}
+        {hasSearched &&
+          (results.length > 0 ? (
+            <>
+              <h2>Search Results</h2>
+              {results.map((username) => (
+                <UserCard
+                  key={username}
+                  username={username}
+                  requested={sentRequests.includes(username)}
+                  handleClick={() => handleToggle(username)}
+                />
+              ))}
+            </>
+          ) : (
+            <h3>No results found</h3>
+          ))}
         <h2>Friend Requests</h2>
         {requests.length > 0 && (
           <>

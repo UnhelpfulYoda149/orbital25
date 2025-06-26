@@ -25,9 +25,8 @@ function HomePage() {
   const fetchFeed = async () => {
     try {
       const res = await api.get("/user/feed/", { withCredentials: true });
-      console.log(res);
+
       const updatedData = res.data.map((item: any) => {
-        console.log(watchlist);
         return {
           id: item.id,
           username: item.user.username,

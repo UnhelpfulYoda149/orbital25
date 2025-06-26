@@ -16,6 +16,7 @@ import StockCard from "./StockCard";
 import { useNavigate } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
+import ProfileCard from "./ProfileCard";
 
 export interface PostCardProps {
   id: number;
@@ -58,8 +59,6 @@ function PostCard({
   const [editingComment, setEditingComment] = useState(false);
   const [newComment, setNewComment] = useState("");
   const navigate = useNavigate();
-
-  console.log(comments);
 
   const fetchStock = async () => {
     try {
@@ -192,14 +191,17 @@ function PostCard({
             }}
           >
             <Grid container direction="row" alignItems="center" spacing={2}>
-              <Avatar
-                sx={{ cursor: "pointer", bgcolor: "primary.main" }}
-                onClick={() => navigate(`/profile/${item.user.username}`)}
-              >
-                {item.user.username.charAt(0).toUpperCase()}
-              </Avatar>
+              <ProfileCard
+                username={item.user.username}
+                bgcolor={isBuy ? "#D1FFBD" : "#FFC2C2"}
+              />
               <Typography variant="body1">{item.text}</Typography>
-              <Typography variant="body2" position="absolute" right={20}>
+              <Typography
+                variant="body2"
+                position="absolute"
+                right={20}
+                bottom={5}
+              >
                 {new Date(item.timestamp).toLocaleString()}
               </Typography>
             </Grid>

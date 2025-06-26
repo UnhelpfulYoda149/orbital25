@@ -1,6 +1,7 @@
 import { Card, Grid, Button } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import ProfileCard from "./ProfileCard";
 
 interface UserCardProps {
   username: string;
@@ -13,7 +14,7 @@ function UserCard({ username, requested, handleClick }: UserCardProps) {
     <Card variant="outlined" sx={{ minWidth: 500, position: "relative" }}>
       <CardContent>
         <Grid container direction="row" alignItems="center" spacing={1}>
-          <Typography variant="h5">{username}</Typography>
+          <ProfileCard username={username} bgcolor="#eeeeee" />
           <div style={{ position: "absolute", right: 50 }}>
             {!requested ? (
               <Button variant="contained" onClick={() => handleClick(username)}>

@@ -12,7 +12,6 @@ function FriendsPage() {
     try {
       const res = await api.get("/user/friends/");
       setFriends(res.data);
-      console.log(res);
     } catch (err) {
       console.error("Error fetching friend requests", err);
     }
@@ -26,7 +25,6 @@ function FriendsPage() {
         { withCredentials: true }
       );
       fetchFriends();
-      console.log(res);
     } catch (err) {
       console.error("Error removing friend", err);
     }
