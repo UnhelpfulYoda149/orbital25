@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics, viewsets   
+from rest_framework import generics, viewsets, status  
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import *
@@ -29,6 +29,12 @@ class HistoryStockViewSet(viewsets.ModelViewSet):
     serializer_class = HistoryStockSerializer
     permission_classes = [AllowAny]
 
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Portfolio
+from .serializers import PortfolioSerializer
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def portfolio_request(request):
@@ -36,6 +42,19 @@ def portfolio_request(request):
     portfolio_ls = Portfolio.objects.filter(user=user)
     serializer = PortfolioSerializer(portfolio_ls, many=True)
     return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_portfolio(request, username):
+    try:
+        from django.contrib.auth.models import User
+        user = User.objects.get(username=username)
+        portfolio_ls = Portfolio.objects.filter(user=user)
+        serializer = PortfolioSerializer(portfolio_ls, many=True)
+        return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=404)
+
 
 FINNHUB_API_KEY = os.getenv("REACT_APP_FINNHUB_KEY")
 
@@ -133,6 +152,29 @@ def live_stock_request(request):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+def get_multiple_stock_prices(request):
+    symbols = request.data.get("symbols", [])
+    if not isinstance(symbols, list):
+        return Response({"error": "Symbols must be a list."}, status=400)
+
+    stocks = LiveStock.objects.filter(symbol__in=symbols)
+    data = [
+        {
+            "symbol": stock.symbol,
+            "name": stock.name,
+            "lastTrade": stock.lastTrade,
+            "open": stock.open,
+            "high": stock.high,
+            "low": stock.low,
+            "close": stock.close,
+            "volume": stock.volume,
+        }
+        for stock in stocks
+    ]
+    return Response(data)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def place_order(request):
     data = request.data
     user = request.user
@@ -216,6 +258,18 @@ def get_orders(request):
     order_list = Order.objects.filter(user=user).order_by('-timestamp')
     serializer = OrderSerializer(order_list, many=True)
 
+    return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_pending_orders(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({"error": "User not found."}, status=404)
+
+    orders = Order.objects.filter(user=user, action="buy")  # optionally: .filter(status="pending")
+    serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
 @api_view(["POST"])
@@ -302,11 +356,21 @@ def search_stock(request):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_money(request):
-    user = request.user
-    user_profile = UserProfile.objects.get(user=user)
-    serializer = UserProfileSerializer(user_profile)
-    return Response(serializer.data)
+def get_money(request, username=None):
+    try:
+        if username:
+            user = User.objects.get(username=username)
+        else:
+            user = request.user
+
+        user_profile = UserProfile.objects.get(user=user)
+        return Response({"money": user_profile.money})
+
+    except User.DoesNotExist:
+        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+    except UserProfile.DoesNotExist:
+        return Response({"error": "UserProfile not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
