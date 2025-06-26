@@ -23,6 +23,10 @@ function StockCard({
 }: StockCardProps) {
   const navigate = useNavigate();
 
+  const handleClick = (stock: Stock) => {
+    navigate("/stock", { state: { stock } });
+  };
+
   const handleWatchlistToggle = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent navigation
 
@@ -35,18 +39,12 @@ function StockCard({
   };
 
   return (
-    <Card variant="outlined" sx={{ minWidth: 500, position: "relative" }}>
-      <CardContent>
-        <IconButton
-          onClick={handleWatchlistToggle}
-          sx={{ position: "absolute", top: 8, right: 8, zIndex: 10 }}
-        >
-          {isWatchlisted ? (
-            <FavoriteIcon color="error" />
-          ) : (
-            <FavoriteBorderIcon />
-          )}
-        </IconButton>
+    <Card
+      variant="outlined"
+      sx={{ minWidth: 500, position: "relative" }}
+      onClick={() => handleClick(stock)}
+    >
+      <CardActionArea sx={{ padding: 2 }}>
         <Typography variant="h5">{stock.name}</Typography>
         <Typography variant="body2" color="textSecondary">
           ({stock.symbol})
@@ -54,7 +52,17 @@ function StockCard({
         <Grid container direction="row" alignItems="center" spacing={1}>
           <StockChange lastTrade={stock.lastTrade} open={stock.open} />
         </Grid>
-      </CardContent>
+      </CardActionArea>
+      <IconButton
+        onClick={handleWatchlistToggle}
+        sx={{ position: "absolute", top: 8, right: 8, zIndex: 10 }}
+      >
+        {isWatchlisted ? (
+          <FavoriteIcon color="error" />
+        ) : (
+          <FavoriteBorderIcon />
+        )}
+      </IconButton>
     </Card>
   );
 }

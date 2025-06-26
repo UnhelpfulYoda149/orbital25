@@ -88,15 +88,12 @@ export default function DashboardPage() {
             <h2>Search Results</h2>
             <Grid container direction="column" spacing={1}>
               {results.map((stock) => (
-                <Card key={stock.symbol} variant="outlined">
-                  <CardActionArea onClick={() => handleClick(stock)}>
-                    <StockCard
-                      stock={stock}
-                      isWatchlisted={watchlist.includes(stock.symbol)}
-                      onToggleWatchlist={fetchWatchlist}
-                    />
-                  </CardActionArea>
-                </Card>
+                <StockCard
+                  key={stock.symbol}
+                  stock={stock}
+                  isWatchlisted={watchlist.includes(stock.symbol)}
+                  onToggleWatchlist={fetchWatchlist}
+                />
               ))}
             </Grid>
           </>
@@ -105,15 +102,12 @@ export default function DashboardPage() {
         {watchlist.length == 0 && <h3>Your Watchlist is empty :(</h3>}
 
         {stocks.map((stock) => (
-          <Card key={stock.symbol} variant="outlined">
-            <CardActionArea onClick={() => handleClick(stock)}>
-              <StockCard
-                stock={stock}
-                isWatchlisted={watchlist.includes(stock.symbol)}
-                onToggleWatchlist={fetchWatchlist}
-              />
-            </CardActionArea>
-          </Card>
+          <StockCard
+            key={stock.symbol}
+            stock={stock}
+            isWatchlisted={watchlist.includes(stock.symbol)}
+            onToggleWatchlist={fetchWatchlist}
+          />
         ))}
       </div>
     </>

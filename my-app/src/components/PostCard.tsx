@@ -116,13 +116,11 @@ function PostCard({
           2
         )}`}</Typography>
         {stock && (
-          <CardActionArea onClick={() => handleClick(stock)}>
-            <StockCard
-              isWatchlisted={isWatchlisted}
-              stock={stock}
-              onToggleWatchlist={onToggleWatchlist}
-            />
-          </CardActionArea>
+          <StockCard
+            isWatchlisted={isWatchlisted}
+            stock={stock}
+            onToggleWatchlist={onToggleWatchlist}
+          />
         )}
         <Typography variant="body2">{date}</Typography>
         <Grid
@@ -182,6 +180,7 @@ function PostCard({
         {comments.map((item) => (
           <Card
             variant="elevation"
+            key={item.id}
             sx={{
               minWidth: 500,
               position: "relative",

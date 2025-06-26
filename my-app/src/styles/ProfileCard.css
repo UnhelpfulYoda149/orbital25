@@ -1,0 +1,7 @@
+.profile-link {
+  background-color: var(--bgcolor);
+  transition: background-color 0.2s ease;
+}
+.profile-link:hover {
+  filter: brightness(0.9);
+}

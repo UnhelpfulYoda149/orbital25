@@ -73,6 +73,7 @@ function HomePage() {
         ) : (
           props.map((prop) => (
             <PostCard
+              key={prop.id}
               {...prop}
               onToggleWatchlist={fetchWatchlist}
               isWatchlisted={watchlist.includes(prop.symbol)}
