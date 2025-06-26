@@ -58,7 +58,7 @@ function ProfilePage() {
 const fetchPortfolioData = async () => {
   try {
     const [portfolioRes, cashRes, ordersRes] = await Promise.all([
-      api.get(`/user/${username}/portfolio/`, { withCredentials: true }),
+      api.get(`/portfolio-request/?user=${username}`, { withCredentials: true }),
       api.get(`/user/${username}/money/`, { withCredentials: true }),
       api.get(`/user/${username}/pending-orders/`, { withCredentials: true }),
     ]);

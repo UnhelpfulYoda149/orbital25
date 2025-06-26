@@ -38,20 +38,21 @@ from .serializers import PortfolioSerializer
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def portfolio_request(request):
-    user = request.user
-    portfolio_ls = Portfolio.objects.filter(user=user)
-    serializer = PortfolioSerializer(portfolio_ls, many=True)
-    return Response(serializer.data)
+    from django.contrib.auth.models import User
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_user_portfolio(request, username):
+    # Check for ?user=username in query string
+    username = request.GET.get("user", None)
+
     try:
-        from django.contrib.auth.models import User
-        user = User.objects.get(username=username)
-        portfolio_ls = Portfolio.objects.filter(user=user)
-        serializer = PortfolioSerializer(portfolio_ls, many=True)
+        if username:
+            user = User.objects.get(username=username)
+        else:
+            user = request.user
+
+        portfolio_items = Portfolio.objects.filter(user=user)
+        serializer = PortfolioSerializer(portfolio_items, many=True)
         return Response(serializer.data)
+
     except User.DoesNotExist:
         return Response({"error": "User not found"}, status=404)
 

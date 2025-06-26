@@ -33,7 +33,7 @@ urlpatterns = [
     path("", include(router.urls)),
     path('place-order/', place_order, name='place-order'),
     path('portfolio-request/', portfolio_request, name='portfolio-request'),
-    path("user/<str:username>/portfolio/", get_user_portfolio),
+    path("user/<str:username>/portfolio/", portfolio_request),
     path('live-stock-request/', live_stock_request, name='live-stock-request'),
     path("live-stock-batch/", get_multiple_stock_prices, name="live_stock_batch"),
     path("user/cancel-order/", cancel_order, name="cancel_order"),
