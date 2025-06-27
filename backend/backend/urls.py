@@ -62,4 +62,6 @@ urlpatterns = [
     path("user/<str:username>/profile/", get_user_profile),
     path("user/<str:username>/posts/", get_user_posts),
     path("user/update-bio/", update_bio),
+    path("leaderboard/global/", global_leaderboard),
+    path("leaderboard/local/", local_leaderboard),
 ]

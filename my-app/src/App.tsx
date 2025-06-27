@@ -24,6 +24,7 @@ import FindFriendsPage from "./pages/FindFriendsPage";
 import FriendsPage from "./pages/FriendsPage";
 import ProfilePage from "./pages/ProfilePage";
 import PendingOrderPage from "./pages/PendingOrderPage";
+import LeaderboardPage from "./pages/Leaderboard";
 
 function Logout() {
   localStorage.clear();
@@ -115,6 +116,14 @@ function App() {
         element={
           <ProtectedRoute>
             <PendingOrderPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/leaderboard"
+        element={
+          <ProtectedRoute>
+            <LeaderboardPage />
           </ProtectedRoute>
         }
       />

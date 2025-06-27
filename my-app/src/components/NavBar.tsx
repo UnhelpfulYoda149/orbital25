@@ -11,6 +11,7 @@ const pages = [
   { name: "pending orders", url: "/pending-orders" },
   { name: "find friends", url: "/find-friends" },
   { name: "friends", url: "/friends" },
+  { name: "leaderboard", url:"/leaderboard" }
 ];
 
 function NavBar() {

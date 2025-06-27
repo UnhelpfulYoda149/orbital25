@@ -10,6 +10,8 @@ from django.db.models import Q
 import requests
 from django.conf import settings
 import os
+from .utils import calculate_portfolio_value
+
 
 
 # Create your views here
@@ -621,3 +623,47 @@ def get_user_profile(request, username):
     }
 
     return Response(data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def global_leaderboard(request):
+    users = User.objects.all()
+    leaderboard = []
+    for user in users:
+        value = calculate_portfolio_value(user)
+        leaderboard.append({
+            "username": user.username,
+            "portfolio_value": value,
+        })
+    leaderboard.sort(key=lambda x: x["portfolio_value"], reverse=True)
+    return Response(leaderboard[:10])
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def local_leaderboard(request):
+    current_user = request.user
+
+    # Get all Friend relationships involving current_user
+    friendships = Friend.objects.filter(Q(user1=current_user) | Q(user2=current_user))
+
+    # Extract all friend users (the one that's not current_user)
+    friend_users = set()
+    for friendship in friendships:
+        if friendship.user1 == current_user:
+            friend_users.add(friendship.user2)
+        else:
+            friend_users.add(friendship.user1)
+
+    # Include the current user
+    users = list(friend_users) + [current_user]
+
+    leaderboard = []
+    for user in users:
+        value = calculate_portfolio_value(user)
+        leaderboard.append({
+            "username": user.username,
+            "portfolio_value": value,
+        })
+
+    leaderboard.sort(key=lambda x: x["portfolio_value"], reverse=True)
+    return Response(leaderboard[:10])
