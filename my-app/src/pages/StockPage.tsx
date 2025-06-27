@@ -37,7 +37,7 @@ function StockPage() {
             spacing={1}
             marginTop={2}
           >
-            <StockChange lastTrade={stock.lastTrade} open={stock.open} />
+            <StockChange lastTrade={stock.lastTrade} prevClose={stock.close} />
           </Grid>
           <Grid
             container

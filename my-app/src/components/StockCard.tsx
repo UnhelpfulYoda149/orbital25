@@ -50,7 +50,7 @@ function StockCard({
           ({stock.symbol})
         </Typography>
         <Grid container direction="row" alignItems="center" spacing={1}>
-          <StockChange lastTrade={stock.lastTrade} open={stock.open} />
+          <StockChange lastTrade={stock.lastTrade} prevClose={stock.close} />
         </Grid>
       </CardActionArea>
       <IconButton
