@@ -64,7 +64,7 @@ FINNHUB_API_KEY = os.getenv("REACT_APP_FINNHUB_KEY")
 def live_stock_request(request):
     symbol = request.data.get("symbol")
 
-    # Step 1: Fetch from Finnhub
+    # Fetch from Finnhub
     finnhub_url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}"
     finnhub_res = requests.get(finnhub_url)
 
@@ -79,7 +79,7 @@ def live_stock_request(request):
 
     print(f"[live_stock_request] Updating {symbol}: {last_price}")
 
-    # Step 2: Update or create
+    # Update or create
     stock, created = LiveStock.objects.get_or_create(symbol=symbol)
     stock.lastTrade = last_price
     stock.save()
@@ -98,10 +98,10 @@ def live_stock_request(request):
                 price=stock.lastTrade,
             )
 
-            # Create Post
+            # Create Post and Portfolio
             post = Post.objects.create(user=order.user, transaction=transaction)
 
-            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
 
             #Refund user the diff between order and transaction
             user_profile = UserProfile.objects.get(user=order.user)
@@ -130,10 +130,10 @@ def live_stock_request(request):
                 price=stock.lastTrade,
             )
 
-            # Create Post
+            # Create Post and Portfolio
             post = Post.objects.create(user=order.user, transaction=transaction)
 
-            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) # defaults are dummy values so as to avoid null errors on the backend
+            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
 
             if order.quantity < portfolio.quantity:
                 user_profile = UserProfile.objects.get(user=order.user)
@@ -188,7 +188,7 @@ def place_order(request):
     expiry = data.get("expiry")
     user_profile = UserProfile.objects.get(user=user)
 
-    # Get Stock model instance (not LiveStock)
+    # Get Stock instance
     try:
         stock = Stock.objects.get(symbol=stock_symbol)
     except Stock.DoesNotExist:
@@ -269,7 +269,7 @@ def get_user_pending_orders(request, username):
     except User.DoesNotExist:
         return Response({"error": "User not found."}, status=404)
 
-    orders = Order.objects.filter(user=user, action="buy")  # optionally: .filter(status="pending")
+    orders = Order.objects.filter(user=user, action="buy")
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
@@ -281,6 +281,7 @@ def cancel_order(request):
 
     order_obj = Order.objects.get(id=order_id, user=user)
 
+    #Refund money if cancelling buy order
     if order_obj.action == "buy":
         user_profile = UserProfile.objects.get(user=user)
         user_profile.money += order_obj.price * order_obj.quantity
