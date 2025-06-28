@@ -22,7 +22,7 @@ function UserCard({ username, requested, handleClick }: UserCardProps) {
               </Button>
             ) : (
               <Button onClick={() => handleClick(username)}>
-                Request Sent
+                Cancel Request
               </Button>
             )}
           </div>

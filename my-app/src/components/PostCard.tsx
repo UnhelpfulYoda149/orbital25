@@ -109,9 +109,13 @@ function PostCard({
       }}
     >
       <CardContent>
-        <Typography variant="h5">
-          {username + (isBuy ? " bought" : " sold")}
-        </Typography>
+        <Grid container direction="row" alignItems="center" spacing={1}>
+          <ProfileCard
+            username={username}
+            bgcolor={isBuy ? "#D1FFBD" : "#FFC2C2"}
+          />
+          <Typography variant="h5">{isBuy ? " bought" : " sold"}</Typography>
+        </Grid>
         <Typography variant="body1">{`${quantity} units of ${symbol} @ $${price.toFixed(
           2
         )}`}</Typography>
@@ -190,20 +194,19 @@ function PostCard({
             }}
           >
             <Grid container direction="row" alignItems="center" spacing={2}>
-              <ProfileCard
-                username={item.user.username}
-                bgcolor={isBuy ? "#D1FFBD" : "#FFC2C2"}
-              />
-              <Typography variant="body1">{item.text}</Typography>
-              <Typography
-                variant="body2"
-                position="absolute"
-                right={20}
-                bottom={5}
-              >
-                {new Date(item.timestamp).toLocaleString()}
-              </Typography>
+              <Grid component="div">
+                <ProfileCard
+                  username={item.user.username}
+                  bgcolor={isBuy ? "#D1FFBD" : "#FFC2C2"}
+                />
+              </Grid>
+              <Grid>
+                <Typography variant="body1">{item.text}</Typography>
+              </Grid>
             </Grid>
+            <Typography variant="body2" textAlign="end">
+              {new Date(item.timestamp).toLocaleString()}
+            </Typography>
           </Card>
         ))}
       </CardContent>
