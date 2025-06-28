@@ -132,7 +132,7 @@ function OrderPage() {
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const num = Number(e.target.value);
-    if (!isNaN(num)) {
+    if (num > 0) {
       setOrderPrice(num);
     }
   };
