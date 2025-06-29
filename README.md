@@ -57,14 +57,7 @@ cd orbital25/my-app
 npm install
 ```
 
-3. Environment Variables
-   Create a .env file in my-app
-
-```
-REACT_APP_API_URL=http://localhost:8000
-```
-
-4. Install Backend Dependencies
+3. Install Backend Dependencies
 
 ```
 cd orbital25/backend
@@ -72,20 +65,13 @@ pip install -r backend_requirements.txt
 python manage.py migrate
 ```
 
-5. Environment Variables
-   Create a .env file in backend
-
-```
-REACT_APP_FINNHUB_KEY=d0t6tapr01qid5qd4bb0d0t6tapr01qid5qd4bbg
-```
-
-6. Run the backend
+4. Run the backend
 
 ```
 python manage.py runserver
 ```
 
-7. Run the frontend
+5. Run the frontend
 
 ```
 npm start
