@@ -125,14 +125,14 @@ function OrderPage() {
 
   const handleNumSharesChange = (e: ChangeEvent<HTMLInputElement>) => {
     const num = Number(e.target.value);
-    if (!isNaN(num)) {
+    if (num > 0 && Number.isInteger(num)) {
       setNumShares(num);
     }
   };
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const num = Number(e.target.value);
-    if (num > 0) {
+    if (num >= 0 && !isNaN(num)) {
       setOrderPrice(num);
     }
   };
@@ -148,9 +148,15 @@ function OrderPage() {
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(numShares);
 
     if (numShares <= 0) {
       setError("Number of shares must be greater than 0.");
+      return;
+    }
+
+    if (orderPrice <= 0) {
+      setError("Limit price must be greater than 0.");
       return;
     }
 
