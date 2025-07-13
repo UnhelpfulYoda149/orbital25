@@ -8,9 +8,6 @@ class SocialFeaturesTests(APITestCase):
     def setUp(self):
         self.user1 = User.objects.create_user(username='user1', password='Password@123')
         self.user2 = User.objects.create_user(username='user2', password='Password@123')
-        UserProfile.objects.get_or_create(user=self.user1)
-        UserProfile.objects.get_or_create(user=self.user2)
-
         # Authenticate user1
         res = self.client.post("/api/token/", {"username": "user1", "password": "Password@123"})
         self.token = res.data["access"]

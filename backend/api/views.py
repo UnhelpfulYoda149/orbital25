@@ -195,6 +195,9 @@ def place_order(request):
         stock = Stock.objects.get(symbol=stock_symbol)
     except Stock.DoesNotExist:
         return Response({"error": f"Stock '{stock_symbol}' does not exist in Stock table."}, status=404)
+    
+    if quantity <= 0:
+        return Response({"error": "Quantity must be positive integer."}, status=400)
 
     if instruction == "limit":
         order = Order.objects.create(

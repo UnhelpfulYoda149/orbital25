@@ -7,22 +7,29 @@ class TradingIntegrationTests(APITestCase):
         self.user = User.objects.create_user(username="alice", password="Password@123")
         self.client.login(username="alice", password="Password@123")
         self.stock = Stock.objects.create(symbol="AAPL", name="Apple Inc.")
-        UserProfile.objects.create(user=self.user, money=5000)
+        self.client.force_authenticate(user=self.user)
 
     def test_market_order_flow(self):
         # Place market order
-        self.client.post('/order/', {
-            "symbol": "AAPL",
+        response = self.client.post('/place-order/', {
+            "stock": "AAPL",
             "quantity": 1,
             "action": "buy",
-            "order_type": "market"
+            "instruction": "market",
+            "price": 1.00,
+            "expiry": "gtc"
         })
+        self.assertEqual(response.status_code, 200)
+
         # Verify transaction recorded
-        tx = self.client.get("/transactions/")
+        tx = self.client.get("/user/transactions/")
         self.assertEqual(len(tx.data), 1)
+
         # Check portfolio
-        pf = self.client.get("/portfolio/")
+        pf = self.client.get("/portfolio-request/")
         self.assertTrue(any(item['stock'] == 'AAPL' for item in pf.data))
+
         # Check post
-        posts = self.client.get("/posts/")
-        self.assertTrue(any("AAPL" in post['content'] for post in posts.data))
+        posts = self.client.get(f"/user/{self.user.username}/posts/")
+        print(posts.data)
+        self.assertTrue(any(post["transaction"]["stock_symbol"] == "AAPL" for post in posts.data)) 
