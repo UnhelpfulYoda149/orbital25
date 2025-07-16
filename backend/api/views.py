@@ -633,10 +633,11 @@ def global_leaderboard(request):
     users = User.objects.all()
     leaderboard = []
     for user in users:
-        value = calculate_portfolio_value(user)
+        [value, holdings] = calculate_portfolio_value(user)
         leaderboard.append({
             "username": user.username,
-            "portfolio_value": value,
+            "stock_holdings": holdings,
+            "portfolio_value": value
         })
     leaderboard.sort(key=lambda x: x["portfolio_value"], reverse=True)
     return Response(leaderboard[:10])
@@ -662,10 +663,11 @@ def local_leaderboard(request):
 
     leaderboard = []
     for user in users:
-        value = calculate_portfolio_value(user)
+        [value, holdings] = calculate_portfolio_value(user)
         leaderboard.append({
             "username": user.username,
-            "portfolio_value": value,
+            "stock_holdings": holdings,
+            "portfolio_value": value
         })
 
     leaderboard.sort(key=lambda x: x["portfolio_value"], reverse=True)
