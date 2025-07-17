@@ -605,16 +605,18 @@ def get_user_profile(request, username):
     except UserProfile.DoesNotExist:
         return Response({"error": "User profile not found"}, status=404)
 
-    # Check if requester is friend
     requester = request.user
+
+    # Check if requester is already a friend
     is_friend = Friend.objects.filter(
         Q(user1=requester, user2=target_user) | Q(user1=target_user, user2=requester)
     ).exists()
 
-    # Post count
-    post_count = Post.objects.filter(user=target_user).count()
+    # Check if a friend request was already sent
+    request_sent = FriendRequest.objects.filter(from_user=requester, to_user=target_user).exists()
 
-    # Friend count
+    # Count posts and friends
+    post_count = Post.objects.filter(user=target_user).count()
     friend_count = Friend.objects.filter(Q(user1=target_user) | Q(user2=target_user)).count()
 
     data = {
@@ -623,6 +625,7 @@ def get_user_profile(request, username):
         "post_count": post_count,
         "friend_count": friend_count,
         "is_friend": is_friend,
+        "request_sent": request_sent,  # <-- new field
     }
 
     return Response(data)

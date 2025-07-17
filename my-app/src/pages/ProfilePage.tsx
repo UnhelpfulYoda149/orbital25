@@ -29,6 +29,7 @@ function ProfilePage() {
   const [portfolioStocks, setPortfolioStocks] = useState<PortfolioSummary[]>([]);
   const [portfolioCash, setPortfolioCash] = useState<number>(0);
   const [reservedCash, setReservedCash] = useState(0);
+  const [requestSent, setRequestSent] = useState(false);
 
   const fetchProfile = async () => {
     try {
@@ -39,6 +40,7 @@ function ProfilePage() {
       setFriendCount(res.data.friend_count);
       setPostCount(res.data.post_count);
       setIsFriend(res.data.is_friend);
+      setRequestSent(res.data.request_sent || false);
     } catch (err) {
       console.error("Error fetching profile:", err);
     }
@@ -129,6 +131,19 @@ const fetchPortfolioData = async () => {
     }
   };
 
+  const handleFriendRequestToggle = async () => {
+    try {
+      await api.post(
+        "/toggle-friend-request/",
+        { username },
+        { withCredentials: true }
+      );
+      setRequestSent(!requestSent);
+    } catch (err) {
+      console.error("Error toggling friend request", err);
+    }
+  };
+
   useEffect(() => {
     if (!username) return;
     fetchProfile();
@@ -194,9 +209,20 @@ const fetchPortfolioData = async () => {
                   </>
                 )
               ) : (
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  {bio || "No bio yet."}
-                </Typography>
+                <>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {bio || "No bio yet."}
+                  </Typography>
+                  {!isFriend && !isOwnProfile && (
+                    <Button
+                      onClick={handleFriendRequestToggle}
+                      variant={requestSent ? "outlined" : "contained"}
+                      sx={{ mt: 1 }}
+                    >
+                      {requestSent ? "Cancel Request" : "Add Friend"}
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           </div>
