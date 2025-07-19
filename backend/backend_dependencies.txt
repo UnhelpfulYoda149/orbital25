@@ -4,7 +4,7 @@ Django
 django-cors-headers
 djangorestframework
 djangorestframework-simplejwt
-dj-databse-url
+dj-database-url
 gunicorn
 PyJWT
 pytz
