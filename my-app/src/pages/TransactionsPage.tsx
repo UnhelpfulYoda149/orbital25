@@ -21,7 +21,9 @@ function TransactionsPage() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const res = await api.get("/user/transactions/");
+        const res = await api.get("/user/transactions/", {
+          withCredentials: true,
+        });
         // Sort by timestamp DESC
         const sorted = res.data.sort(
           (a: Transaction, b: Transaction) =>

@@ -16,7 +16,7 @@ function FindFriendsPage() {
 
   const fetchFriends = async () => {
     try {
-      const res = await api.get("/user/friends/");
+      const res = await api.get("/user/friends/", { withCredentials: true });
       setFriends(res.data);
     } catch (err) {
       console.error("Error fetching friend requests", err);
@@ -25,7 +25,9 @@ function FindFriendsPage() {
 
   const fetchRequested = async () => {
     try {
-      const res = await api.get("/user/sent-requests/");
+      const res = await api.get("/user/sent-requests/", {
+        withCredentials: true,
+      });
       setSentRequests(res.data);
     } catch (err) {
       console.error("Error fetching requested users", err);
@@ -34,7 +36,9 @@ function FindFriendsPage() {
 
   const fetchRequests = async () => {
     try {
-      const res = await api.get("/user/received-requests/");
+      const res = await api.get("/user/received-requests/", {
+        withCredentials: true,
+      });
       setRequests(res.data);
     } catch (err) {
       console.error("Error fetching friend requests", err);
@@ -45,7 +49,7 @@ function FindFriendsPage() {
     try {
       setHasSearched(true);
       const res = await api
-        .get(`/search-user/?query=${search}`)
+        .get(`/search-user/?query=${search}`, { withCredentials: true })
         .then((res) =>
           res.data
             .map((item: { username: string }) => item.username)

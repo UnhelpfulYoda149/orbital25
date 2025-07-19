@@ -54,7 +54,7 @@ function OrderPage() {
 
   const fetchWatchlist = async () => {
     try {
-      const res = await api.get("/user/watchlist/");
+      const res = await api.get("/user/watchlist/",  { withCredentials: true });
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
     } catch (err) {

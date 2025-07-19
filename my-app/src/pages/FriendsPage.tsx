@@ -10,7 +10,7 @@ function FriendsPage() {
 
   const fetchFriends = async () => {
     try {
-      const res = await api.get("/user/friends/");
+      const res = await api.get("/user/friends/", { withCredentials: true });
       setFriends(res.data);
     } catch (err) {
       console.error("Error fetching friend requests", err);

@@ -29,7 +29,11 @@ function LoginForm({ route, method }: FormProps) {
 
   const checkUsernameExists = async (username: string): Promise<boolean> => {
     try {
-      const res = await api.post("/user/check-username/", { username });
+      const res = await api.post(
+        "/user/check-username/",
+        { username },
+        { withCredentials: true }
+      );
       return !res.data.available;
     } catch (err) {
       console.error("Username check failed", err);
@@ -64,7 +68,11 @@ function LoginForm({ route, method }: FormProps) {
     }
 
     try {
-      const res = await api.post(route, { username, password });
+      const res = await api.post(
+        route,
+        { username, password },
+        { withCredentials: true }
+      );
 
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);

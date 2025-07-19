@@ -18,9 +18,13 @@ function ProtectedRoute({ children }: Props): JSX.Element {
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     try {
-      const res = await api.post("/api/token/refresh/", {
-        refresh: refreshToken,
-      });
+      const res = await api.post(
+        "/api/token/refresh/",
+        {
+          refresh: refreshToken,
+        },
+        { withCredentials: true }
+      );
       if (res.status === 200) {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         setIsAuthorized(true);
@@ -58,7 +62,6 @@ function ProtectedRoute({ children }: Props): JSX.Element {
 }
 
 export default ProtectedRoute;
-
 
 /* .jsx
 import { Navigate } from "react-router-dom";
