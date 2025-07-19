@@ -20,7 +20,7 @@ export default function DashboardPage() {
 
   const fetchWatchlist = async () => {
     try {
-      const res = await api.get("/user/watchlist/");
+      const res = await api.get("/user/watchlist/", { withCredentials: true });
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
 
@@ -50,12 +50,18 @@ export default function DashboardPage() {
 
   const handleSearch = async () => {
     try {
-      const res = await api.get(`/search-stock/?query=${search}`);
+      const res = await api.get(`/search-stock/?query=${search}`, {
+        withCredentials: true,
+      });
       const basicResults: Stock[] = res.data;
 
       // Fetch full LiveStock info for each search result
       const promises = basicResults.map((stock) =>
-        api.post("/live-stock-request/", { symbol: stock.symbol })
+        api.post(
+          "/live-stock-request/",
+          { symbol: stock.symbol },
+          { withCredentials: true }
+        )
       );
       const detailedRes = await Promise.all(promises);
       const detailedStocks = detailedRes.map((r) => r.data);
