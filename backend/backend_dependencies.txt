@@ -1,12 +1,15 @@
 asgiref
 celery
+dj-databse-url
 Django
 django-cors-headers
 djangorestframework
 djangorestframework-simplejwt
+gunicorn
 PyJWT
 pytz
 requests
 sqlparse
 psycopg2-binary
 python-dotenv
+uvicorn
