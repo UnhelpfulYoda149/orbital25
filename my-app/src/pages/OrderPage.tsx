@@ -148,7 +148,6 @@ function OrderPage() {
 
   const handleOrderSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(numShares);
 
     if (numShares <= 0) {
       setError("Number of shares must be greater than 0.");

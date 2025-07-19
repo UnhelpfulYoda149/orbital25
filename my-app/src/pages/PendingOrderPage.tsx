@@ -22,8 +22,6 @@ function PendingOrderPage() {
     fetchOrders();
   }, []);
 
-  console.log(orders);
-
   return (
     <>
       <Header user={username} />

@@ -30,7 +30,6 @@ export async function getCompanyName(symbol: string): Promise<string | null> {
       `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}&token=${process.env.REACT_APP_FINNHUB_KEY}`
     );
     const data = await res.json();
-    console.log(data);
     return data.name;
   } catch (error) {
     console.error("Failed to fetch company name", error);
