@@ -26,7 +26,7 @@ router.register(r"historyStock", HistoryStockViewSet, basename="historyStock")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/cleanup-orders", cleanup_orders, name="cleanup_orders"),
+    path("api/cleanup-orders/", cleanup_orders, name="cleanup_orders"),
     path("api/user/register/", CreateUserView.as_view(), name="register"),
     path("api/token/", TokenObtainPairView.as_view(), name="login"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
