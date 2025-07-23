@@ -688,3 +688,15 @@ def local_leaderboard(request):
 
     leaderboard.sort(key=lambda x: x["portfolio_value"], reverse=True)
     return Response(leaderboard[:10])
+
+@api_view(["POST"])
+def cleanup_orders(request):
+    token = request.headers.get("CRON_TOKEN")
+    if token != os.getenv("CRON_TOKEN"):
+        return Response({"error": "Unauthorised"}, status=401)
+    
+    expired_orders = Order.objects.filter(expiry=Order.DAY)
+    count = expired_orders.count()
+    expired_orders.delete()
+
+    return Response({"success": f"Deleted {count} expired orders."})

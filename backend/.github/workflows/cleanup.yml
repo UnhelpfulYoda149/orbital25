@@ -1,0 +1,16 @@
+name: Day-Only Order Cleanup
+
+on:
+  schedule:
+    - cron: "0 20 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  call-cleanup-endpoint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call cleanup endpoint
+        run: |
+          curl -X POST https://backend-fjwp.onrender.com/api/cleanup-orders/ \
+            -H "CRON_TOKEN: ${{ secrets.CRON_TOKEN }}"
