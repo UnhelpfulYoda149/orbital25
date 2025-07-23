@@ -11,8 +11,7 @@ import requests
 from django.conf import settings
 import os
 from .utils import calculate_portfolio_value
-
-
+from django.utils import timezone
 
 # Create your views here
 
@@ -89,6 +88,8 @@ def live_stock_request(request):
     s = Stock.objects.get(symbol=stock.symbol)
     orders_list = Order.objects.filter(stock=s)
     for order in orders_list:
+        print(order.timestamp)
+        print()
         #If stock price is lower than price user is willing to buy at
         if order.action == "buy" and order.price >= stock.lastTrade:
             #Check if Transacted already
