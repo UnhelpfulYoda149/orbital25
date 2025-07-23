@@ -91,64 +91,76 @@ def live_stock_request(request):
     for order in orders_list:
         #If stock price is lower than price user is willing to buy at
         if order.action == "buy" and order.price >= stock.lastTrade:
-            #Transaction occurs
-            transaction = Transaction.objects.create(
-                user=order.user,
-                stock=s,
-                action=order.action,
-                quantity=order.quantity,
-                price=stock.lastTrade,
-            )
+            #Check if Transacted already
+            most_recent_transaction = Transaction.objects.filter(user=order.user).order_by("-timestamp").first()
 
-            # Create Post and Portfolio
-            post = Post.objects.create(user=order.user, transaction=transaction)
-
-            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
-
-            #Refund user the diff between order and transaction
-            user_profile = UserProfile.objects.get(user=order.user)
-            user_profile.money += order.quantity * (order.price - stock.lastTrade)
-            user_profile.save()
-
-            if created:
-                portfolio.quantity = order.quantity
-                portfolio.average_price = stock.lastTrade
-            else:
-                total_shares = portfolio.quantity + order.quantity
-                portfolio.average_price = (
-                    (portfolio.average_price * portfolio.quantity + stock.lastTrade * order.quantity) / total_shares
+            #Only transact if it hasn't already
+            if most_recent_transaction.order_id != order.id:
+                #Transaction occurs
+                transaction = Transaction.objects.create(
+                    user=order.user,
+                    stock=s,
+                    action=order.action,
+                    quantity=order.quantity,
+                    price=stock.lastTrade,
+                    order_id=order.id
                 )
-                portfolio.quantity = total_shares
-            portfolio.save()
-            order.delete()
 
-        if order.action == "sell" and order.price <= stock.lastTrade:
-            #Transaction occurs
-            transaction = Transaction.objects.create(
-                user=order.user,
-                stock=s,
-                action=order.action,
-                quantity=order.quantity,
-                price=stock.lastTrade,
-            )
+                # Create Post and Portfolio
+                post = Post.objects.create(user=order.user, transaction=transaction)
 
-            # Create Post and Portfolio
-            post = Post.objects.create(user=order.user, transaction=transaction)
+                portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
 
-            portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
-
-            if order.quantity < portfolio.quantity:
+                #Refund user the diff between order and transaction
                 user_profile = UserProfile.objects.get(user=order.user)
-                user_profile.money += stock.lastTrade * order.quantity
+                user_profile.money += order.quantity * (order.price - stock.lastTrade)
                 user_profile.save()
 
-                portfolio.quantity -= order.quantity
-
-                if portfolio.quantity == 0:
-                    portfolio.delete()
+                if created:
+                    portfolio.quantity = order.quantity
+                    portfolio.average_price = stock.lastTrade
                 else:
-                    portfolio.save()
-            order.delete()
+                    total_shares = portfolio.quantity + order.quantity
+                    portfolio.average_price = (
+                        (portfolio.average_price * portfolio.quantity + stock.lastTrade * order.quantity) / total_shares
+                    )
+                    portfolio.quantity = total_shares
+                portfolio.save()
+                order.delete()
+
+        if order.action == "sell" and order.price <= stock.lastTrade:
+            #Check if Transacted already
+            most_recent_transaction = Transaction.objects.filter(user=order.user).order_by("-timestamp").first()
+
+            #Only transact if it hasn't already
+            if most_recent_transaction.order_id != order.id:
+                #Transaction occurs
+                transaction = Transaction.objects.create(
+                    user=order.user,
+                    stock=s,
+                    action=order.action,
+                    quantity=order.quantity,
+                    price=stock.lastTrade,
+                    order_id=order.id
+                )
+
+                # Create Post and Portfolio
+                post = Post.objects.create(user=order.user, transaction=transaction)
+
+                portfolio, created = Portfolio.objects.get_or_create(user=order.user, stock=s, defaults={"quantity": 0, "average_price": 0}) 
+
+                if order.quantity < portfolio.quantity:
+                    user_profile = UserProfile.objects.get(user=order.user)
+                    user_profile.money += stock.lastTrade * order.quantity
+                    user_profile.save()
+
+                    portfolio.quantity -= order.quantity
+
+                    if portfolio.quantity == 0:
+                        portfolio.delete()
+                    else:
+                        portfolio.save()
+                order.delete()
 
     serializer = LiveStockSerializer(stock)
     return Response(serializer.data)

@@ -56,6 +56,7 @@ class Transaction(models.Model):
     price = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
     realized_pnl = models.FloatField(null=True, blank=True)  # optional
+    order_id = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} {self.action} {self.quantity} {self.stock}"

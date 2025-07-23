@@ -13,6 +13,7 @@ function PendingOrderPage() {
         withCredentials: true,
       });
       setOrders(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error("Error fetching pending orders", err);
     }
