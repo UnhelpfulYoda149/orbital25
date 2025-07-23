@@ -10,7 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get JWT access token
+        id: get_token
+        run: |
+          RESPONSE=$(curl -s -X POST https://backend-fjwp.onrender.com/api/token/ \
+            -H "Content-Type: application/json" \
+            -d '{"username": "${{ secrets.DJANGO_USERNAME }}", "password": "${{ secrets.DJANGO_PASSWORD }}"}')
+
+          ACCESS=$(echo $RESPONSE | jq -r '.access')
+          REFRESH=$(echo $RESPONSE | jq -r '.refresh')
+
+          if [ "$ACCESS" == "null" ] || [ "$REFRESH" == "null" ]; then
+            echo "Login failed. Response: $RESPONSE"
+            exit 1
+          fi
+
+          echo "ACCESS_TOKEN=$ACCESS" >> $GITHUB_ENV
+          echo "REFRESH_TOKEN=$REFRESH" >> $GITHUB_ENV
+
       - name: Call cleanup endpoint
+        id: call_cleanup
         run: |
           curl -X POST https://backend-fjwp.onrender.com/api/cleanup-orders/ \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "CRON_TOKEN: ${{ secrets.CRON_TOKEN }}"
