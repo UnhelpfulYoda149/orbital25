@@ -1,7 +1,15 @@
-import { Card, Grid, Button } from "@mui/material";
+import {
+  Card,
+  Grid,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import ProfileCard from "./ProfileCard";
+import { useState } from "react";
 
 interface UserCardProps {
   username: string;
@@ -10,6 +18,12 @@ interface UserCardProps {
 }
 
 function UserCard({ username, requested, handleClick }: UserCardProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Card variant="outlined" sx={{ minWidth: 500, position: "relative" }}>
       <CardContent>
@@ -21,9 +35,33 @@ function UserCard({ username, requested, handleClick }: UserCardProps) {
                 Send Request
               </Button>
             ) : (
-              <Button onClick={() => handleClick(username)}>
-                Cancel Request
-              </Button>
+              <>
+                <Button onClick={() => setOpen(true)}>Cancel Request</Button>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    Cancel Friend Request?
+                  </DialogTitle>
+                  <DialogActions>
+                    <Button variant="outlined" onClick={handleClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        handleClose();
+                        handleClick(username);
+                      }}
+                      autoFocus
+                      variant="contained"
+                    >
+                      Confirm
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </>
             )}
           </div>
         </Grid>

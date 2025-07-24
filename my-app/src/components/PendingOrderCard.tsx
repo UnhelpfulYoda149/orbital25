@@ -1,5 +1,14 @@
-import { Card, Typography, Grid, Button } from "@mui/material";
+import {
+  Card,
+  Typography,
+  Grid,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+} from "@mui/material";
 import api from "../api";
+import { useState } from "react";
 
 type PendingOrderProps = {
   id: number;
@@ -22,9 +31,14 @@ function PendingOrderCard({
   stock,
   refresh,
 }: PendingOrderProps) {
+  const [open, setOpen] = useState(false);
   const date = new Date(timestamp).toLocaleString();
   const isBuy = action === "buy";
   const isDay = expiry === "day";
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const cancelOrder = async (id: number) => {
     try {
@@ -71,10 +85,36 @@ function PendingOrderCard({
         <Button
           variant="contained"
           sx={{ width: "30%", marginTop: "0.5rem" }}
-          onClick={() => cancelOrder(id)}
+          onClick={() => {
+            setOpen(true);
+          }}
         >
           Cancel Order
         </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+        >
+          <DialogTitle id="alert-dialog-title">
+            Delete Pending Order?
+          </DialogTitle>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                handleClose();
+                cancelOrder(id);
+              }}
+              autoFocus
+              variant="contained"
+            >
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Typography variant="body1" position="absolute" bottom={0} right={5}>
           {date}
         </Typography>

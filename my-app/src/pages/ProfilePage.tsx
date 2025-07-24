@@ -26,7 +26,9 @@ function ProfilePage() {
   const [postCount, setPostCount] = useState(0);
   const [isFriend, setIsFriend] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
-  const [portfolioStocks, setPortfolioStocks] = useState<PortfolioSummary[]>([]);
+  const [portfolioStocks, setPortfolioStocks] = useState<PortfolioSummary[]>(
+    []
+  );
   const [portfolioCash, setPortfolioCash] = useState<number>(0);
   const [reservedCash, setReservedCash] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
@@ -57,52 +59,52 @@ function ProfilePage() {
     }
   };
 
-const fetchPortfolioData = async () => {
-  try {
-    const [portfolioRes, cashRes, ordersRes] = await Promise.all([
-      api.get(`/portfolio-request/?user=${username}`, { withCredentials: true }),
-      api.get(`/user/${username}/money/`, { withCredentials: true }),
-      api.get(`/user/${username}/pending-orders/`, { withCredentials: true }),
-    ]);
+  const fetchPortfolioData = async () => {
+    try {
+      const [portfolioRes, cashRes, ordersRes] = await Promise.all([
+        api.get(`/portfolio-request/?user=${username}`, {
+          withCredentials: true,
+        }),
+        api.get(`/user/${username}/money/`, { withCredentials: true }),
+        api.get(`/user/${username}/pending-orders/`, { withCredentials: true }),
+      ]);
 
-    const portfolioData = portfolioRes.data;
-    const symbols = portfolioData.map((obj: any) => obj.stock);
+      const portfolioData = portfolioRes.data;
+      const symbols = portfolioData.map((obj: any) => obj.stock);
 
-    const pricesRes = await api.post(
-      "/live-stock-batch/",
-      { symbols },
-      { withCredentials: true }
-    );
+      const pricesRes = await api.post(
+        "/live-stock-batch/",
+        { symbols },
+        { withCredentials: true }
+      );
 
-    const priceMap: Record<string, any> = {};
-    for (const item of pricesRes.data) {
-      priceMap[item.symbol] = item;
+      const priceMap: Record<string, any> = {};
+      for (const item of pricesRes.data) {
+        priceMap[item.symbol] = item;
+      }
+
+      const stocks = portfolioData.map((obj: any) => ({
+        stock: priceMap[obj.stock],
+        quantity: obj.quantity,
+        averagePrice: obj.average_price,
+      }));
+
+      const pendingBuyOrders = ordersRes.data.filter(
+        (order: any) => order.action === "buy"
+      );
+
+      const reserved = pendingBuyOrders.reduce(
+        (sum: number, order: any) => sum + order.price * order.quantity,
+        0
+      );
+
+      setPortfolioStocks(stocks);
+      setPortfolioCash(cashRes.data.money);
+      setReservedCash(reserved);
+    } catch (err) {
+      console.error("Failed to fetch portfolio data", err);
     }
-
-    const stocks = portfolioData.map((obj: any) => ({
-      stock: priceMap[obj.stock],
-      quantity: obj.quantity,
-      averagePrice: obj.average_price,
-    }));
-
-    const pendingBuyOrders = ordersRes.data.filter(
-      (order: any) => order.action === "buy"
-    );
-
-    const reserved = pendingBuyOrders.reduce(
-      (sum: number, order: any) => sum + order.price * order.quantity,
-      0
-    );
-
-    setPortfolioStocks(stocks);
-    setPortfolioCash(cashRes.data.money);
-    setReservedCash(reserved);
-
-  } catch (err) {
-    console.error("Failed to fetch portfolio data", err);
-  }
-};
-
+  };
 
   const toggleLike = async (id: number) => {
     try {
@@ -158,7 +160,14 @@ const fetchPortfolioData = async () => {
     <>
       <Header user={username || ""} />
       <Container maxWidth="md" sx={{ mt: 4 }}>
-        <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "2rem",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
+          }}
+        >
           {/* Left Column: Avatar + Bio */}
           <div style={{ flex: 1, minWidth: "250px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -187,7 +196,11 @@ const fetchPortfolioData = async () => {
                     />
                     <div style={{ marginTop: "0.5rem" }}>
                       <Button onClick={handleBioSubmit}>Save</Button>
-                      <Button onClick={() => setEditingBio(false)} color="secondary" sx={{ ml: 1 }}>
+                      <Button
+                        onClick={() => setEditingBio(false)}
+                        color="secondary"
+                        sx={{ ml: 1 }}
+                      >
                         Cancel
                       </Button>
                     </div>
@@ -230,7 +243,11 @@ const fetchPortfolioData = async () => {
           {/* Right Column: Portfolio Summary */}
           {(isOwnProfile || isFriend) && (
             <div style={{ flex: 1, minWidth: "300px" }}>
-              <PortfolioSummaryCard cash={portfolioCash} reservedCash={reservedCash} stocks={portfolioStocks} />
+              <PortfolioSummaryCard
+                cash={portfolioCash}
+                reservedCash={reservedCash}
+                stocks={portfolioStocks}
+              />
             </div>
           )}
         </div>

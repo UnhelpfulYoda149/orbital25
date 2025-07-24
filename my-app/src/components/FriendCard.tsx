@@ -1,4 +1,11 @@
-import { Card, Grid, Button } from "@mui/material";
+import {
+  Card,
+  Grid,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import api from "../api";
@@ -13,7 +20,13 @@ interface FriendCardProps {
 }
 
 function FriendCard({ username, handleClick }: FriendCardProps) {
+  const [open, setOpen] = useState(false);
   const [portfolioValue, setPortfolioValue] = useState<number>();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const getFriendData = async () => {
     try {
       const res = await api.post(
@@ -40,9 +53,31 @@ function FriendCard({ username, handleClick }: FriendCardProps) {
             Portfolio Value: ${portfolioValue?.toFixed(2)}
           </Typography>
           <div style={{ position: "absolute", right: 50 }}>
-            <Button variant="contained" onClick={() => handleClick(username)}>
+            <Button variant="contained" onClick={() => setOpen(true)}>
               Remove Friend
             </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+            >
+              <DialogTitle id="alert-dialog-title">Remove Friend?</DialogTitle>
+              <DialogActions>
+                <Button variant="outlined" onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    handleClick(username);
+                  }}
+                  autoFocus
+                  variant="contained"
+                >
+                  Confirm
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </Grid>
       </CardContent>
