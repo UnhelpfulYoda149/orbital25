@@ -35,7 +35,6 @@ function PortfolioPage() {
           };
         })
       );
-      console.log(fetchedStocks);
       setStocks(fetchedStocks);
     } catch (error) {
       console.error("Portfolio retrieval error:", error);
