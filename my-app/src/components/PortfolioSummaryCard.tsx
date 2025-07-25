@@ -8,7 +8,6 @@ type Props = {
 };
 
 function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
-  console.log(stocks);
   const stockValue = stocks.reduce(
     (acc, cur) => acc + cur.stock.lastTrade * cur.quantity,
     0
@@ -23,6 +22,12 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
     (acc, cur) => acc + cur.averagePrice * cur.quantity,
     0
   );
+  const tdyChange = stocks.reduce(
+    (acc, cur) => acc + cur.quantity * (cur.stock.lastTrade - cur.stock.open),
+    0
+  );
+  const tdyColor = tdyChange >= 0 ? "green" : "red";
+  const tdyPrefix = tdyChange >= 0 ? "+" : "";
   const unrealizedPnL = stockValue - totalCostBasis;
   const pnlColor = unrealizedPnL >= 0 ? "green" : "red";
   const pnlPrefix = unrealizedPnL >= 0 ? "+" : "";
@@ -70,7 +75,9 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
       </p>
       <p>
         <strong>Today's Change:</strong>{" "}
-        <span style={{ fontWeight: "bold" }}>Coming soon</span>
+        <span style={{ color: tdyColor, fontWeight: "bold" }}>
+          {tdyPrefix}${tdyChange.toFixed(2)}
+        </span>
       </p>
       <p>
         <strong>Portfolio Variance</strong>{" "}
