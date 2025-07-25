@@ -8,6 +8,7 @@ export interface Stock {
   low: number;
   close: number;
   volume: number;
+  var: number;
 }
 
 export interface StockNames {

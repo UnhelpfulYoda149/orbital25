@@ -94,6 +94,17 @@ function StockPage() {
                   ${stock.high !== undefined ? stock.high.toFixed(2) : "N/A"}
                 </Typography>
               </Grid>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                spacing={0}
+              >
+                <Typography variant="body1">Variance</Typography>
+                <Typography variant="body1">
+                  {stock.high !== undefined ? stock.var : "N/A"}
+                </Typography>
+              </Grid>
             </Grid>
           </CardContent>
           <Button

@@ -65,7 +65,6 @@ export default function DashboardPage() {
       );
       const detailedRes = await Promise.all(promises);
       const detailedStocks = detailedRes.map((r) => r.data);
-
       setResults(detailedStocks);
     } catch (err) {
       console.error("Search failed", err);

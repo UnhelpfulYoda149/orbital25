@@ -137,7 +137,7 @@ function LeaderboardPage() {
   const [mode, setMode] = useState("global");
   const [leaders, setLeaders] = useState<any[]>([]);
   const username = localStorage.getItem("username");
-  const [order, setOrder] = useState<Order>("asc");
+  const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<keyof Data>("portfolio");
 
   const fetchLeaders = async () => {
@@ -163,8 +163,8 @@ function LeaderboardPage() {
     event: React.MouseEvent<unknown>,
     property: keyof Data
   ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isDesc = orderBy === property && order === "desc";
+    setOrder(isDesc ? "asc" : "desc");
     setOrderBy(property);
   };
 

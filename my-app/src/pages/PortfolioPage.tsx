@@ -18,7 +18,9 @@ function PortfolioPage() {
 
   const getUserStocks = async () => {
     try {
-      const res = await api.get("/portfolio-request/", { withCredentials: true });
+      const res = await api.get("/portfolio-request/", {
+        withCredentials: true,
+      });
       const fetchedStocks = await Promise.all(
         res.data.map(async (obj: any) => {
           const res2 = await api.post(
@@ -33,6 +35,7 @@ function PortfolioPage() {
           };
         })
       );
+      console.log(fetchedStocks);
       setStocks(fetchedStocks);
     } catch (error) {
       console.error("Portfolio retrieval error:", error);
@@ -50,7 +53,9 @@ function PortfolioPage() {
 
   const getReservedCash = async () => {
     try {
-      const res = await api.get("/user/pending-orders/", { withCredentials: true });
+      const res = await api.get("/user/pending-orders/", {
+        withCredentials: true,
+      });
       const buyOrders = res.data.filter((order: any) => order.action === "buy");
       const totalReserved = buyOrders.reduce(
         (sum: number, order: any) => sum + order.price * order.quantity,
@@ -83,7 +88,11 @@ function PortfolioPage() {
       <Header user={username} />
       <div style={{ padding: "2rem" }}>
         {!loading && (
-          <PortfolioSummaryCard cash={money} reservedCash={reservedCash} stocks={stocks} />
+          <PortfolioSummaryCard
+            cash={money}
+            reservedCash={reservedCash}
+            stocks={stocks}
+          />
         )}
 
         <div
@@ -96,7 +105,11 @@ function PortfolioPage() {
         >
           <h2>My Stocks</h2>
           {stocks.map((portfolioStock) => (
-            <Card key={portfolioStock.stock.symbol} variant="outlined" sx={{ width: 500 }}>
+            <Card
+              key={portfolioStock.stock.symbol}
+              variant="outlined"
+              sx={{ width: 500 }}
+            >
               <CardActionArea onClick={() => handleClick(portfolioStock.stock)}>
                 <PortfolioCard
                   stock={portfolioStock.stock}

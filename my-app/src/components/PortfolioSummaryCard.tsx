@@ -8,8 +8,15 @@ type Props = {
 };
 
 function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
+  console.log(stocks);
   const stockValue = stocks.reduce(
     (acc, cur) => acc + cur.stock.lastTrade * cur.quantity,
+    0
+  );
+  const variance = stocks.reduce(
+    (acc, cur) =>
+      acc +
+      ((cur.stock.lastTrade * cur.quantity) / stockValue) ** 2 * cur.stock.var,
     0
   );
   const totalCostBasis = stocks.reduce(
@@ -65,10 +72,12 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
         <strong>Today's Change:</strong>{" "}
         <span style={{ fontWeight: "bold" }}>Coming soon</span>
       </p>
+      <p>
+        <strong>Portfolio Variance</strong>{" "}
+        <span style={{ fontWeight: "bold" }}>{variance.toFixed(2)}</span>
+      </p>
     </div>
   );
 }
-
-
 
 export default PortfolioSummaryCard;
