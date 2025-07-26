@@ -19,6 +19,7 @@ class HistoryStock(models.Model): #To store historical stock info
     low = models.FloatField()
     close = models.FloatField()
     volume = models.BigIntegerField()
+    var = models.FloatField(default=0.0)
 
     class Meta:
         unique_together = ('symbol', 'timestamp')
@@ -38,6 +39,7 @@ class LiveStock(models.Model): #To store live stock data
     low = models.FloatField()
     close = models.FloatField()
     volume = models.BigIntegerField()
+    var = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
