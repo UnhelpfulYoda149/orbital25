@@ -6,6 +6,8 @@ on:
     - cron: "30-55/5 14 * * 1-5"
     # 10:00 AM to 15:55 PM EST
     - cron: "0-55/5 15-20 * * 1-5"
+    # Exactly at 3:59 PM EST (20:59 UTC)
+    - cron: "59 20 * * 1-5"
   workflow_dispatch:
 
 jobs:
