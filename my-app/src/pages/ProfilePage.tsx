@@ -97,7 +97,6 @@ function ProfilePage() {
         (sum: number, order: any) => sum + order.price * order.quantity,
         0
       );
-
       setPortfolioStocks(stocks);
       setPortfolioCash(cashRes.data.money);
       setReservedCash(reserved);

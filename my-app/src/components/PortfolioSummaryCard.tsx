@@ -38,7 +38,9 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
 
   const totalValue = cash + reservedCash + stockValue;
 
-  const realizedPnl = totalValue - unrealizedPnL - 10000
+  const realizedPnl = totalValue - unrealizedPnL - 10000;
+  const rpnlColor = realizedPnl >= 0 ? "green" : "red";
+  const rpnlPrefix = realizedPnl >= 0 ? "+" : "";
 
   return (
     <div
@@ -73,8 +75,8 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
       </p>
       <p>
         <strong>Total Realized P&L:</strong>{" "}
-        <span style={{ color: realizedPnl >= 0 ? "green" : "red", fontWeight: "bold" }}>
-          {realizedPnl >= 0 ? "+" : "-"}${Math.abs(realizedPnl).toFixed(2)}
+        <span style={{ color: rpnlColor, fontWeight: "bold" }}>
+          {rpnlPrefix}${Math.abs(realizedPnl).toFixed(2)}
         </span>
       </p>
       <p>
