@@ -174,20 +174,8 @@ def get_multiple_stock_prices(request):
         return Response({"error": "Symbols must be a list."}, status=400)
 
     stocks = LiveStock.objects.filter(symbol__in=symbols)
-    data = [
-        {
-            "symbol": stock.symbol,
-            "name": stock.name,
-            "lastTrade": stock.lastTrade,
-            "open": stock.open,
-            "high": stock.high,
-            "low": stock.low,
-            "close": stock.close,
-            "volume": stock.volume,
-        }
-        for stock in stocks
-    ]
-    return Response(data)
+    serializer = LiveStockSerializer(stocks, many=True)
+    return Response(serializer.data)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
