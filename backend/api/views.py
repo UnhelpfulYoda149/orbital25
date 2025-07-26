@@ -96,7 +96,7 @@ def live_stock_request(request):
             most_recent_transaction = Transaction.objects.filter(user=order.user).order_by("-timestamp").first()
 
             #Only transact if it hasn't already
-            if most_recent_transaction.order_id != order.id:
+            if not most_recent_transaction or most_recent_transaction.order_id != order.id:
                 #Transaction occurs
                 transaction = Transaction.objects.create(
                     user=order.user,
@@ -134,7 +134,7 @@ def live_stock_request(request):
             most_recent_transaction = Transaction.objects.filter(user=order.user).order_by("-timestamp").first()
 
             #Only transact if it hasn't already
-            if most_recent_transaction.order_id != order.id:
+            if not most_recent_transaction or most_recent_transaction.order_id != order.id:
                 #Transaction occurs
                 transaction = Transaction.objects.create(
                     user=order.user,
