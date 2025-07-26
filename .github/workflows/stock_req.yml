@@ -1,0 +1,47 @@
+name: Live Stock Updates
+
+on:
+  schedule:
+    # 9:30 AM to 9:55 AM EST
+    - cron: "30-55/5 14 * * 1-5"
+    # 10:00 AM to 15:55 PM EST
+    - cron: "0-55/5 15-20 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  update-live-stocks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get JWT access token
+        id: get_token
+        run: |
+          RESPONSE=$(curl -s -X POST https://backend-fjwp.onrender.com/api/token/ \
+            -H "Content-Type: application/json" \
+            -d '{"username": "${{ secrets.DJANGO_USERNAME }}", "password": "${{ secrets.DJANGO_PASSWORD }}"}')
+
+          ACCESS=$(echo $RESPONSE | jq -r '.access')
+          REFRESH=$(echo $RESPONSE | jq -r '.refresh')
+
+          if [ "$ACCESS" == "null" ] || [ "$REFRESH" == "null" ]; then
+            echo "Login failed. Response: $RESPONSE"
+            exit 1
+          fi
+
+          echo "ACCESS_TOKEN=$ACCESS" >> $GITHUB_ENV
+          echo "REFRESH_TOKEN=$REFRESH" >> $GITHUB_ENV
+
+      - name: Call live stock endpoint
+        run: |
+          SYMBOLS=("AAPL" "GOOG" "MSFT" "NVDA" "AMZN" "TSLA" "META" "NFLX" "INTC" "AMD")
+
+          for SYMBOL in "${SYMBOLS[@]}"
+          do
+            echo "Requesting live stock update for $SYMBOL"
+            RESPONSE=$(curl -s -X POST https://backend-fjwp.onrender.com/live-stock-request/ \
+              -H "Authorization: Bearer $ACCESS_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "{\"symbol\": \"$SYMBOL\"}")
+
+            echo "Response for $SYMBOL: $RESPONSE"
+          done
