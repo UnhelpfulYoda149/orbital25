@@ -78,7 +78,7 @@ function HomePage() {
               onToggleWatchlist={fetchWatchlist}
               isWatchlisted={watchlist.includes(prop.symbol)}
               toggleLike={() => toggleLike(prop.id)}
-              handleCommentSubmit={fetchFeed}
+              handleCommentSubmit={() => fetchFeed()}
             />
           ))
         )}
