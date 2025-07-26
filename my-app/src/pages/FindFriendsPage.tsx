@@ -45,6 +45,12 @@ function FindFriendsPage() {
     }
   };
 
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   const handleSearch = async () => {
     try {
       setHasSearched(true);
@@ -117,6 +123,7 @@ function FindFriendsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             style={{ marginRight: "0.5rem" }}
+            onKeyDown={handleKey}
           />
           <Button variant="contained" onClick={handleSearch}>
             Search

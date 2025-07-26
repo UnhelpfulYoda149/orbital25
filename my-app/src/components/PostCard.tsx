@@ -162,6 +162,13 @@ function PostCard({
               rows={2}
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleComment(newComment, id);
+                  handleCommentSubmit();
+                  resetComment();
+                }
+              }}
             />
             <div style={{ marginTop: "0.5rem" }}>
               <Button

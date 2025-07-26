@@ -44,8 +44,10 @@ export default function DashboardPage() {
     fetchWatchlist();
   }, []);
 
-  const handleClick = (stock: Stock) => {
-    navigate("/stock", { state: { stock } });
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const handleSearch = async () => {
@@ -82,6 +84,7 @@ export default function DashboardPage() {
             label="Search Stocks"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleKey}
             style={{ marginRight: "0.5rem" }}
           />
           <Button variant="contained" onClick={handleSearch}>
