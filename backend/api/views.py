@@ -164,7 +164,7 @@ def live_stock_request(request):
                 order.delete()
 
     serializer = LiveStockSerializer(stock)
-    return Response({**serializer.data, "var": s.var})
+    return Response(serializer.data)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
