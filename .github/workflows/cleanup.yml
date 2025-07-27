@@ -2,7 +2,7 @@ name: Day-Only Order Cleanup
 
 on:
   schedule:
-    - cron: "0 20 * * 1-5"
+    - cron: "1 20 * * 1-5"
   workflow_dispatch:
 
 jobs:
