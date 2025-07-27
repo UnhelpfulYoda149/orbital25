@@ -70,13 +70,17 @@ def live_stock_request(request):
     finnhub_res = requests.get(finnhub_url)
 
     if finnhub_res.status_code != 200:
-        return Response({"error": "Failed to fetch from Finnhub."}, status=500)
+        last = LiveStock.objects.get(symbol=symbol)
+        serializer = LiveStockSerializer(last)
+        return Response(serializer.data)
 
     finnhub_data = finnhub_res.json()
     last_price = finnhub_data.get("c")
 
     if last_price is None:
-        return Response({"error": "Invalid data from Finnhub."}, status=500)
+        last = LiveStock.objects.get(symbol=symbol)
+        serializer = LiveStockSerializer(last)
+        return Response(serializer.data)
 
     print(f"[live_stock_request] Updating {symbol}: {last_price}")
 
