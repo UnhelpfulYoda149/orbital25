@@ -73,17 +73,17 @@ def live_stock_request(request):
     try:
         finnhub_res = requests.get(finnhub_url, timeout=2)
         if finnhub_res.status_code != 200:
-            fallback()
+            return fallback()
 
         finnhub_data = finnhub_res.json()
         last_price = finnhub_data.get("c")
 
         if last_price is None:
-            fallback()
+            return fallback()
 
         print(f"[live_stock_request] Updating {symbol}: {last_price}")
     except (requests.exceptions.Timeout, requests.exceptions.RequestException):
-        fallback()
+        return fallback()
 
     else:
         # Update or create
