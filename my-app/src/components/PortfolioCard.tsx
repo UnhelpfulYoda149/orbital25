@@ -11,16 +11,24 @@ function PortfolioCard({ stock, numShares, averagePrice }: PortfolioCardProps) {
   const currentValue = stock.lastTrade * numShares;
   const costBasis = averagePrice * numShares;
   const pnl = currentValue - costBasis;
-  const pnlPercent = ((pnl / costBasis) * 100) || 0;
+  const pnlPercent = (pnl / costBasis) * 100 || 0;
   const pnlColor = pnl >= 0 ? "green" : "red";
 
-  const formattedPnL = `${pnl >= 0 ? "+" : ""}${pnl.toFixed(2)}`;
-  const formattedPnLPercent = `${pnlPercent >= 0 ? "+" : ""}${pnlPercent.toFixed(2)}%`;
+  const formattedPnL = `${pnl >= 0 ? "+" : "-"}$${pnl.toFixed(2)}`;
+  const formattedPnLPercent = `${
+    pnlPercent >= 0 ? "+" : "-"
+  }${pnlPercent.toFixed(2)}%`;
 
   return (
     <Card variant="outlined" sx={{ minWidth: 500 }}>
       <CardContent>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           {/* Left Section */}
           <Box>
             <Typography variant="h5">{stock.name}</Typography>
@@ -47,10 +55,7 @@ function PortfolioCard({ stock, numShares, averagePrice }: PortfolioCardProps) {
             >
               {formattedPnL}
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{ color: pnlColor }}
-            >
+            <Typography variant="body2" sx={{ color: pnlColor }}>
               {formattedPnLPercent}
             </Typography>
           </Box>

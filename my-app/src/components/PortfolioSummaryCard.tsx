@@ -27,10 +27,10 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
     0
   );
   const tdyColor = tdyChange >= 0 ? "green" : "red";
-  const tdyPrefix = tdyChange >= 0 ? "+" : "";
+  const tdyPrefix = tdyChange >= 0 ? "+" : "-";
   const unrealizedPnL = stockValue - totalCostBasis;
   const pnlColor = unrealizedPnL >= 0 ? "green" : "red";
-  const pnlPrefix = unrealizedPnL >= 0 ? "+" : "";
+  const pnlPrefix = unrealizedPnL >= 0 ? "+" : "-";
   const pnlPercentage =
     totalCostBasis > 0
       ? ((unrealizedPnL / totalCostBasis) * 100).toFixed(2)
@@ -40,7 +40,7 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
 
   const realizedPnl = totalValue - unrealizedPnL - 10000;
   const rpnlColor = realizedPnl >= 0 ? "green" : "red";
-  const rpnlPrefix = realizedPnl >= 0 ? "+" : "";
+  const rpnlPrefix = realizedPnl >= 0 ? "+" : "-";
 
   return (
     <div
