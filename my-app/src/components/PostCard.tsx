@@ -1,13 +1,11 @@
 import {
   Card,
   CardContent,
-  CardActionArea,
   Typography,
   Grid,
   IconButton,
   TextField,
-  Button,
-  Avatar,
+  Button
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Stock } from "../types";
@@ -83,10 +81,6 @@ function PostCard({
     } catch (err) {
       console.error("Error updating comment:", err);
     }
-  };
-
-  const handleClick = (stock: Stock) => {
-    navigate("/stock", { state: { stock } });
   };
 
   const resetComment = () => {

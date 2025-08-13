@@ -10,8 +10,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import api from "../api";
 import { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 
 interface FriendCardProps {

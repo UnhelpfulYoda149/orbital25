@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { Stock } from "../types";
-import { Card, Grid, Box } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";

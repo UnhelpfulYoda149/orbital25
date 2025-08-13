@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import { TextField, Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../api";
 import FriendCard from "../components/FriendCard";

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-//import { supabase } from "../App";
 import Button from "@mui/material/Button";
 import NavBar from "./NavBar";
 import { Grid } from "@mui/material";
@@ -16,7 +15,7 @@ function Header({ user }: HeaderProps) {
 
   function signOut() {
     // Clear local storage or any authentication token
-    localStorage.clear(); // or localStorage.removeItem("ACCESS_TOKEN")
+    localStorage.clear(); 
     navigate("/login");
   }
 

@@ -120,31 +120,6 @@ function PendingOrderCard({
         </Typography>
       </Grid>
     </Card>
-    // <div
-    //   style={{
-    //     border: "1px solid #ccc",
-    //     borderRadius: "8px",
-    //     padding: "1rem",
-    //     marginBottom: "1rem",
-    //     backgroundColor: isBuy ? "#D1FFBD" : "#FFC2C2",
-    //   }}
-    // >
-    //   <h3 style={{ margin: "0", fontWeight: "bold" }}>
-    //     {isBuy ? "Buy" : "Sell"}
-    //   </h3>
-    //   <p style={{ marginTop: "0.2rem", marginBottom: "1rem" }}>
-    //     {stock.name} ({stock.symbol})
-    //   </p>
-    //   <p>
-    //     <strong>Quantity:</strong> {quantity}
-    //   </p>
-    //   <p>
-    //     <strong>Price:</strong> ${price.toFixed(2)}
-    //   </p>
-    //   <p>
-    //     <strong>Date:</strong> {date}
-    //   </p>
-    // </div>
   );
 }
 

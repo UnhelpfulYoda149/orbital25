@@ -1,4 +1,3 @@
-import React from "react";
 import { PortfolioSummary } from "../types";
 
 type Props = {

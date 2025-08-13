@@ -10,7 +10,7 @@ import api from "../api";
 function PortfolioPage() {
   const username = localStorage.getItem("username");
   const [stocks, setStocks] = useState<PortfolioSummary[]>([]);
-  const [money, setMoney] = useState<number>(0); // already excludes reserved
+  const [money, setMoney] = useState<number>(0);
   const [reservedCash, setReservedCash] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 

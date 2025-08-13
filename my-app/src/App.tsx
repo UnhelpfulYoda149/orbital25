@@ -1,13 +1,8 @@
-import React from "react";
-import { useState, useEffect, MouseEvent } from "react";
 import "./App.css";
-import { Stock } from "./types";
 import {
   Route,
   Routes,
-  useLocation,
   Navigate,
-  BrowserRouter,
 } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";

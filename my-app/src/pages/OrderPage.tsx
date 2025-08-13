@@ -6,7 +6,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import StockCard from "../components/StockCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { Order, Instruction, Expiry } from "../types";
 import api from "../api";
@@ -28,6 +28,7 @@ function OrderPage() {
   const [livePrice, setLivePrice] = useState<number>(0);
   const [previousPrice, setPreviousPrice] = useState<number>(0);
   const [blinkColor, setBlinkColor] = useState<"green" | "red" | "">("");
+  const navigate = useNavigate();
 
   const stock: Stock = location.state.stock;
 
@@ -54,7 +55,7 @@ function OrderPage() {
 
   const fetchWatchlist = async () => {
     try {
-      const res = await api.get("/user/watchlist/",  { withCredentials: true });
+      const res = await api.get("/user/watchlist/", { withCredentials: true });
       const symbols: string[] = res.data.map((item: any) => item.stock);
       setWatchlist(symbols);
     } catch (err) {
@@ -186,8 +187,11 @@ function OrderPage() {
       );
       alert("Order submitted!");
       resetForm();
-      fetchPortfolio();
-      fetchMoney();
+      if (instructionType === "limit") {
+        navigate("/pending-orders");
+      } else {
+        navigate("/transactions");
+      }
     } catch (error) {
       console.error("Order error:", error);
       alert("Failed to submit order.");

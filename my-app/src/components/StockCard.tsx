@@ -1,11 +1,9 @@
 import { Stock } from "../types";
 import { Card, Grid, IconButton } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import StockChange from "./StockChange";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useState, useEffect } from "react";
 import api from "../api";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useNavigate } from "react-router-dom";
@@ -28,7 +26,7 @@ function StockCard({
   };
 
   const handleWatchlistToggle = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent navigation
+    e.stopPropagation();
 
     await api.post(
       "/user/watchlist/toggle/",

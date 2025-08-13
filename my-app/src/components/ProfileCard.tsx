@@ -1,4 +1,4 @@
-import { Avatar, Card, CardActionArea, Grid, Typography } from "@mui/material";
+import { Avatar, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProfileCard.css";
 
@@ -11,7 +11,6 @@ function ProfileCard({ username, bgcolor }: ProfileCardProps) {
   const navigate = useNavigate();
 
   return (
-    // <Card sx={{ backgroundColor: bgcolor }} variant="outlined">
     <div
       className="profile-link"
       onClick={() => navigate(`/profile/${username}`)}
@@ -30,7 +29,6 @@ function ProfileCard({ username, bgcolor }: ProfileCardProps) {
         <Typography variant="caption">{username}</Typography>
       </Grid>
     </div>
-    // </Card>
   );
 }
 

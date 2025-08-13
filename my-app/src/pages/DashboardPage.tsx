@@ -1,9 +1,6 @@
 import StockCard from "../components/StockCard";
 import { Stock } from "../types";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import api from "../api";
 import TextField from "@mui/material/TextField";
@@ -16,7 +13,6 @@ export default function DashboardPage() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<Stock[]>([]);
   const [watchlist, setWatchlist] = useState<string[]>([]);
-  const navigate = useNavigate();
 
   const fetchWatchlist = async () => {
     try {

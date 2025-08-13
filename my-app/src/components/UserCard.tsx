@@ -7,7 +7,6 @@ import {
   DialogActions,
 } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 import ProfileCard from "./ProfileCard";
 import { useState } from "react";
 

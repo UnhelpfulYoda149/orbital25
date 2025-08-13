@@ -1,7 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
 
 const pages = [
   { name: "home", url: "/" },
@@ -11,13 +10,12 @@ const pages = [
   { name: "pending orders", url: "/pending-orders" },
   { name: "find friends", url: "/find-friends" },
   { name: "friends", url: "/friends" },
-  { name: "leaderboard", url:"/leaderboard" }
+  { name: "leaderboard", url: "/leaderboard" },
 ];
 
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const me = localStorage.getItem("username");
 
   return (
     <nav style={{ display: "flex", alignItems: "center", padding: "0 1rem" }}>

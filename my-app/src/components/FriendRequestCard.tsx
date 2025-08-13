@@ -1,10 +1,8 @@
-import { Card, Grid, Button, IconButton } from "@mui/material";
+import { Card, Grid, IconButton } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckIcon from "@mui/icons-material/Check";
-import Avatar from "@mui/material/Avatar";
-import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 
 interface FriendRequestCardProps {

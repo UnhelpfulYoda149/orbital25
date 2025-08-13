@@ -13,7 +13,6 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  Toolbar,
 } from "@mui/material";
 import api from "../api";
 import Header from "../components/Header";
@@ -236,100 +235,6 @@ function LeaderboardPage() {
           </Paper>
         </Box>
       </Container>
-
-      {/* <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          {mode === "global" ? "Global Leaderboard" : "Local Leaderboard"}
-        </Typography>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <ToggleButtonGroup
-            value={mode}
-            exclusive
-            onChange={(e, newMode) => newMode && setMode(newMode)}
-            sx={{ mb: 3 }}
-          >
-            <ToggleButton value="global">Global</ToggleButton>
-            <ToggleButton value="local">Local</ToggleButton>
-          </ToggleButtonGroup>
-
-          <ToggleButtonGroup
-            value={mode}
-            exclusive
-            onChange={(e, newMode) => newMode && setMode(newMode)}
-            sx={{ mb: 3 }}
-          >
-            <ToggleButton value="global">
-              Stock Holdings
-              <SwapVertIcon />
-            </ToggleButton>
-            <ToggleButton value="local">
-              Portfolio
-              <SwapVertIcon />
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-
-        <Paper sx={{ p: 2, mb: 1 }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Typography variant="body1" fontWeight="bold">
-              Rank
-            </Typography>
-            <Box display="flex">
-              <Typography variant="body1" fontWeight="bold">
-                Stock Holdings Value
-              </Typography>
-              <SwapVertIcon />
-            </Box>
-            <Box display="flex">
-              <Typography variant="body1" fontWeight="bold">
-                Portfolio Value
-              </Typography>
-              <SwapVertIcon />
-            </Box>
-          </Box>
-        </Paper>
-
-        {leaders.map((user, index) => (
-          <Paper key={user.username} sx={{ p: 2, mb: 1 }}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Box display="flex" alignItems="center" gap={1}>
-                <Typography
-                  variant="body2"
-                  fontWeight="bold"
-                  sx={{ fontSize: "1.2rem" }}
-                >
-                  #{index + 1}
-                </Typography>
-                <ProfileCard username={user.username} bgcolor="#e3f2fd" />
-              </Box>
-
-              <Typography
-                variant="body2"
-                fontWeight="medium"
-                sx={{ fontSize: "1.2rem" }}
-              >
-                ${user.stock_holdings.toFixed(2)}
-              </Typography>
-
-              <Typography
-                variant="body2"
-                fontWeight="medium"
-                sx={{ fontSize: "1.2rem" }}
-              >
-                ${user.portfolio_value.toFixed(2)}
-              </Typography>
-            </Box>
-          </Paper>
-        ))}
-      </Container> */}
     </>
   );
 }
