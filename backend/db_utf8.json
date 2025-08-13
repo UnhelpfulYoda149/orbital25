@@ -1,0 +1,2968 @@
+[
+  {
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+      "action_time": "2025-06-23T07:25:08.653Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "2",
+      "object_repr": "admin",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+      "action_time": "2025-06-23T07:25:13.630Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "3",
+      "object_repr": "hello",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+      "action_time": "2025-06-23T07:25:16.229Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "4",
+      "object_repr": "helloworld",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+      "action_time": "2025-06-23T07:25:18.963Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "5",
+      "object_repr": "user",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+      "action_time": "2025-06-23T12:13:52.817Z",
+      "user": 1,
+      "content_type": 15,
+      "object_id": "9",
+      "object_repr": "admin has requested admin",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "114",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "113",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "112",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "111",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "110",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "109",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "108",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "107",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "106",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "105",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "104",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "103",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "102",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "101",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "100",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "99",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "98",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "97",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "96",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "95",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "94",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "93",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "92",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "91",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "90",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "89",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "88",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "87",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "86",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "85",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "84",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "83",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "82",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.811Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "81",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "80",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "79",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "78",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "77",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "76",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "75",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "74",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "73",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 48,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "72",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "71",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "70",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "69",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "68",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "67",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "66",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "65",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "64",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 57,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "63",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 58,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "62",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 59,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "61",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 60,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "60",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 61,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "59",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 62,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "58",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 63,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.812Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "57",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 64,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "56",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 65,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "55",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 66,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "54",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 67,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "53",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 68,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "52",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 69,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "51",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 70,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "50",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 71,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "49",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 72,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "48",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 73,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "47",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 74,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "46",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 75,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "45",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 76,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "44",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 77,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "43",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 78,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "42",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 79,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "41",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 80,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "40",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 81,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "39",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 82,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "38",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 83,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "37",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 84,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "36",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 85,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "35",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 86,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.813Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "34",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 87,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.814Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "33",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 88,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.814Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "32",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 89,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.814Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "31",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 90,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.814Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "30",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 91,
+    "fields": {
+      "action_time": "2025-06-26T09:10:24.814Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "29",
+      "object_repr": "MONMO sell 1 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 92,
+    "fields": {
+      "action_time": "2025-06-26T09:11:25.807Z",
+      "user": 1,
+      "content_type": 11,
+      "object_id": "23",
+      "object_repr": "MONMO buy 10 Apple Inc",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 4,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 4,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 4,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 4,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 5,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 5,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 5,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 5,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 6,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 6,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 6,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 6,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add live stock",
+      "content_type": 7,
+      "codename": "add_livestock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change live stock",
+      "content_type": 7,
+      "codename": "change_livestock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete live stock",
+      "content_type": 7,
+      "codename": "delete_livestock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view live stock",
+      "content_type": 7,
+      "codename": "view_livestock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add stock",
+      "content_type": 8,
+      "codename": "add_stock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change stock",
+      "content_type": 8,
+      "codename": "change_stock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete stock",
+      "content_type": 8,
+      "codename": "delete_stock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view stock",
+      "content_type": 8,
+      "codename": "view_stock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add stock names",
+      "content_type": 9,
+      "codename": "add_stocknames"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change stock names",
+      "content_type": 9,
+      "codename": "change_stocknames"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete stock names",
+      "content_type": 9,
+      "codename": "delete_stocknames"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view stock names",
+      "content_type": 9,
+      "codename": "view_stocknames"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add history stock",
+      "content_type": 10,
+      "codename": "add_historystock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change history stock",
+      "content_type": 10,
+      "codename": "change_historystock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete history stock",
+      "content_type": 10,
+      "codename": "delete_historystock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view history stock",
+      "content_type": 10,
+      "codename": "view_historystock"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can add transaction",
+      "content_type": 11,
+      "codename": "add_transaction"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can change transaction",
+      "content_type": 11,
+      "codename": "change_transaction"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can delete transaction",
+      "content_type": 11,
+      "codename": "delete_transaction"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can view transaction",
+      "content_type": 11,
+      "codename": "view_transaction"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+      "name": "Can add portfolio",
+      "content_type": 12,
+      "codename": "add_portfolio"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+      "name": "Can change portfolio",
+      "content_type": 12,
+      "codename": "change_portfolio"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+      "name": "Can delete portfolio",
+      "content_type": 12,
+      "codename": "delete_portfolio"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+      "name": "Can view portfolio",
+      "content_type": 12,
+      "codename": "view_portfolio"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+      "name": "Can add watchlist",
+      "content_type": 13,
+      "codename": "add_watchlist"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+      "name": "Can change watchlist",
+      "content_type": 13,
+      "codename": "change_watchlist"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+      "name": "Can delete watchlist",
+      "content_type": 13,
+      "codename": "delete_watchlist"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+      "name": "Can view watchlist",
+      "content_type": 13,
+      "codename": "view_watchlist"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+      "name": "Can add user profile",
+      "content_type": 14,
+      "codename": "add_userprofile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+      "name": "Can change user profile",
+      "content_type": 14,
+      "codename": "change_userprofile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+      "name": "Can delete user profile",
+      "content_type": 14,
+      "codename": "delete_userprofile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+      "name": "Can view user profile",
+      "content_type": 14,
+      "codename": "view_userprofile"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+      "name": "Can add friend request",
+      "content_type": 15,
+      "codename": "add_friendrequest"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+      "name": "Can change friend request",
+      "content_type": 15,
+      "codename": "change_friendrequest"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+      "name": "Can delete friend request",
+      "content_type": 15,
+      "codename": "delete_friendrequest"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+      "name": "Can view friend request",
+      "content_type": 15,
+      "codename": "view_friendrequest"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+      "name": "Can add friend",
+      "content_type": 16,
+      "codename": "add_friend"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+      "name": "Can change friend",
+      "content_type": 16,
+      "codename": "change_friend"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+      "name": "Can delete friend",
+      "content_type": 16,
+      "codename": "delete_friend"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+      "name": "Can view friend",
+      "content_type": 16,
+      "codename": "view_friend"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+      "name": "Can add post",
+      "content_type": 17,
+      "codename": "add_post"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+      "name": "Can change post",
+      "content_type": 17,
+      "codename": "change_post"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+      "name": "Can delete post",
+      "content_type": 17,
+      "codename": "delete_post"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+      "name": "Can view post",
+      "content_type": 17,
+      "codename": "view_post"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 69,
+    "fields": {
+      "name": "Can add comment",
+      "content_type": 18,
+      "codename": "add_comment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 70,
+    "fields": {
+      "name": "Can change comment",
+      "content_type": 18,
+      "codename": "change_comment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 71,
+    "fields": {
+      "name": "Can delete comment",
+      "content_type": 18,
+      "codename": "delete_comment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 72,
+    "fields": {
+      "name": "Can view comment",
+      "content_type": 18,
+      "codename": "view_comment"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 73,
+    "fields": {
+      "name": "Can add like",
+      "content_type": 19,
+      "codename": "add_like"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 74,
+    "fields": {
+      "name": "Can change like",
+      "content_type": 19,
+      "codename": "change_like"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 75,
+    "fields": {
+      "name": "Can delete like",
+      "content_type": 19,
+      "codename": "delete_like"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 76,
+    "fields": {
+      "name": "Can view like",
+      "content_type": 19,
+      "codename": "view_like"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 77,
+    "fields": {
+      "name": "Can add order",
+      "content_type": 20,
+      "codename": "add_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 78,
+    "fields": {
+      "name": "Can change order",
+      "content_type": 20,
+      "codename": "change_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 79,
+    "fields": {
+      "name": "Can delete order",
+      "content_type": 20,
+      "codename": "delete_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 80,
+    "fields": {
+      "name": "Can view order",
+      "content_type": 20,
+      "codename": "view_order"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$qJ9xUgVkCUzyi3tOCD9o6l$BlvhnO0nJK/5d+AxKlfqiHXzpRl6fl1LFsPj81QnI3Y=",
+      "last_login": "2025-07-13T05:34:23.923Z",
+      "is_superuser": true,
+      "username": "user",
+      "first_name": "",
+      "last_name": "",
+      "email": "lioneltan03@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-06-21T13:56:52.350Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$mSRv7dJup7ZfXIrr0VR6TI$A8JjTsFZGlXolgYSOLKX8/8MmGzX/49+JVHXueEWp7w=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "hello",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-06-21T13:59:18.360Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$tYN2VMPZ0Q4kaT6sWzAcrz$Ovr2QdYiAW8bNsl+vv3p3UCinr3ZsDC8VDLsZWeAm/s=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-06-21T14:33:13.298Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$61c2hHxJpnG4IMvFbfbX55$qPyPVC4jK/9WuA7oq7vOSvmwVjE8mxce/Q+qVY0cyUE=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "helloworld",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-06-21T15:35:56.417Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$Ui2bsCI6jiEDcfuGXPfcTl$LJ7INWyBBLxr//7IcgrvRD2/yvOxVQOftzPIDdAN/GY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "MONMO",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-06-23T06:49:58.904Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$bNfb41jEvgQDWhRmoR8ryz$I17fZu5RgJELsRVgkGnUW6YCLRGRFQXZp7Ds1NRNt9I=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "hello2",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-06-25T08:21:00.792Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": { "app_label": "admin", "model": "logentry" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": { "app_label": "auth", "model": "permission" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": { "app_label": "auth", "model": "group" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": { "app_label": "auth", "model": "user" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": { "app_label": "contenttypes", "model": "contenttype" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": { "app_label": "sessions", "model": "session" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": { "app_label": "api", "model": "livestock" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": { "app_label": "api", "model": "stock" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": { "app_label": "api", "model": "stocknames" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": { "app_label": "api", "model": "historystock" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": { "app_label": "api", "model": "transaction" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": { "app_label": "api", "model": "portfolio" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": { "app_label": "api", "model": "watchlist" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": { "app_label": "api", "model": "userprofile" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": { "app_label": "api", "model": "friendrequest" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 16,
+    "fields": { "app_label": "api", "model": "friend" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": { "app_label": "api", "model": "post" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 18,
+    "fields": { "app_label": "api", "model": "comment" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 19,
+    "fields": { "app_label": "api", "model": "like" }
+  },
+  {
+    "model": "contenttypes.contenttype",
+    "pk": 20,
+    "fields": { "app_label": "api", "model": "order" }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "lx5mvay3w01z649tkq3tp3k095jagqsk",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGllex581JX3OYK1_OIAcKU4qxN1JpBTQzsx7b-ZpW6vfel78lNiVAbv8skDxmdsh0oPafeZxbusyBX4k_LSdj3PKr9vZ_h1U6nVfy4iobdEBUaHRhoSATA6MhGxTiS5mAKt3TKggFKWKHSRhFEIWOTj2-QLFvTcO:1uT0Jn:sA9MOhjaTorYR5dhgHIFySZCr0Z23nm2BTX5ArfD_uM",
+      "expire_date": "2025-07-05T15:39:47.658Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "pxcp89w769f9ihlx0v025dj2uhjj2u3i",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGllex581JX3OYK1_OIAcKU4qxN1JpBTQzsx7b-ZpW6vfel78lNiVAbv8skDxmdsh0oPafeZxbusyBX4k_LSdj3PKr9vZ_h1U6nVfy4iobdEBUaHRhoSATA6MhGxTiS5mAKt3TKggFKWKHSRhFEIWOTj2-QLFvTcO:1uSzGZ:2QtLnDSpdIHWK947a0-zr8RMgjd5qN3S4lZgXTQGR4Q",
+      "expire_date": "2025-07-05T14:32:23.623Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "t8jav1mbqq6g9x2sdl2a278zhje9xzjo",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGllex581JX3OYK1_OIAcKU4qxN1JpBTQzsx7b-ZpW6vfel78lNiVAbv8skDxmdsh0oPafeZxbusyBX4k_LSdj3PKr9vZ_h1U6nVfy4iobdEBUaHRhoSATA6MhGxTiS5mAKt3TKggFKWKHSRhFEIWOTj2-QLFvTcO:1uSyia:XaHFhYrzdaDSCy2oNSfEjI2fhlw7wKfooLcOp-PLZ5s",
+      "expire_date": "2025-07-05T13:57:16.921Z"
+    }
+  },
+  {
+    "model": "sessions.session",
+    "pk": "xhq01h7dhjq0lub78kj7akghxvqlmzub",
+    "fields": {
+      "session_data": ".eJxVjDsOwjAQBe_iGllex581JX3OYK1_OIAcKU4qxN1JpBTQzsx7b-ZpW6vfel78lNiVAbv8skDxmdsh0oPafeZxbusyBX4k_LSdj3PKr9vZ_h1U6nVfy4iobdEBUaHRhoSATA6MhGxTiS5mAKt3TKggFKWKHSRhFEIWOTj2-QLFvTcO:1uapLz:QKdV7AZqLTMHDuV1CmcbyJ1FWt52JF4e0uYg4z6ppEc",
+      "expire_date": "2025-07-27T05:34:23.928Z"
+    }
+  },
+  { "model": "api.stock", "pk": "AAPL", "fields": { "name": "Apple Inc" } },
+  {
+    "model": "api.stock",
+    "pk": "AMD",
+    "fields": { "name": "Advanced Micro Devices Inc" }
+  },
+  {
+    "model": "api.stock",
+    "pk": "AMZN",
+    "fields": { "name": "Amazon.com Inc" }
+  },
+  { "model": "api.stock", "pk": "GOOG", "fields": { "name": "Alphabet Inc" } },
+  { "model": "api.stock", "pk": "INTC", "fields": { "name": "Intel Corp" } },
+  {
+    "model": "api.stock",
+    "pk": "META",
+    "fields": { "name": "Meta Platforms Inc" }
+  },
+  {
+    "model": "api.stock",
+    "pk": "MSFT",
+    "fields": { "name": "Microsoft Corp" }
+  },
+  { "model": "api.stock", "pk": "NFLX", "fields": { "name": "Netflix Inc" } },
+  { "model": "api.stock", "pk": "NVDA", "fields": { "name": "NVIDIA Corp" } },
+  { "model": "api.stock", "pk": "TSLA", "fields": { "name": "Tesla Inc" } },
+  {
+    "model": "api.livestock",
+    "pk": "AAPL",
+    "fields": {
+      "name": "Apple Inc",
+      "timestamp": "2025-06-23T15:45:47.082Z",
+      "open": 200.3,
+      "lastTrade": 210.16,
+      "high": 202.3,
+      "low": 199.51,
+      "close": 201.0,
+      "volume": 1750693544,
+      "var": 2.31
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "AMD",
+    "fields": {
+      "name": "Advanced Micro Devices Inc",
+      "timestamp": "2025-06-23T15:45:54.865Z",
+      "open": 128.34,
+      "lastTrade": 129.58,
+      "high": 133.25,
+      "low": 128.34,
+      "close": 128.24,
+      "volume": 1750693553,
+      "var": 6.56
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "AMZN",
+    "fields": {
+      "name": "Amazon.com Inc",
+      "timestamp": "2025-06-23T15:45:50.151Z",
+      "open": 209.61,
+      "lastTrade": 223.19,
+      "high": 210.39,
+      "low": 207.39,
+      "close": 209.69,
+      "volume": 1750693542,
+      "var": 3.06
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "GOOG",
+    "fields": {
+      "name": "Alphabet Inc",
+      "timestamp": "2025-06-23T15:45:47.808Z",
+      "open": 167.62,
+      "lastTrade": 183.77,
+      "high": 168.48,
+      "low": 164.93,
+      "close": 167.73,
+      "volume": 1750693544,
+      "var": 3.12
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "INTC",
+    "fields": {
+      "name": "Intel Corp",
+      "timestamp": "2025-06-23T15:45:54.082Z",
+      "open": 20.99,
+      "lastTrade": 21.14,
+      "high": 21.58,
+      "low": 20.99,
+      "close": 21.08,
+      "volume": 1750693548,
+      "var": 8.09
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "META",
+    "fields": {
+      "name": "Meta Platforms Inc",
+      "timestamp": "2025-06-23T15:45:52.202Z",
+      "open": 684.32,
+      "lastTrade": 698.53,
+      "high": 693.63,
+      "low": 678.75,
+      "close": 682.35,
+      "volume": 1750693544,
+      "var": 3.53
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "MSFT",
+    "fields": {
+      "name": "Microsoft Corp",
+      "timestamp": "2025-06-23T15:45:48.613Z",
+      "open": 477.29,
+      "lastTrade": 495.94,
+      "high": 479.9,
+      "low": 472.51,
+      "close": 477.4,
+      "volume": 1750693544,
+      "var": 1.63
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "NFLX",
+    "fields": {
+      "name": "Netflix Inc",
+      "timestamp": "2025-06-23T15:45:52.944Z",
+      "open": 1231.41,
+      "lastTrade": 1323.12,
+      "high": 1250.4,
+      "low": 1215.01,
+      "close": 1231.41,
+      "volume": 1750693548,
+      "var": 3.04
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "NVDA",
+    "fields": {
+      "name": "NVIDIA Corp",
+      "timestamp": "2025-06-23T15:45:49.369Z",
+      "open": 143.92,
+      "lastTrade": 171.37,
+      "high": 144.3,
+      "low": 142.32,
+      "close": 143.85,
+      "volume": 1750693544,
+      "var": 3.88
+    }
+  },
+  {
+    "model": "api.livestock",
+    "pk": "TSLA",
+    "fields": {
+      "name": "Tesla Inc",
+      "timestamp": "2025-06-23T15:45:50.869Z",
+      "open": 327.68,
+      "lastTrade": 348.68,
+      "high": 357.54,
+      "low": 327.48,
+      "close": 322.16,
+      "volume": 1750693548,
+      "var": 15.39
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 20,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "buy",
+      "quantity": 1,
+      "price": 209.1,
+      "timestamp": "2025-06-23T16:00:04.887Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 21,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "buy",
+      "quantity": 1,
+      "price": 209.1,
+      "timestamp": "2025-06-23T16:00:08.063Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 22,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "buy",
+      "quantity": 1,
+      "price": 208.41,
+      "timestamp": "2025-06-23T16:51:28.723Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 24,
+    "fields": {
+      "user": 3,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 10,
+      "price": 201.5,
+      "timestamp": "2025-06-24T08:23:48.678Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 25,
+    "fields": {
+      "user": 3,
+      "stock": "AAPL",
+      "action": "sell",
+      "quantity": 5,
+      "price": 201.5,
+      "timestamp": "2025-06-24T09:23:14.077Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 26,
+    "fields": {
+      "user": 3,
+      "stock": "NVDA",
+      "action": "buy",
+      "quantity": 20,
+      "price": 144.17,
+      "timestamp": "2025-06-24T09:23:30.143Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 27,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "sell",
+      "quantity": 1,
+      "price": 208.47,
+      "timestamp": "2025-06-24T12:37:42.012Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 28,
+    "fields": {
+      "user": 2,
+      "stock": "GOOG",
+      "action": "buy",
+      "quantity": 4,
+      "price": 167.74,
+      "timestamp": "2025-06-25T09:36:49.337Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 115,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 10,
+      "price": 201.56,
+      "timestamp": "2025-06-26T09:10:45.659Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 116,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "sell",
+      "quantity": 1,
+      "price": 201.56,
+      "timestamp": "2025-06-26T09:10:54.630Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 117,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 1,
+      "price": 201.56,
+      "timestamp": "2025-06-26T09:11:46.720Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 118,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 1,
+      "price": 199.7292,
+      "timestamp": "2025-06-26T14:30:45.250Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 119,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 1,
+      "price": 199.7292,
+      "timestamp": "2025-06-26T14:30:45.276Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 120,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "buy",
+      "quantity": 1,
+      "price": 201.08,
+      "timestamp": "2025-06-29T03:21:08.365Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 121,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "sell",
+      "quantity": 1,
+      "price": 210.01,
+      "timestamp": "2025-07-09T08:02:30.546Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.transaction",
+    "pk": 122,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "action": "sell",
+      "quantity": 1,
+      "price": 210.01,
+      "timestamp": "2025-07-09T08:02:30.569Z",
+      "realized_pnl": null,
+      "order_id": null
+    }
+  },
+  {
+    "model": "api.portfolio",
+    "pk": 8,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "quantity": 2,
+      "average_price": 208.87
+    }
+  },
+  {
+    "model": "api.portfolio",
+    "pk": 10,
+    "fields": {
+      "user": 3,
+      "stock": "AAPL",
+      "quantity": 5,
+      "average_price": 201.5
+    }
+  },
+  {
+    "model": "api.portfolio",
+    "pk": 11,
+    "fields": {
+      "user": 3,
+      "stock": "NVDA",
+      "quantity": 20,
+      "average_price": 144.17
+    }
+  },
+  {
+    "model": "api.portfolio",
+    "pk": 12,
+    "fields": {
+      "user": 2,
+      "stock": "GOOG",
+      "quantity": 4,
+      "average_price": 167.74
+    }
+  },
+  {
+    "model": "api.portfolio",
+    "pk": 13,
+    "fields": {
+      "user": 5,
+      "stock": "AAPL",
+      "quantity": 11,
+      "average_price": 201.24141538461538
+    }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 54,
+    "fields": { "user": 2, "stock": "AMZN" }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 56,
+    "fields": { "user": 2, "stock": "GOOG" }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 72,
+    "fields": { "user": 5, "stock": "AAPL" }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 76,
+    "fields": { "user": 5, "stock": "NVDA" }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 79,
+    "fields": { "user": 3, "stock": "AAPL" }
+  },
+  {
+    "model": "api.watchlist",
+    "pk": 80,
+    "fields": { "user": 3, "stock": "NVDA" }
+  },
+  {
+    "model": "api.friendrequest",
+    "pk": 639,
+    "fields": {
+      "from_user": 3,
+      "to_user": 4,
+      "created_at": "2025-06-23T13:13:01.084Z"
+    }
+  },
+  {
+    "model": "api.friendrequest",
+    "pk": 645,
+    "fields": {
+      "from_user": 5,
+      "to_user": 1,
+      "created_at": "2025-06-25T13:00:48.958Z"
+    }
+  },
+  {
+    "model": "api.friendrequest",
+    "pk": 650,
+    "fields": {
+      "from_user": 5,
+      "to_user": 3,
+      "created_at": "2025-06-28T12:21:32.798Z"
+    }
+  },
+  {
+    "model": "api.friend",
+    "pk": 4,
+    "fields": {
+      "user1": 2,
+      "user2": 3,
+      "created_at": "2025-06-23T14:52:40.410Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "transaction": 24,
+      "timestamp": "2025-06-24T08:23:48.686Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "transaction": 25,
+      "timestamp": "2025-06-24T09:23:14.086Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "transaction": 26,
+      "timestamp": "2025-06-24T09:23:30.155Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 4,
+    "fields": {
+      "user": 2,
+      "transaction": 27,
+      "timestamp": "2025-06-24T12:37:42.029Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 5,
+    "fields": {
+      "user": 2,
+      "transaction": 28,
+      "timestamp": "2025-06-25T09:36:49.352Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 92,
+    "fields": {
+      "user": 5,
+      "transaction": 115,
+      "timestamp": "2025-06-26T09:10:45.666Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 93,
+    "fields": {
+      "user": 5,
+      "transaction": 116,
+      "timestamp": "2025-06-26T09:10:54.641Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 94,
+    "fields": {
+      "user": 5,
+      "transaction": 117,
+      "timestamp": "2025-06-26T09:11:46.738Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 95,
+    "fields": {
+      "user": 5,
+      "transaction": 118,
+      "timestamp": "2025-06-26T14:30:45.264Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 96,
+    "fields": {
+      "user": 5,
+      "transaction": 119,
+      "timestamp": "2025-06-26T14:30:45.360Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 97,
+    "fields": {
+      "user": 5,
+      "transaction": 120,
+      "timestamp": "2025-06-29T03:21:08.376Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 98,
+    "fields": {
+      "user": 5,
+      "transaction": 122,
+      "timestamp": "2025-07-09T08:02:30.576Z"
+    }
+  },
+  {
+    "model": "api.post",
+    "pk": 99,
+    "fields": {
+      "user": 5,
+      "transaction": 121,
+      "timestamp": "2025-07-09T08:02:30.555Z"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 1,
+    "fields": {
+      "user": 5,
+      "post": 3,
+      "timestamp": "2025-06-25T14:52:41.864Z",
+      "text": "hello"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 2,
+    "fields": {
+      "user": 5,
+      "post": 3,
+      "timestamp": "2025-06-25T14:52:56.585Z",
+      "text": "hello"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 3,
+    "fields": {
+      "user": 5,
+      "post": 3,
+      "timestamp": "2025-06-25T15:07:17.576Z",
+      "text": "toodles"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 4,
+    "fields": {
+      "user": 3,
+      "post": 5,
+      "timestamp": "2025-06-25T15:11:09.082Z",
+      "text": "hi hello!! Great buy!"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "post": 2,
+      "timestamp": "2025-06-26T01:44:35.219Z",
+      "text": "Wow, what a smart move :O"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 6,
+    "fields": {
+      "user": 5,
+      "post": 2,
+      "timestamp": "2025-06-26T01:44:55.460Z",
+      "text": "This is a very long comment I wonder what it will look like after this this is so weird i do hope it will not break"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 7,
+    "fields": {
+      "user": 3,
+      "post": 2,
+      "timestamp": "2025-06-28T12:30:23.850Z",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 8,
+    "fields": {
+      "user": 3,
+      "post": 5,
+      "timestamp": "2025-06-29T03:14:12.235Z",
+      "text": "Test comment from home page"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 9,
+    "fields": {
+      "user": 3,
+      "post": 3,
+      "timestamp": "2025-06-29T03:14:26.842Z",
+      "text": "test comment from profile page"
+    }
+  },
+  {
+    "model": "api.comment",
+    "pk": 10,
+    "fields": {
+      "user": 3,
+      "post": 5,
+      "timestamp": "2025-06-29T03:14:53.077Z",
+      "text": "Test comment from other user profile page"
+    }
+  },
+  {
+    "model": "api.like",
+    "pk": 7,
+    "fields": { "user": 3, "post": 5, "timestamp": "2025-06-25T13:56:00.870Z" }
+  },
+  {
+    "model": "api.like",
+    "pk": 8,
+    "fields": { "user": 3, "post": 4, "timestamp": "2025-06-25T13:56:02.663Z" }
+  },
+  {
+    "model": "api.like",
+    "pk": 9,
+    "fields": { "user": 5, "post": 3, "timestamp": "2025-06-25T13:57:24.104Z" }
+  },
+  {
+    "model": "api.like",
+    "pk": 10,
+    "fields": { "user": 5, "post": 1, "timestamp": "2025-06-25T13:57:25.824Z" }
+  },
+  {
+    "model": "api.like",
+    "pk": 11,
+    "fields": { "user": 5, "post": 94, "timestamp": "2025-06-26T09:14:17.561Z" }
+  },
+  {
+    "model": "api.order",
+    "pk": 11,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "buy",
+      "expiry": "gtc",
+      "quantity": 1,
+      "price": 211.95,
+      "timestamp": "2025-06-26T12:42:53.078Z"
+    }
+  },
+  {
+    "model": "api.order",
+    "pk": 12,
+    "fields": {
+      "user": 2,
+      "stock": "NFLX",
+      "action": "buy",
+      "expiry": "gtc",
+      "quantity": 1,
+      "price": 1275.15,
+      "timestamp": "2025-06-26T12:44:55.346Z"
+    }
+  },
+  {
+    "model": "api.order",
+    "pk": 13,
+    "fields": {
+      "user": 3,
+      "stock": "AAPL",
+      "action": "buy",
+      "expiry": "gtc",
+      "quantity": 1,
+      "price": 200.0,
+      "timestamp": "2025-06-28T02:48:42.972Z"
+    }
+  },
+  {
+    "model": "api.order",
+    "pk": 14,
+    "fields": {
+      "user": 2,
+      "stock": "AMZN",
+      "action": "buy",
+      "expiry": "gtc",
+      "quantity": 1,
+      "price": -0.05,
+      "timestamp": "2025-06-28T14:24:00.273Z"
+    }
+  }
+]
