@@ -68,7 +68,7 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
       <p>
         <strong>Total Unrealized P&L:</strong>{" "}
         <span style={{ color: pnlColor, fontWeight: "bold" }}>
-          {pnlPrefix}${unrealizedPnL.toFixed(2)} ({pnlPrefix}
+          {pnlPrefix}${Math.abs(unrealizedPnL).toFixed(2)} ({pnlPrefix}
           {pnlPercentage}%)
         </span>
       </p>
@@ -81,7 +81,7 @@ function PortfolioSummaryCard({ cash, stocks, reservedCash }: Props) {
       <p>
         <strong>Today's Change:</strong>{" "}
         <span style={{ color: tdyColor, fontWeight: "bold" }}>
-          {tdyPrefix}${tdyChange.toFixed(2)}
+          {tdyPrefix}${Math.abs(tdyChange).toFixed(2)}
         </span>
       </p>
       <p>
